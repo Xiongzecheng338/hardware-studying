@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硬件探索者 - 电脑硬件交互式学习平台</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cyber: {
+          dark: '#050810',
+          darker: '#020408',
+          blue: '#00d4ff',
+          purple: '#a855f7',
+          green: '#00ff88',
+          pink: '#ff0080',
+          orange: '#ff6b00',
+          card: 'rgba(10, 15, 25, 0.85)'
+        }
+      },
+      fontFamily: {
+        display: ['Orbitron', 'sans-serif'],
+        body: ['Inter', 'sans-serif']
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'gradient': 'gradient 15s ease infinite',
+        'spin-slow': 'spin 20s linear infinite',
+        'bounce-slow': 'bounce 3s infinite',
+      }
+    }
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { 
+  font-family: 'Inter', sans-serif;
+  background: #050810;
+  color: #e2e8f0;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.font-display { font-family: 'Orbitron', sans-serif; }
+
+/* 高级动态背景 */
+.dynamic-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 40% 60%, rgba(0, 255, 136, 0.05) 0%, transparent 30%),
+    linear-gradient(180deg, #050810 0%, #0a1020 100%);
+}
+
+/* 移动的光斑 */
+@keyframes moveSpot {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(100px, -50px) scale(1.1); }
+  50% { transform: translate(50px, 100px) scale(0.9); }
+  75% { transform: translate(-50px, 50px) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.light-spot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: moveSpot 20s ease-in-out infinite;
+}
+
+/* 网格背景 */
+.grid-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+/* 玻璃效果 */
+.glass {
+  background: rgba(10, 15, 25, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-strong {
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 发光效果 */
+.glow-blue { box-shadow: 0 0 40px rgba(0, 212, 255, 0.2); }
+.glow-purple { box-shadow: 0 0 40px rgba(168, 85, 247, 0.2); }
+.glow-green { box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
+
+/* 动画边框 */
+@keyframes borderRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animated-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(transparent, rgba(0, 212, 255, 0.3), transparent 30%);
+  animation: borderRotate 4s linear infinite;
+}
+
+.animated-border::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: rgba(10, 15, 25, 0.95);
+  border-radius: inherit;
+}
+
+/* 悬停卡片效果 */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 渐变文字 */
+.gradient-text {
+  background: linear-gradient(135deg, #00d4ff, #a855f7, #00ff88);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 打字机效果 */
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid #00d4ff;
+  white-space: nowrap;
+  animation: typing 3s steps(40) 1s forwards, blink 0.75s step-end infinite;
+  width: 0;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* 滚动显示 */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #050810; }
+::-webkit-scrollbar-thumb { 
+  background: linear-gradient(180deg, #00d4ff, #a855f7);
+  border-radius: 3px;
+}
+
+/* 进度条 */
+.progress-bar {
+  position: relative;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #a855f7);
+  border-radius: 4px;
+  width: var(--progress);
+  transition: width 1s ease;
+}
+
+/* 涟漪效果 */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* 脉冲环 */
+@keyframes pulseRing {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.pulse-ring {
+  position: absolute;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  animation: pulseRing 2s ease-out infinite;
+}
+
+/* 悬浮标签 */
+.float-label {
+  position: absolute;
+  padding: 4px 12px;
+  background: rgba(0, 212, 255, 0.2);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  white-space: nowrap;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* 移动端菜单 */
+.mobile-menu {
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu.active {
+  transform: translateX(0);
+}
+
+/* 硬件图标动画 */
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.icon-float {
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+/* 数据流动画 */
+@keyframes dataFlow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+.data-flow {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 212, 255, 0.3) 10px,
+    rgba(0, 212, 255, 0.3) 20px
+  );
+  background-size: 200% 100%;
+  animation: dataFlow 2s linear infinite;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .hero-title { font-size: 2rem; }
+  .section-title { font-size: 1.75rem; }
+}
+
+/* 性能优化 */
+.will-change-transform { will-change: transform; }
+.gpu-accelerated { transform: translateZ(0); backface-visibility: hidden; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- 动态背景 -->
+<div class="dynamic-bg"></div>
+<div class="grid-pattern"></div>
+
+<!-- 移动光斑 -->
+<div class="light-spot w-96 h-96 bg-cyber-blue top-0 left-0" style="animation-delay: 0s;"></div>
+<div class="light-spot w-80 h-80 bg-cyber-purple bottom-0 right-0" style="animation-delay: -5s;"></div>
+<div class="light-spot w-64 h-64 bg-cyber-green top-1/2 left-1/2" style="animation-delay: -10s;"></div>
+
+<!-- 导航栏 -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-strong">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="relative w-10 h-10 rounded-xl bg-gradient-to-br from-cyber-blue to-cyber-purple flex items-center justify-center glow-blue">
+          <i class="fas fa-microchip text-white"></i>
+          <div class="pulse-ring w-10 h-10 text-cyber-blue"></div>
+        </div>
+        <span class="font-display font-bold text-lg tracking-wider hidden sm:block">HARDWARE<span class="text-cyber-blue">HUB</span></span>
+      </div>
+      
+      <!-- 桌面导航 -->
+      <div class="hidden md:flex items-center gap-1">
+        <a href="#hero" class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">首页</a>
+        <a href="#anatomy" class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">硬件解剖</a>
+        <a href="#components" class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">详细分析</a>
+        <a href="#guide" class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">新手引导</a>
+        <a href="#build" class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">配置推荐</a>
+        <a href="#buy" class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">购买指南</a>
+      </div>
+      
+      <!-- CTA按钮 -->
+      <div class="flex items-center gap-3">
+        <button onclick="scrollToSection('guide')" class="hidden sm:flex px-5 py-2 rounded-xl bg-gradient-to-r from-cyber-blue to-cyber-purple font-semibold text-sm hover:shadow-lg hover:shadow-cyber-blue/30 transition-all ripple">
+          开始学习
+        </button>
+        
+        <!-- 移动端菜单按钮 -->
+        <button id="mobileMenuBtn" class="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center">
+          <i class="fas fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- 移动端菜单 -->
+<div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 w-72 glass-strong z-50 p-6">
+  <div class="flex justify-between items-center mb-8">
+    <span class="font-display font-bold text-lg">菜单</span>
+    <button id="closeMobileMenu" class="w-10 h-10 rounded-xl glass flex items-center justify-center">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="flex flex-col gap-2">
+    <a href="#hero" class="px-4 py-3 rounded-xl hover:bg-white/5 transition-all">首页</a>
+    <a href="#anatomy" class="px-4 py-3 rounded-xl hover:bg-white/5 transition-all">硬件解剖</a>
+    <a href="#components" class="px-4 py-3 rounded-xl hover:bg-white/5 transition-all">详细分析</a>
+    <a href="#guide" class="px-4 py-3 rounded-xl hover:bg-white/5 transition-all">新手引导</a>
+    <a href="#build" class="px-4 py-3 rounded-xl hover:bg-white/5 transition-all">配置推荐</a>
+    <a href="#buy" class="px-4 py-3 rounded-xl hover:bg-white/5 transition-all">购买指南</a>
+  </div>
+</div>
+
+<!-- 英雄区域 -->
+<section id="hero" class="min-h-screen flex items-center justify-center relative pt-16 overflow-hidden">
+  <!-- 装饰元素 -->
+  <div class="absolute top-1/4 left-10 w-2 h-2 bg-cyber-blue rounded-full animate-pulse"></div>
+  <div class="absolute top-1/3 right-20 w-3 h-3 bg-cyber-purple rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+  <div class="absolute bottom-1/4 left-1/4 w-2 h-2 bg-cyber-green rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- 左侧文字 -->
+      <div class="text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-cyber-blue text-sm font-medium mb-6">
+          <span class="w-2 h-2 bg-cyber-green rounded-full animate-pulse"></span>
+          新手友好的硬件学习平台
+        </div>
+        
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight hero-title">
+          <span class="block text-white mb-2">探索电脑硬件的</span>
+          <span class="gradient-text">无限可能</span>
+        </h1>
+        
+        <p class="text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+          通过交互式学习，轻松了解CPU、显卡、内存等核心硬件。
+          从零开始，成为硬件达人 🚀
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <button onclick="scrollToSection('anatomy')" class="group px-8 py-4 rounded-2xl bg-gradient-to-r from-cyber-blue to-cyan-400 font-bold text-lg hover:shadow-2xl hover:shadow-cyber-blue/40 transition-all transform hover:scale-105 ripple">
+            <i class="fas fa-rocket mr-2 group-hover:animate-bounce"></i>
+            开始探索
+          </button>
+          <button onclick="scrollToSection('guide')" class="px-8 py-4 rounded-2xl glass border border-cyber-blue/30 font-bold text-lg hover:bg-cyber-blue/10 transition-all ripple">
+            <i class="fas fa-graduation-cap mr-2"></i>
+            新手引导
+          </button>
+        </div>
+        
+        <!-- 统计数据 -->
+        <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/10">
+          <div class="text-center lg:text-left">
+            <div class="font-display text-3xl font-bold text-cyber-blue">8+</div>
+            <div class="text-sm text-gray-500">核心硬件</div>
+          </div>
+          <div class="text-center lg:text-left">
+            <div class="font-display text-3xl font-bold text-cyber-purple">50+</div>
+            <div class="text-sm text-gray-500">知识点</div>
+          </div>
+          <div class="text-center lg:text-left">
+            <div class="font-display text-3xl font-bold text-cyber-green">4</div>
+            <div class="text-sm text-gray-500">配置方案</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 右侧3D电脑图 -->
+      <div class="relative hidden lg:block">
+        <div class="relative w-full aspect-square max-w-lg mx-auto">
+          <!-- 外圈装饰 -->
+          <div class="absolute inset-0 rounded-full border border-cyber-blue/20 animate-spin-slow"></div>
+          <div class="absolute inset-4 rounded-full border border-cyber-purple/20 animate-spin-slow" style="animation-direction: reverse;"></div>
+          
+          <!-- 中心电脑图 -->
+          <div class="absolute inset-12 glass rounded-3xl flex items-center justify-center glow-blue">
+            <div class="text-center p-8">
+              <div class="relative inline-block mb-4">
+                <i class="fas fa-desktop text-7xl text-cyber-blue icon-float"></i>
+                <div class="absolute -top-2 -right-2 w-6 h-6 bg-cyber-green rounded-full flex items-center justify-center text-xs font-bold">✓</div>
+              </div>
+              <div class="font-display text-xl font-bold mb-2">INTERACTIVE</div>
+              <div class="text-gray-400 text-sm">点击各部件开始学习</div>
+              
+              <!-- 组件指示器 -->
+              <div class="absolute top-4 left-4 w-8 h-8 rounded-lg glass flex items-center justify-center text-cyber-blue animate-pulse">
+                <i class="fas fa-microchip text-sm"></i>
+              </div>
+              <div class="absolute top-4 right-4 w-8 h-8 rounded-lg glass flex items-center justify-center text-cyber-purple animate-pulse" style="animation-delay: 0.3s;">
+                <i class="fas fa-gamepad text-sm"></i>
+              </div>
+              <div class="absolute bottom-4 left-4 w-8 h-8 rounded-lg glass flex items-center justify-center text-cyber-green animate-pulse" style="animation-delay: 0.6s;">
+                <i class="fas fa-memory text-sm"></i>
+              </div>
+              <div class="absolute bottom-4 right-4 w-8 h-8 rounded-lg glass flex items-center justify-center text-cyber-pink animate-pulse" style="animation-delay: 0.9s;">
+                <i class="fas fa-hdd text-sm"></i>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 浮动标签 -->
+          <div class="float-label top-8 right-0 text-cyber-blue" style="animation-delay: 0s;">CPU</div>
+          <div class="float-label bottom-20 left-0 text-cyber-purple" style="animation-delay: 1s;">GPU</div>
+          <div class="float-label top-1/2 right-0 text-cyber-green" style="animation-delay: 2s;">RAM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 滚动提示 -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce-slow">
+    <span class="text-xs text-gray-500">向下滚动</span>
+    <i class="fas fa-chevron-down text-cyber-blue"></i>
+  </div>
+</section>
+
+<!-- 硬件解剖区域 -->
+<section id="anatomy" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-cyber-purple text-sm font-medium mb-4">
+        <i class="fas fa-sitemap"></i>
+        硬件解剖
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 section-title">电脑内部结构</h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">悬停或点击各部件，了解它们在电脑中的位置和作用</p>
+    </div>
+    
+    <!-- 交互式电脑图 -->
+    <div class="relative max-w-4xl mx-auto reveal">
+      <div class="glass rounded-3xl p-4 sm:p-8">
+        <!-- 机箱框架 -->
+        <div class="relative aspect-[4/3] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl border-4 border-gray-700 overflow-hidden">
+          <!-- 侧板透明效果 -->
+          <div class="absolute inset-2 rounded-xl border border-gray-600/50 bg-gradient-to-br from-gray-800/50 to-transparent"></div>
+          
+          <!-- 主板 -->
+          <div class="absolute top-8 left-8 right-1/3 bottom-8 bg-green-900/30 rounded-lg border border-green-500/30 p-2 group cursor-pointer hover:bg-green-900/50 transition-all" onclick="showAnatomyDetail('motherboard')">
+            <div class="text-xs text-green-400 font-bold mb-1">主板</div>
+            <div class="grid grid-cols-4 gap-1">
+              <div class="h-2 bg-gray-600 rounded"></div>
+              <div class="h-2 bg-gray-600 rounded"></div>
+              <div class="h-2 bg-gray-600 rounded"></div>
+              <div class="h-2 bg-gray-600 rounded"></div>
+            </div>
+            <!-- CPU插槽 -->
+            <div class="absolute top-1/4 left-1/4 w-12 h-12 bg-gray-700 rounded border-2 border-gray-500 flex items-center justify-center group-hover:border-cyber-blue transition-all">
+              <i class="fas fa-microchip text-gray-400 group-hover:text-cyber-blue"></i>
+            </div>
+            <!-- 内存插槽 -->
+            <div class="absolute top-1/4 right-4 w-3 h-16 bg-gray-700 rounded border border-gray-500 group-hover:border-cyber-green transition-all"></div>
+            <div class="absolute top-1/4 right-9 w-3 h-16 bg-gray-700 rounded border border-gray-500 group-hover:border-cyber-green transition-all"></div>
+            <!-- PCIe插槽 -->
+            <div class="absolute bottom-1/4 left-1/4 right-4 h-3 bg-gray-700 rounded border border-gray-500 group-hover:border-cyber-purple transition-all"></div>
+            <div class="absolute bottom-1/4 left-1/4 right-4 h-3 bg-gray-700 rounded border border-gray-500 mt-4 group-hover:border-cyber-purple transition-all"></div>
+          </div>
+          
+          <!-- 电源 -->
+          <div class="absolute top-8 right-8 w-1/4 h-1/3 bg-gray-800 rounded-lg border border-gray-600 p-2 cursor-pointer hover:border-yellow-500 transition-all group" onclick="showAnatomyDetail('psu')">
+            <div class="text-xs text-yellow-400 font-bold">电源</div>
+            <div class="mt-2 grid grid-cols-3 gap-1">
+              <div class="h-1 bg-yellow-600 rounded"></div>
+              <div class="h-1 bg-red-600 rounded"></div>
+              <div class="h-1 bg-orange-600 rounded"></div>
+            </div>
+            <div class="absolute bottom-2 left-2 right-2 h-2 bg-gray-700 rounded">
+              <div class="h-full w-3/4 bg-yellow-500/50 rounded"></div>
+            </div>
+          </div>
+          
+          <!-- 显卡 -->
+          <div class="absolute bottom-8 left-1/4 w-1/2 h-1/4 bg-gray-800 rounded-lg border border-gray-600 p-2 cursor-pointer hover:border-cyber-purple transition-all group" onclick="showAnatomyDetail('gpu')">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-cyber-purple font-bold">显卡</span>
+              <div class="flex gap-1">
+                <div class="w-4 h-4 bg-gray-700 rounded flex items-center justify-center">
+                  <i class="fas fa-fan text-xs text-gray-500 group-hover:animate-spin"></i>
+                </div>
+                <div class="w-4 h-4 bg-gray-700 rounded flex items-center justify-center">
+                  <i class="fas fa-fan text-xs text-gray-500 group-hover:animate-spin"></i>
+                </div>
+              </div>
+            </div>
+            <div class="mt-1 h-2 bg-cyber-purple/30 rounded"></div>
+          </div>
+          
+          <!-- 硬盘 -->
+          <div class="absolute bottom-8 right-8 w-1/5 h-1/6 bg-gray-800 rounded border border-gray-600 p-2 cursor-pointer hover:border-cyber-pink transition-all" onclick="showAnatomyDetail('storage')">
+            <div class="text-xs text-cyber-pink font-bold">SSD</div>
+            <div class="mt-1 h-1 bg-cyber-pink/30 rounded"></div>
+          </div>
+          
+          <!-- CPU散热器 -->
+          <div class="absolute top-16 left-16 w-16 h-16 rounded-full bg-gray-700 border-2 border-gray-500 flex items-center justify-center cursor-pointer hover:border-cyber-blue transition-all group" onclick="showAnatomyDetail('cpu')">
+            <i class="fas fa-fan text-2xl text-gray-400 group-hover:text-cyber-blue group-hover:animate-spin"></i>
+          </div>
+          
+          <!-- 机箱风扇 -->
+          <div class="absolute top-4 right-1/3 w-8 h-8 rounded-full bg-gray-700 border border-gray-500 flex items-center justify-center">
+            <i class="fas fa-fan text-xs text-gray-500 animate-spin" style="animation-duration: 3s;"></i>
+          </div>
+          
+          <!-- RGB灯效 -->
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-pink opacity-50"></div>
+        </div>
+      </div>
+      
+      <!-- 说明文字 -->
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass rounded-xl p-4 text-center">
+          <i class="fas fa-microchip text-2xl text-cyber-blue mb-2"></i>
+          <div class="font-bold text-sm">CPU + 散热器</div>
+          <div class="text-xs text-gray-500">计算核心</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <i class="fas fa-gamepad text-2xl text-cyber-purple mb-2"></i>
+          <div class="font-bold text-sm">显卡</div>
+          <div class="text-xs text-gray-500">图形处理</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <i class="fas fa-th text-2xl text-green-400 mb-2"></i>
+          <div class="font-bold text-sm">主板</div>
+          <div class="text-xs text-gray-500">连接中枢</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <i class="fas fa-bolt text-2xl text-yellow-400 mb-2"></i>
+          <div class="font-bold text-sm">电源</div>
+          <div class="text-xs text-gray-500">电力供应</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 硬件详细分析区域 -->
+<section id="components" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-cyber-blue text-sm font-medium mb-4">
+        <i class="fas fa-microchip"></i>
+        核心硬件
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 section-title">深入了解每个组件</h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">点击卡片查看详细参数、品牌推荐和选购建议</p>
+    </div>
+    
+    <!-- 硬件网格 -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- CPU -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-cyber-blue/50 group reveal" onclick="showHardwareDetail('cpu')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyber-blue/20 to-cyber-blue/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-microchip text-3xl text-cyber-blue"></i>
+          </div>
+          <div class="absolute -top-1 -right-1 w-6 h-6 bg-cyber-green rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">CPU 处理器</h3>
+        <p class="text-gray-400 text-sm mb-4">电脑的大脑，负责所有计算任务</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">核心数: 4-24核</span>
+          <span class="text-cyber-blue font-bold text-sm">¥500+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 85%;"></div>
+      </div>
+      
+      <!-- GPU -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-cyber-purple/50 group reveal" onclick="showHardwareDetail('gpu')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyber-purple/20 to-cyber-purple/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-gamepad text-3xl text-cyber-purple"></i>
+          </div>
+          <div class="absolute -top-1 -right-1 w-6 h-6 bg-cyber-green rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">GPU 显卡</h3>
+        <p class="text-gray-400 text-sm mb-4">图形处理核心，游戏与创作必备</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">显存: 6-24GB</span>
+          <span class="text-cyber-purple font-bold text-sm">¥1500+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 90%;"></div>
+      </div>
+      
+      <!-- RAM -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-cyber-green/50 group reveal" onclick="showHardwareDetail('ram')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyber-green/20 to-cyber-green/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-memory text-3xl text-cyber-green"></i>
+          </div>
+          <div class="absolute -top-1 -right-1 w-6 h-6 bg-cyber-green rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">RAM 内存</h3>
+        <p class="text-gray-400 text-sm mb-4">临时存储空间，影响多任务能力</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">容量: 8-64GB</span>
+          <span class="text-cyber-green font-bold text-sm">¥200+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 70%;"></div>
+      </div>
+      
+      <!-- Storage -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-cyber-pink/50 group reveal" onclick="showHardwareDetail('storage')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyber-pink/20 to-cyber-pink/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-hdd text-3xl text-cyber-pink"></i>
+          </div>
+          <div class="absolute -top-1 -right-1 w-6 h-6 bg-cyber-green rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">存储设备</h3>
+        <p class="text-gray-400 text-sm mb-4">SSD/HDD，数据的永久家园</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">速度: 500MB-7GB/s</span>
+          <span class="text-cyber-pink font-bold text-sm">¥200+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 75%;"></div>
+      </div>
+      
+      <!-- Motherboard -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-amber-500/50 group reveal" onclick="showHardwareDetail('motherboard')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-th text-3xl text-amber-500"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">主板</h3>
+        <p class="text-gray-400 text-sm mb-4">连接所有组件的核心平台</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">板型: ATX/mATX/ITX</span>
+          <span class="text-amber-500 font-bold text-sm">¥500+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 60%;"></div>
+      </div>
+      
+      <!-- PSU -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-yellow-500/50 group reveal" onclick="showHardwareDetail('psu')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-yellow-500/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-bolt text-3xl text-yellow-500"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">电源</h3>
+        <p class="text-gray-400 text-sm mb-4">为所有组件提供稳定电力</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">功率: 400-1200W</span>
+          <span class="text-yellow-500 font-bold text-sm">¥200+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 55%;"></div>
+      </div>
+      
+      <!-- Case -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-teal-500/50 group reveal" onclick="showHardwareDetail('case')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500/20 to-teal-500/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-box text-3xl text-teal-500"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">机箱</h3>
+        <p class="text-gray-400 text-sm mb-4">保护硬件，散热与美观兼顾</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">类型: 塔式/紧凑</span>
+          <span class="text-teal-500 font-bold text-sm">¥200+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 40%;"></div>
+      </div>
+      
+      <!-- Monitor -->
+      <div class="card-hover glass rounded-3xl p-6 cursor-pointer border border-transparent hover:border-indigo-500/50 group reveal" onclick="showHardwareDetail('monitor')">
+        <div class="relative mb-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-indigo-500/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fas fa-tv text-3xl text-indigo-500"></i>
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">显示器</h3>
+        <p class="text-gray-400 text-sm mb-4">视觉输出窗口，影响体验</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-500">分辨率: 1080P-4K</span>
+          <span class="text-indigo-500 font-bold text-sm">¥500+</span>
+        </div>
+        <div class="mt-3 progress-bar" style="--progress: 65%;"></div>
+      </div>
+    </div>
+    
+    <!-- 性能天梯图 -->
+    <div class="mt-16 reveal">
+      <h3 class="font-display text-2xl font-bold mb-8 text-center">CPU 性能天梯图 <span class="text-sm text-gray-500">(简化版)</span></h3>
+      <div class="glass rounded-3xl p-6 sm:p-8">
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <span class="w-24 text-sm text-right text-gray-400">旗舰级</span>
+            <div class="flex-1 h-12 bg-gradient-to-r from-cyber-pink to-cyber-purple rounded-xl flex items-center px-4 font-bold text-sm">
+              i9-14900K / R9 7950X3D
+            </div>
+            <span class="text-cyber-pink font-bold">★★★</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="w-24 text-sm text-right text-gray-400">高端级</span>
+            <div class="flex-1 h-12 bg-gradient-to-r from-cyber-purple to-cyber-blue rounded-xl flex items-center px-4 font-bold text-sm" style="width: 85%;">
+              i7-13700K / R7 7800X3D
+            </div>
+            <span class="text-cyber-purple font-bold">★★</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="w-24 text-sm text-right text-gray-400">中端级</span>
+            <div class="flex-1 h-12 bg-gradient-to-r from-cyber-blue to-cyan-400 rounded-xl flex items-center px-4 font-bold text-sm" style="width: 70%;">
+              i5-13400F / R5 7500F
+            </div>
+            <span class="text-cyber-blue font-bold">★</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="w-24 text-sm text-right text-gray-400">入门级</span>
+            <div class="flex-1 h-12 bg-gradient-to-r from-cyan-400 to-cyber-green rounded-xl flex items-center px-4 font-bold text-sm" style="width: 50%;">
+              i3-12100 / R5 5600G
+            </div>
+            <span class="text-cyber-green font-bold">☆</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 新手引导区域 -->
+<section id="guide" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-cyber-green text-sm font-medium mb-4">
+        <i class="fas fa-graduation-cap"></i>
+        新手引导
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 section-title">从零开始的学习路径</h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">跟随步骤，轻松掌握硬件知识 🎯</p>
+    </div>
+    
+    <!-- 时间线式引导 -->
+    <div class="relative">
+      <!-- 连接线 -->
+      <div class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyber-blue via-cyber-purple to-cyber-green"></div>
+      
+      <!-- 步骤1 -->
+      <div class="relative flex flex-col sm:flex-row items-start mb-12 reveal">
+        <div class="sm:w-1/2 sm:pr-12 sm:text-right pl-12 sm:pl-0">
+          <div class="glass rounded-2xl p-6 inline-block">
+            <span class="inline-block px-3 py-1 rounded-full bg-cyber-blue/20 text-cyber-blue text-xs font-bold mb-3">STEP 01</span>
+            <h3 class="font-display text-xl font-bold mb-2">了解基本组成 🧩</h3>
+            <p class="text-gray-400 text-sm">电脑由CPU、GPU、内存、存储、主板、电源、机箱、显示器八大核心组件构成。每个组件都有独特功能。</p>
+          </div>
+        </div>
+        <div class="absolute left-0 sm:left-1/2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-cyber-blue flex items-center justify-center font-bold text-sm z-10">1</div>
+        <div class="sm:w-1/2 sm:pl-12 hidden sm:block"></div>
+      </div>
+      
+      <!-- 步骤2 -->
+      <div class="relative flex flex-col sm:flex-row items-start mb-12 reveal">
+        <div class="sm:w-1/2 sm:pr-12 hidden sm:block"></div>
+        <div class="absolute left-0 sm:left-1/2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-cyber-purple flex items-center justify-center font-bold text-sm z-10">2</div>
+        <div class="sm:w-1/2 sm:pl-12 pl-12">
+          <div class="glass rounded-2xl p-6 inline-block">
+            <span class="inline-block px-3 py-1 rounded-full bg-cyber-purple/20 text-cyber-purple text-xs font-bold mb-3">STEP 02</span>
+            <h3 class="font-display text-xl font-bold mb-2">明确使用需求 🎯</h3>
+            <p class="text-gray-400 text-sm">游戏玩家重视GPU，内容创作者需要CPU和内存，办公用户追求稳定。不同需求决定配置方向。</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 步骤3 -->
+      <div class="relative flex flex-col sm:flex-row items-start mb-12 reveal">
+        <div class="sm:w-1/2 sm:pr-12 sm:text-right pl-12 sm:pl-0">
+          <div class="glass rounded-2xl p-6 inline-block">
+            <span class="inline-block px-3 py-1 rounded-full bg-cyber-green/20 text-cyber-green text-xs font-bold mb-3">STEP 03</span>
+            <h3 class="font-display text-xl font-bold mb-2">理解性能参数 📊</h3>
+            <p class="text-gray-400 text-sm">核心数、频率、显存、容量等参数代表什么？学会看参数，才能做出明智选择。</p>
+          </div>
+        </div>
+        <div class="absolute left-0 sm:left-1/2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-cyber-green flex items-center justify-center font-bold text-sm z-10">3</div>
+        <div class="sm:w-1/2 sm:pl-12 hidden sm:block"></div>
+      </div>
+      
+      <!-- 步骤4 -->
+      <div class="relative flex flex-col sm:flex-row items-start mb-12 reveal">
+        <div class="sm:w-1/2 sm:pr-12 hidden sm:block"></div>
+        <div class="absolute left-0 sm:left-1/2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-cyber-orange flex items-center justify-center font-bold text-sm z-10" style="background: #ff6b00;">4</div>
+        <div class="sm:w-1/2 sm:pl-12 pl-12">
+          <div class="glass rounded-2xl p-6 inline-block">
+            <span class="inline-block px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold mb-3">STEP 04</span>
+            <h3 class="font-display text-xl font-bold mb-2">注意兼容性 🔗</h3>
+            <p class="text-gray-400 text-sm">CPU与主板接口匹配、电源功率足够、机箱尺寸合适。兼容性是组装成功的关键。</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 步骤5 -->
+      <div class="relative flex flex-col sm:flex-row items-start reveal">
+        <div class="sm:w-1/2 sm:pr-12 sm:text-right pl-12 sm:pl-0">
+          <div class="glass rounded-2xl p-6 inline-block">
+            <span class="inline-block px-3 py-1 rounded-full bg-cyber-pink/20 text-cyber-pink text-xs font-bold mb-3">STEP 05</span>
+            <h3 class="font-display text-xl font-bold mb-2">理性消费购买 💰</h3>
+            <p class="text-gray-400 text-sm">选择正规渠道、关注保修政策、对比价格。不盲目追求高端，适合自己的才是最好的。</p>
+          </div>
+        </div>
+        <div class="absolute left-0 sm:left-1/2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-cyber-pink flex items-center justify-center font-bold text-sm z-10">5</div>
+        <div class="sm:w-1/2 sm:pl-12 hidden sm:block"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 配置推荐区域 -->
+<section id="build" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-cyber-orange text-sm font-medium mb-4">
+        <i class="fas fa-sliders-h"></i>
+        配置推荐
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 section-title">选择适合你的配置</h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">根据预算和需求，我们为你准备了多套方案 💡</p>
+    </div>
+    
+    <!-- 配置卡片 -->
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- 入门办公 -->
+      <div class="reveal">
+        <div class="glass rounded-3xl p-8 h-full border border-cyber-green/20 hover:border-cyber-green/50 transition-all card-hover">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <span class="text-xs text-cyber-green font-bold">ENTRY LEVEL</span>
+              <h3 class="font-display text-2xl font-bold mt-1">入门办公</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-cyber-green">¥3000</div>
+              <div class="text-xs text-gray-500">起步</div>
+            </div>
+          </div>
+          
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-microchip text-cyber-blue w-5"></i>
+              <span class="text-sm">i3-12100F / R5 5600G</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-memory text-cyber-green w-5"></i>
+              <span class="text-sm">16GB DDR4 内存</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-hdd text-cyber-pink w-5"></i>
+              <span class="text-sm">500GB NVMe SSD</span>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 rounded-full bg-cyber-green/10 text-cyber-green text-xs">办公流畅</span>
+            <span class="px-3 py-1 rounded-full bg-cyber-green/10 text-cyber-green text-xs">高清视频</span>
+            <span class="px-3 py-1 rounded-full bg-gray-500/10 text-gray-400 text-xs">轻度游戏</span>
+          </div>
+          
+          <button class="w-full py-3 rounded-xl bg-gradient-to-r from-cyber-green to-teal-400 font-bold text-sm hover:shadow-lg hover:shadow-cyber-green/30 transition-all ripple">
+            查看详细配置
+          </button>
+        </div>
+      </div>
+      
+      <!-- 游戏主机 -->
+      <div class="reveal">
+        <div class="glass rounded-3xl p-8 h-full border border-cyber-purple/20 hover:border-cyber-purple/50 transition-all card-hover relative overflow-hidden">
+          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-cyber-purple/20 text-cyber-purple text-xs font-bold">
+            🔥 热门推荐
+          </div>
+          
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <span class="text-xs text-cyber-purple font-bold">GAMING RIG</span>
+              <h3 class="font-display text-2xl font-bold mt-1">游戏主机</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-cyber-purple">¥8000</div>
+              <div class="text-xs text-gray-500">起步</div>
+            </div>
+          </div>
+          
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-microchip text-cyber-blue w-5"></i>
+              <span class="text-sm">i5-13400F / R5 7500F</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-gamepad text-cyber-purple w-5"></i>
+              <span class="text-sm">RTX 4060 Ti / RX 7700 XT</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-memory text-cyber-green w-5"></i>
+              <span class="text-sm">32GB DDR5 内存</span>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 rounded-full bg-cyber-purple/10 text-cyber-purple text-xs">1080P高画质</span>
+            <span class="px-3 py-1 rounded-full bg-cyber-purple/10 text-cyber-purple text-xs">光追支持</span>
+            <span class="px-3 py-1 rounded-full bg-cyber-purple/10 text-cyber-purple text-xs">直播推流</span>
+          </div>
+          
+          <button class="w-full py-3 rounded-xl bg-gradient-to-r from-cyber-purple to-pink-500 font-bold text-sm hover:shadow-lg hover:shadow-cyber-purple/30 transition-all ripple">
+            查看详细配置
+          </button>
+        </div>
+      </div>
+      
+      <!-- 创作工作站 -->
+      <div class="reveal">
+        <div class="glass rounded-3xl p-8 h-full border border-cyber-blue/20 hover:border-cyber-blue/50 transition-all card-hover">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <span class="text-xs text-cyber-blue font-bold">CREATOR PRO</span>
+              <h3 class="font-display text-2xl font-bold mt-1">创作工作站</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-cyber-blue">¥15000</div>
+              <div class="text-xs text-gray-500">起步</div>
+            </div>
+          </div>
+          
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-microchip text-cyber-blue w-5"></i>
+              <span class="text-sm">i7-13700K / R9 7900X</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-gamepad text-cyber-purple w-5"></i>
+              <span class="text-sm">RTX 4070 Super</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-memory text-cyber-green w-5"></i>
+              <span class="text-sm">64GB DDR5 内存</span>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 rounded-full bg-cyber-blue/10 text-cyber-blue text-xs">4K剪辑</span>
+            <span class="px-3 py-1 rounded-full bg-cyber-blue/10 text-cyber-blue text-xs">3D渲染</span>
+            <span class="px-3 py-1 rounded-full bg-cyber-blue/10 text-cyber-blue text-xs">AI创作</span>
+          </div>
+          
+          <button class="w-full py-3 rounded-xl bg-gradient-to-r from-cyber-blue to-cyan-400 font-bold text-sm hover:shadow-lg hover:shadow-cyber-blue/30 transition-all ripple">
+            查看详细配置
+          </button>
+        </div>
+      </div>
+      
+      <!-- 发烧旗舰 -->
+      <div class="reveal">
+        <div class="glass rounded-3xl p-8 h-full border border-cyber-pink/30 hover:border-cyber-pink/60 transition-all card-hover relative overflow-hidden glow-purple">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-blue"></div>
+          
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <span class="text-xs text-cyber-pink font-bold">ENTHUSIAST</span>
+              <h3 class="font-display text-2xl font-bold mt-1">发烧旗舰</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-cyber-pink">¥30000+</div>
+              <div class="text-xs text-gray-500">顶配</div>
+            </div>
+          </div>
+          
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-microchip text-cyber-blue w-5"></i>
+              <span class="text-sm">i9-14900K / R9 7950X3D</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-gamepad text-cyber-purple w-5"></i>
+              <span class="text-sm">RTX 4090 / RX 7900 XTX</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+              <i class="fas fa-memory text-cyber-green w-5"></i>
+              <span class="text-sm">64GB DDR5 7200MHz</span>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 rounded-full bg-cyber-pink/10 text-cyber-pink text-xs">4K极致</span>
+            <span class="px-3 py-1 rounded-full bg-cyber-pink/10 text-cyber-pink text-xs">8K就绪</span>
+            <span class="px-3 py-1 rounded-full bg-cyber-pink/10 text-cyber-pink text-xs">未来5年</span>
+          </div>
+          
+          <button class="w-full py-3 rounded-xl bg-gradient-to-r from-cyber-pink to-rose-500 font-bold text-sm hover:shadow-lg hover:shadow-cyber-pink/30 transition-all ripple">
+            查看详细配置
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 购买指南区域 -->
+<section id="buy" class="py-24 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-amber-500 text-sm font-medium mb-4">
+        <i class="fas fa-shopping-bag"></i>
+        购买指南
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 section-title">聪明购物避坑指南</h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">掌握这些技巧，避免踩坑 🛡️</p>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-6 reveal card-hover">
+        <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-4">
+          <i class="fas fa-store text-xl text-green-400"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">正规渠道 ✅</h3>
+        <p class="text-gray-400 text-sm mb-4">京东自营、天猫旗舰店、品牌官网是首选。避免非授权店铺。</p>
+        <div class="text-xs text-gray-500">推荐：京东自营 > 天猫旗舰店 > 官网</div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 reveal card-hover">
+        <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
+          <i class="fas fa-chart-line text-xl text-blue-400"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">比价技巧 📊</h3>
+        <p class="text-gray-400 text-sm mb-4">使用比价工具查看历史价格，618、双11大促期间入手更划算。</p>
+        <div class="text-xs text-gray-500">工具：慢慢买、什么值得买</div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 reveal card-hover">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4">
+          <i class="fas fa-shield-alt text-xl text-purple-400"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">保修政策 🛡️</h3>
+        <p class="text-gray-400 text-sm mb-4">CPU通常3年质保，显卡3-5年，电源可达5-10年。保留购买凭证。</p>
+        <div class="text-xs text-gray-500">提示：个人送保品牌更安心</div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 reveal card-hover">
+        <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-4">
+          <i class="fas fa-comments text-xl text-orange-400"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">参考评测 📺</h3>
+        <p class="text-gray-400 text-sm mb-4">购买前观看B站硬件区UP主评测，了解真实性能和优缺点。</p>
+        <div class="text-xs text-gray-500">推荐：极客湾、硬件茶谈等</div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 reveal card-hover">
+        <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center mb-4">
+          <i class="fas fa-exclamation-triangle text-xl text-red-400"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">避坑警示 ⚠️</h3>
+        <p class="text-gray-400 text-sm mb-4">警惕价格过低的产品，避免矿卡、洋垃圾。杂牌电源可能损坏硬件。</p>
+        <div class="text-xs text-gray-500">切记：一分钱一分货</div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 reveal card-hover">
+        <div class="w-12 h-12 rounded-xl bg-teal-500/20 flex items-center justify-center mb-4">
+          <i class="fas fa-tools text-xl text-teal-400"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">组装建议 🔧</h3>
+        <p class="text-gray-400 text-sm mb-4">新手可选择京东装机服务或观看B站教程自己动手，注意防静电。</p>
+        <div class="text-xs text-gray-500">服务：京东装机大师</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="py-12 border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyber-blue to-cyber-purple flex items-center justify-center">
+          <i class="fas fa-microchip text-white"></i>
+        </div>
+        <span class="font-display font-bold text-lg">HARDWARE<span class="text-cyber-blue">HUB</span></span>
+      </div>
+      <p class="text-gray-500 text-sm text-center">
+        © 2024 HardwareHub. 让每个人都能轻松了解电脑硬件 🚀
+      </p>
+      <div class="flex gap-3">
+        <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-400 hover:text-cyber-blue hover:border-cyber-blue/50 transition-all">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-400 hover:text-cyber-blue hover:border-cyber-blue/50 transition-all">
+          <i class="fab fa-bilibili"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- 硬件详情模态框 -->
+<div id="hardwareModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeModal()"></div>
+  <div class="relative glass-strong rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-400 hover:text-white transition-colors z-10">
+      <i class="fas fa-times"></i>
+    </button>
+    <div id="modalContent" class="p-6 sm:p-8"></div>
+  </div>
+</div>
+
+<script>
+// 硬件数据
+const hardwareData = {
+  cpu: {
+    name: 'CPU 处理器',
+    icon: 'fa-microchip',
+    color: 'cyber-blue',
+    emoji: '🧠',
+    description: 'CPU（中央处理器）是电脑的核心计算单元，负责执行所有计算任务和指令。它决定了电脑的整体性能表现，就像人的大脑一样。',
+    specs: [
+      { label: '核心数', value: '4-24核', desc: '影响多任务处理能力', icon: 'fa-circle' },
+      { label: '线程数', value: '8-32线程', desc: '提高并行处理效率', icon: 'fa-layer-group' },
+      { label: '主频', value: '3.0-5.5GHz', desc: '影响单核性能', icon: 'fa-tachometer-alt' },
+      { label: '缓存', value: '16-64MB', desc: '加速数据访问', icon: 'fa-database' },
+      { label: '制程', value: '5nm-14nm', desc: '影响功耗和发热', icon: 'fa-atom' }
+    ],
+    brands: [
+      { name: 'Intel', series: ['Core i3', 'Core i5', 'Core i7', 'Core i9'], tip: '单核性能强，游戏表现好', logo: '🔵' },
+      { name: 'AMD', series: ['Ryzen 5', 'Ryzen 7', 'Ryzen 9'], tip: '多核性能强，性价比高', logo: '🔴' }
+    ],
+    tips: [
+      '游戏玩家优先考虑单核性能和高主频',
+      '内容创作者需要更多核心数',
+      '注意CPU与主板的接口兼容性 (Intel LGA/AMD AM)',
+      '散热器选择要匹配CPU的TDP功耗',
+      '盒装CPU自带散热器，散片需要单独购买'
+    ],
+    priceRange: '¥500 - ¥5000+',
+    performance: [
+      { name: 'i9-14900K', score: 100, level: '旗舰' },
+      { name: 'i7-13700K', score: 85, level: '高端' },
+      { name: 'i5-13400F', score: 65, level: '中端' },
+      { name: 'i3-12100', score: 40, level: '入门' }
+    ]
+  },
+  gpu: {
+    name: 'GPU 显卡',
+    icon: 'fa-gamepad',
+    color: 'cyber-purple',
+    emoji: '🎮',
+    description: 'GPU（图形处理器）专门负责图形渲染任务，对于游戏、视频编辑、3D建模等场景至关重要。现代显卡还支持AI加速和光线追踪。',
+    specs: [
+      { label: '显存', value: '6-24GB', desc: '影响高分辨率纹理处理', icon: 'fa-memory' },
+      { label: 'CUDA/流处理器', value: '2000-16000', desc: '并行计算能力', icon: 'fa-microchip' },
+      { label: '显存位宽', value: '128-384bit', desc: '数据传输带宽', icon: 'fa-road' },
+      { label: '频率', value: '1500-2500MHz', desc: '图形处理速度', icon: 'fa-tachometer-alt' },
+      { label: 'TDP', value: '120-450W', desc: '功耗和散热需求', icon: 'fa-bolt' }
+    ],
+    brands: [
+      { name: 'NVIDIA', series: ['RTX 4060', 'RTX 4070', 'RTX 4080', 'RTX 4090'], tip: '光追性能强，DLSS 3技术', logo: '💚' },
+      { name: 'AMD', series: ['RX 7600', 'RX 7700 XT', 'RX 7800 XT', 'RX 7900 XTX'], tip: '性价比高，FSR技术', logo: '❤️' }
+    ],
+    tips: [
+      '1080P游戏选RTX 4060/RX 7600级别',
+      '2K游戏选RTX 4070/RX 7800 XT级别',
+      '4K游戏选RTX 4080以上',
+      '注意电源功率要求和机箱长度限制',
+      '创作者建议选择NVIDIA显卡（CUDA加速）'
+    ],
+    priceRange: '¥1500 - ¥15000+',
+    performance: [
+      { name: 'RTX 4090', score: 100, level: '旗舰' },
+      { name: 'RTX 4080', score: 80, level: '高端' },
+      { name: 'RTX 4070', score: 60, level: '中高端' },
+      { name: 'RTX 4060', score: 40, level: '入门' }
+    ]
+  },
+  ram: {
+    name: 'RAM 内存',
+    icon: 'fa-memory',
+    color: 'cyber-green',
+    emoji: '💾',
+    description: 'RAM（随机存取存储器）是电脑的临时存储空间，用于存放正在运行的程序和数据。内存越大，能同时运行的程序越多，系统越流畅。',
+    specs: [
+      { label: '容量', value: '8-64GB', desc: '影响多任务能力', icon: 'fa-expand' },
+      { label: '频率', value: '3200-7200MHz', desc: '数据传输速度', icon: 'fa-tachometer-alt' },
+      { label: '时序', value: 'CL16-CL40', desc: '延迟时间（越低越好）', icon: 'fa-clock' },
+      { label: '代数', value: 'DDR4/DDR5', desc: '技术标准', icon: 'fa-microchip' }
+    ],
+    brands: [
+      { name: '金士顿', series: ['Fury Beast', 'Fury Renegade'], tip: '稳定性好，兼容性强', logo: '👑' },
+      { name: '芝奇', series: ['Trident Z5', 'Ripjaws'], tip: '高性能，外观炫酷', logo: '🌟' },
+      { name: '海盗船', series: ['Vengeance', 'Dominator'], tip: '高端品质，RGB丰富', logo: '⛵' }
+    ],
+    tips: [
+      '办公用户16GB足够',
+      '游戏玩家推荐32GB',
+      '视频创作者建议64GB',
+      '双通道（2根内存）可提升性能',
+      'DDR5是新标准，但DDR4性价比更高'
+    ],
+    priceRange: '¥200 - ¥2000+',
+    performance: [
+      { name: 'DDR5-7200', score: 100, level: '顶级' },
+      { name: 'DDR5-6000', score: 80, level: '高端' },
+      { name: 'DDR5-5600', score: 65, level: '主流' },
+      { name: 'DDR4-3200', score: 45, level: '入门' }
+    ]
+  },
+  storage: {
+    name: '存储设备',
+    icon: 'fa-hdd',
+    color: 'cyber-pink',
+    emoji: '💿',
+    description: '存储设备用于永久保存数据。SSD（固态硬盘）速度快但价格高，HDD（机械硬盘）容量大但速度慢。系统建议使用NVMe SSD。',
+    specs: [
+      { label: '容量', value: '256GB-8TB', desc: '存储空间大小', icon: 'fa-database' },
+      { label: '接口', value: 'SATA/NVMe', desc: '传输协议', icon: 'fa-plug' },
+      { label: '速度', value: '500-7000MB/s', desc: '读写性能', icon: 'fa-tachometer-alt' },
+      { label: '缓存', value: '无-2GB', desc: '加速小文件读写', icon: 'fa-bolt' }
+    ],
+    brands: [
+      { name: '三星', series: ['980 PRO', '990 PRO'], tip: '顶级性能，可靠性强', logo: '⭐' },
+      { name: '西部数据', series: ['SN770', 'SN850X'], tip: '性价比高，性能优秀', logo: '💿' },
+      { name: '致态', series: ['TiPlus7100'], tip: '国产之光，性价比极高', logo: '🇨🇳' }
+    ],
+    tips: [
+      '系统盘建议使用NVMe SSD',
+      '容量至少500GB起步',
+      '重要数据要多重备份',
+      'HDD适合存储大量冷数据',
+      'PCIe 4.0是目前主流标准'
+    ],
+    priceRange: '¥200 - ¥3000+',
+    performance: [
+      { name: 'PCIe 5.0 SSD', score: 100, level: '未来' },
+      { name: 'PCIe 4.0 SSD', score: 80, level: '主流' },
+      { name: 'PCIe 3.0 SSD', score: 50, level: '入门' },
+      { name: 'SATA SSD', score: 30, level: '基础' }
+    ]
+  },
+  motherboard: {
+    name: '主板',
+    icon: 'fa-th',
+    color: 'amber-500',
+    emoji: '🔌',
+    description: '主板是连接所有硬件的核心平台，决定了你能使用哪些CPU、内存类型，以及扩展能力。选择主板要注意芯片组和板型。',
+    specs: [
+      { label: '芯片组', value: 'B660/Z790等', desc: '决定功能和扩展性', icon: 'fa-microchip' },
+      { label: '板型', value: 'ATX/mATX/ITX', desc: '尺寸和扩展槽', icon: 'fa-expand' },
+      { label: '内存槽', value: '2-4槽', desc: '内存扩展能力', icon: 'fa-memory' },
+      { label: 'M.2接口', value: '1-5个', desc: 'NVMe SSD安装位', icon: 'fa-hdd' }
+    ],
+    brands: [
+      { name: '华硕', series: ['ROG系列', 'TUF系列'], tip: '品质优秀，BIOS友好', logo: '🛡️' },
+      { name: '微星', series: ['MPG系列', 'PRO系列'], tip: '性价比高，功能全面', logo: '🐉' },
+      { name: '技嘉', series: ['AORUS系列', 'UD系列'], tip: '用料扎实，散热好', logo: '🦅' }
+    ],
+    tips: [
+      '根据CPU选择对应芯片组主板',
+      '注意机箱支持的板型尺寸',
+      'M.2接口数量要满足需求',
+      'WiFi/蓝牙功能看个人需要',
+      '供电相数影响高端CPU发挥'
+    ],
+    priceRange: '¥500 - ¥5000+',
+    performance: [
+      { name: 'Z790/X670E', score: 100, level: '旗舰' },
+      { name: 'B760/B650', score: 70, level: '主流' },
+      { name: 'H610/A620', score: 40, level: '入门' }
+    ]
+  },
+  psu: {
+    name: '电源',
+    icon: 'fa-bolt',
+    color: 'yellow-500',
+    emoji: '⚡',
+    description: '电源为所有硬件提供稳定的电力供应。选择优质电源非常重要，劣质电源可能损坏硬件，甚至引发安全事故。',
+    specs: [
+      { label: '功率', value: '400-1200W', desc: '供电能力', icon: 'fa-bolt' },
+      { label: '认证', value: '80+铜/金/白金', desc: '转换效率', icon: 'fa-certificate' },
+      { label: '模组', value: '非模/半模/全模', desc: '线材管理便利性', icon: 'fa-plug' },
+      { label: '接口', value: '24pin/8pin等', desc: '供电接口类型', icon: 'fa-link' }
+    ],
+    brands: [
+      { name: '海韵', series: ['Focus系列', 'Prime系列'], tip: '顶级品质，十年质保', logo: '🌊' },
+      { name: '振华', series: ['Leadex系列'], tip: '性价比高，性能稳定', logo: '💎' },
+      { name: '海盗船', series: ['RM系列', 'HX系列'], tip: '品牌响亮，售后方便', logo: '⛵' }
+    ],
+    tips: [
+      '功率要留20%余量',
+      '优先选择金牌及以上认证',
+      '模组电源便于理线',
+      '绝对不要在电源上省钱',
+      '关注电源的保持时间'
+    ],
+    priceRange: '¥200 - ¥2000+',
+    performance: [
+      { name: '80+ Titanium', score: 100, level: '顶级' },
+      { name: '80+ Platinum', score: 90, level: '高端' },
+      { name: '80+ Gold', score: 75, level: '主流' },
+      { name: '80+ Bronze', score: 50, level: '入门' }
+    ]
+  },
+  case: {
+    name: '机箱',
+    icon: 'fa-box',
+    color: 'teal-500',
+    emoji: '📦',
+    description: '机箱不仅是硬件的容器，还影响散热效果和整体美观。好的机箱能让装机更轻松，散热更高效，展示更炫酷。',
+    specs: [
+      { label: '板型支持', value: 'ATX/mATX/ITX', desc: '兼容主板类型', icon: 'fa-th' },
+      { label: '显卡限长', value: '280-400mm', desc: '显卡兼容性', icon: 'fa-ruler-horizontal' },
+      { label: '散热器限高', value: '150-180mm', desc: 'CPU散热器兼容', icon: 'fa-arrows-alt-v' },
+      { label: '风扇位', value: '3-9个', desc: '散热扩展能力', icon: 'fa-fan' }
+    ],
+    brands: [
+      { name: '追风者', series: ['P系列', 'E系列'], tip: '做工精良，散热优秀', logo: '🌀' },
+      { name: '联力', series: ['O11系列', '包豪斯'], tip: '颜值高，展示效果好', logo: '✨' },
+      { name: '九州风神', series: ['魔方系列', 'CK系列'], tip: '性价比高，设计新颖', logo: '❄️' }
+    ],
+    tips: [
+      '确认显卡长度兼容',
+      '风道设计很重要',
+      '前置接口要够用（USB-C等）',
+      '玻璃侧透易碎要小心',
+      'ITX机箱装机难度较高'
+    ],
+    priceRange: '¥200 - ¥2000+',
+    performance: [
+      { name: '全塔机箱', score: 100, level: '扩展最强' },
+      { name: '中塔机箱', score: 80, level: '主流选择' },
+      { name: '紧凑型', score: 60, level: '小巧精致' },
+      { name: 'ITX机箱', score: 40, level: '极致便携' }
+    ]
+  },
+  monitor: {
+    name: '显示器',
+    icon: 'fa-tv',
+    color: 'indigo-500',
+    emoji: '🖥️',
+    description: '显示器是你与电脑交互的窗口，直接影响视觉体验。选择合适的显示器能大幅提升使用体验，保护眼睛健康。',
+    specs: [
+      { label: '分辨率', value: '1080P/2K/4K', desc: '显示清晰度', icon: 'fa-th' },
+      { label: '刷新率', value: '60-240Hz', desc: '画面流畅度', icon: 'fa-sync' },
+      { label: '响应时间', value: '1-5ms', desc: '动态清晰度', icon: 'fa-clock' },
+      { label: '面板', value: 'IPS/VA/TN', desc: '色彩和视角', icon: 'fa-palette' }
+    ],
+    brands: [
+      { name: '戴尔', series: ['U系列', 'S系列'], tip: '色彩准确，售后好', logo: '🔵' },
+      { name: 'LG', series: ['UltraGear系列'], tip: '面板优秀，游戏表现好', logo: '🔴' },
+      { name: '华硕', series: ['ROG系列', 'VG系列'], tip: '电竞功能丰富', logo: '🟢' }
+    ],
+    tips: [
+      '办公选IPS面板，色彩好',
+      '游戏选高刷新率（144Hz+）',
+      '创作选高色域覆盖',
+      '尺寸根据视距选择（24-32寸）',
+      'HDR效果看HDR400/600认证'
+    ],
+    priceRange: '¥500 - ¥10000+',
+    performance: [
+      { name: '4K 144Hz', score: 100, level: '顶级' },
+      { name: '2K 165Hz', score: 80, level: '主流电竞' },
+      { name: '1080P 144Hz', score: 60, level: '入门电竞' },
+      { name: '1080P 60Hz', score: 30, level: '办公基础' }
+    ]
+  }
+};
+
+// 显示硬件详情
+function showHardwareDetail(type) {
+  const data = hardwareData[type];
+  const modal = document.getElementById('hardwareModal');
+  const content = document.getElementById('modalContent');
+  
+  content.innerHTML = `
+    <div class="flex items-center gap-4 mb-6">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-${data.color}/20 to-${data.color}/5 flex items-center justify-center">
+        <i class="fas ${data.icon} text-2xl text-${data.color}"></i>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold">${data.emoji} ${data.name}</h2>
+        <p class="text-gray-400 text-sm">价格范围: ${data.priceRange}</p>
+      </div>
+    </div>
+    
+    <p class="text-gray-300 mb-6 leading-relaxed">${data.description}</p>
+    
+    <!-- 性能天梯 -->
+    <div class="mb-6">
+      <h3 class="font-bold mb-3 flex items-center gap-2">
+        <i class="fas fa-chart-bar text-${data.color}"></i>
+        性能参考
+      </h3>
+      <div class="space-y-2">
+        ${data.performance.map(p => `
+          <div class="flex items-center gap-3">
+            <span class="w-24 text-xs text-gray-400">${p.level}</span>
+            <div class="flex-1 h-6 bg-white/5 rounded-lg overflow-hidden relative">
+              <div class="h-full bg-gradient-to-r from-${data.color} to-${data.color}/50 rounded-lg transition-all duration-1000" style="width: ${p.score}%;"></div>
+              <span class="absolute inset-0 flex items-center px-3 text-xs font-bold">${p.name}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    
+    <!-- 关键参数 -->
+    <div class="grid sm:grid-cols-2 gap-4 mb-6">
+      ${data.specs.map(spec => `
+        <div class="glass rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-1">
+            <i class="fas ${spec.icon} text-${data.color} text-sm"></i>
+            <span class="font-bold text-sm">${spec.label}</span>
+          </div>
+          <div class="text-lg font-bold text-${data.color}">${spec.value}</div>
+          <div class="text-xs text-gray-500">${spec.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+    
+    <!-- 品牌推荐 -->
+    <div class="mb-6">
+      <h3 class="font-bold mb-3 flex items-center gap-2">
+        <i class="fas fa-tags text-${data.color}"></i>
+        品牌推荐
+      </h3>
+      <div class="grid sm:grid-cols-2 gap-3">
+        ${data.brands.map(brand => `
+          <div class="glass rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-lg">${brand.logo}</span>
+              <span class="font-bold">${brand.name}</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              ${brand.series.map(s => `<span class="px-2 py-0.5 rounded bg-white/5 text-xs">${s}</span>`).join('')}
+            </div>
+            <p class="text-xs text-gray-400">${brand.tip}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    
+    <!-- 选购建议 -->
+    <div class="glass rounded-xl p-4">
+      <h3 class="font-bold mb-3 flex items-center gap-2">
+        <i class="fas fa-lightbulb text-${data.color}"></i>
+        选购建议
+      </h3>
+      <div class="space-y-2">
+        ${data.tips.map(tip => `
+          <div class="flex items-start gap-2 text-sm">
+            <i class="fas fa-check-circle text-${data.color} mt-0.5"></i>
+            <span class="text-gray-300">${tip}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+
+// 显示解剖详情
+function showAnatomyDetail(type) {
+  showHardwareDetail(type);
+}
+
+// 关闭模态框
+function closeModal() {
+  const modal = document.getElementById('hardwareModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+
+// 滚动到指定区域
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// 滚动显示动画
+function initScrollReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// 移动端菜单
+function initMobileMenu() {
+  const btn = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('mobileMenu');
+  const closeBtn = document.getElementById('closeMobileMenu');
+  
+  btn.addEventListener('click', () => {
+    menu.classList.add('active');
+  });
+  
+  closeBtn.addEventListener('click', () => {
+    menu.classList.remove('active');
+  });
+  
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('active');
+    });
+  });
+}
+
+// 导航栏滚动效果
+function initNavScroll() {
+  const nav = document.querySelector('nav');
+  let lastScroll = 0;
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+      nav.style.background = 'rgba(5, 8, 16, 0.95)';
+    } else {
+      nav.style.background = 'rgba(10, 15, 25, 0.75)';
+    }
+    
+    lastScroll = currentScroll;
+  });
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollReveal();
+  initMobileMenu();
+  initNavScroll();
+  
+  // ESC关闭模态框
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+  
+  // 平滑滚动
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
