@@ -1,4 +1,4 @@
-```markdown
+
 # 💻 HardwareHub - 电脑硬件交互式学习平台
 <div align="center">
 ![HardwareHub Banner](https://img.shields.io/badge/Version-2.0-00d4ff?style=for-the-badge)
