@@ -71,7 +71,7 @@
 1. 克隆仓库：
 
    bash
-git clone https://github.com/your-username/hardware-hub.git
+git clone https://github.com/badhope/hardware-hub.git
 
 2. 进入项目目录：
 bash
@@ -189,8 +189,8 @@ hardware-hub/
 
 如有问题或建议，欢迎通过以下方式联系：
 
-- **Email**: your-email@example.com
-- **GitHub Issues**: [提交 Issue](https://github.com/your-username/hardware-hub/issues)
+- **Email**: x18825407105.outlook.com
+- **GitHub Issues**: [提交 Issue](https://github.com/badhope/hardware-hub/issues)
 
 ---
 
