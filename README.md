@@ -1,6 +1,17 @@
 # 💻 硬件小白成神计划 | 交互式电脑硬件学习平台
 (๑•̀ㅂ•́)و✧ 从零开始，手把手带你玩转电脑硬件，告别小白，拒绝踩坑！
 
+![GitHub stars](https://img.shields.io/github/stars/badhope/Visual-Security?style=social)
+![GitHub forks](https://img.shields.io/github/forks/badhope/Visual-Security?style=social)
+![GitHub issues](https://img.shields.io/github/issues/badhope/Visual-Security)
+![GitHub license](https://img.shields.io/github/license/badhope/Visual-Security)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Neuroscience](https://img.shields.io/badge/Neuroscience-005571?style=flat-square&logo=academia&logoColor=white)
+![Optical Art](https://img.shields.io/badge/Optical_Art-FF6F00?style=flat-square&logo=artstation&logoColor=white)
+
+
 ---
 
 哈喽，各位刚入坑电脑硬件的小伙伴们👋！
