@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>装机模拟 - 硬件探索者</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <div class="flex items-center gap-3 mb-8 px-2">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div>
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 space-y-2">
+    <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+      <i class="fas fa-home w-5"></i>
+      <span>首页</span>
+    </div>
+    <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+      <i class="fas fa-route w-5"></i>
+      <span>学习路径</span>
+    </div>
+    <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+      <i class="fas fa-book-open w-5"></i>
+      <span>新手入门</span>
+    </div>
+    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+      <i class="fas fa-book w-5"></i>
+      <span>硬件百科</span>
+    </div>
+    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+      <i class="fas fa-mobile-alt w-5"></i>
+      <span>手机硬件</span>
+    </div>
+    <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+      <i class="fas fa-laptop w-5"></i>
+      <span>其他设备</span>
+    </div>
+    <div class="nav-item active" data-page="builder" onclick="navigateTo('builder')">
+      <i class="fas fa-tools w-5"></i>
+      <span>装机模拟</span>
+    </div>
+    <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+      <i class="fas fa-question-circle w-5"></i>
+      <span>知识测验</span>
+    </div>
+    <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+      <i class="fas fa-trophy w-5"></i>
+      <span>成就系统</span>
+    </div>
+    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+      <i class="fas fa-user w-5"></i>
+      <span>登录/注册</span>
+    </div>
+  </nav>
+  
+  <div class="glass rounded-xl p-4 mt-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
+      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+    </div>
+    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    </div>
+  </div>
+</aside>
+
+<nav class="mobile-nav">
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home text-lg"></i>
+    <span class="text-[10px] mt-1">首页</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route text-lg"></i>
+    <span class="text-[10px] mt-1">学习</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all active" data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools text-lg"></i>
+    <span class="text-[10px] mt-1">装机</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad text-lg"></i>
+    <span class="text-[10px] mt-1">测验</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="achievements" onclick="navigateTo('achievements')">
+    <i class="fas fa-trophy text-lg"></i>
+    <span class="text-[10px] mt-1">成就</span>
+  </div>
+</nav>
+
+<main>
+  <div class="page">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <header class="mb-12 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-4">
+          <i class="fas fa-tools text-[var(--accent-cyan)]"></i>
+          <span class="text-sm">互动学习</span>
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl font-bold mb-4">装机模拟器</h1>
+        <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">通过拖放方式组装虚拟电脑，学习硬件安装流程</p>
+      </header>
+      
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+          <div class="glass rounded-2xl p-6 h-[600px] flex items-center justify-center">
+            <div class="text-center">
+              <i class="fas fa-desktop text-6xl text-[var(--accent-cyan)] mb-4"></i>
+              <h3 class="font-bold text-xl mb-2">装机模拟器</h3>
+              <p class="text-[var(--text-secondary)] mb-6">将左侧的硬件拖放到机箱中</p>
+              <button class="btn-primary" onclick="initBuilder()">
+                <i class="fas fa-play mr-2"></i>开始模拟
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <div class="glass rounded-2xl p-6">
+            <h2 class="font-bold text-xl mb-4">硬件组件</h2>
+            <div class="space-y-4">
+              <div class="hardware-component p-4 rounded-xl bg-white/5 cursor-move" draggable="true">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-cyan)]/20 flex items-center justify-center">
+                    <i class="fas fa-microchip text-[var(--accent-cyan)]"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold">CPU</div>
+                    <div class="text-xs text-[var(--text-secondary)]">处理器</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="hardware-component p-4 rounded-xl bg-white/5 cursor-move" draggable="true">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-orange)]/20 flex items-center justify-center">
+                    <i class="fas fa-gamepad text-[var(--accent-orange)]"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold">GPU</div>
+                    <div class="text-xs text-[var(--text-secondary)]">显卡</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="hardware-component p-4 rounded-xl bg-white/5 cursor-move" draggable="true">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-green)]/20 flex items-center justify-center">
+                    <i class="fas fa-memory text-[var(--accent-green)]"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold">RAM</div>
+                    <div class="text-xs text-[var(--text-secondary)]">内存</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="hardware-component p-4 rounded-xl bg-white/5 cursor-move" draggable="true">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-pink)]/20 flex items-center justify-center">
+                    <i class="fas fa-hdd text-[var(--accent-pink)]"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold">SSD</div>
+                    <div class="text-xs text-[var(--text-secondary)]">固态硬盘</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="hardware-component p-4 rounded-xl bg-white/5 cursor-move" draggable="true">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                    <i class="fas fa-th text-amber-500"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold">主板</div>
+                    <div class="text-xs text-[var(--text-secondary)]">母板</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="hardware-component p-4 rounded-xl bg-white/5 cursor-move" draggable="true">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+                    <i class="fas fa-bolt text-yellow-500"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold">电源</div>
+                    <div class="text-xs text-[var(--text-secondary)]">PSU</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 glass rounded-2xl p-6">
+        <h2 class="font-bold text-xl mb-4">装机步骤</h2>
+        <div class="space-y-4">
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">准备工作</h3>
+              <p class="text-sm text-[var(--text-secondary)]">准备好所有硬件组件和工具，选择合适的工作环境</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">安装CPU</h3>
+              <p class="text-sm text-[var(--text-secondary)]">将CPU安装到主板的CPU插槽中，注意方向</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">安装内存</h3>
+              <p class="text-sm text-[var(--text-secondary)]">将内存插入主板的内存插槽中，确保完全插入</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">安装主板</h3>
+              <p class="text-sm text-[var(--text-secondary)]">将主板固定到机箱中，连接必要的线缆</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">安装存储设备</h3>
+              <p class="text-sm text-[var(--text-secondary)]">安装SSD或HDD到机箱的存储位</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">安装显卡</h3>
+              <p class="text-sm text-[var(--text-secondary)]">将显卡插入主板的PCIe插槽中</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">安装电源</h3>
+              <p class="text-sm text-[var(--text-secondary)]">将电源固定到机箱中，连接所有必要的线缆</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="step-number flex-shrink-0"></div>
+            <div>
+              <h3 class="font-bold">测试开机</h3>
+              <p class="text-sm text-[var(--text-secondary)]">连接显示器、键盘、鼠标，测试系统是否正常启动</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+</body>
+</html>

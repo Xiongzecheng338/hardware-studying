@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>其他设备 - 硬件探索者</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <div class="flex items-center gap-3 mb-8 px-2">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div>
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 space-y-2">
+    <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+      <i class="fas fa-home w-5"></i>
+      <span>首页</span>
+    </div>
+    <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+      <i class="fas fa-route w-5"></i>
+      <span>学习路径</span>
+    </div>
+    <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+      <i class="fas fa-book-open w-5"></i>
+      <span>新手入门</span>
+    </div>
+    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+      <i class="fas fa-book w-5"></i>
+      <span>硬件百科</span>
+    </div>
+    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+      <i class="fas fa-mobile-alt w-5"></i>
+      <span>手机硬件</span>
+    </div>
+    <div class="nav-item active" data-page="other-devices" onclick="navigateTo('other-devices')">
+      <i class="fas fa-laptop w-5"></i>
+      <span>其他设备</span>
+    </div>
+    <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+      <i class="fas fa-tools w-5"></i>
+      <span>装机模拟</span>
+    </div>
+    <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+      <i class="fas fa-question-circle w-5"></i>
+      <span>知识测验</span>
+    </div>
+    <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+      <i class="fas fa-trophy w-5"></i>
+      <span>成就系统</span>
+    </div>
+    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+      <i class="fas fa-user w-5"></i>
+      <span>登录/注册</span>
+    </div>
+  </nav>
+  
+  <div class="glass rounded-xl p-4 mt-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
+      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+    </div>
+    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    </div>
+  </div>
+</aside>
+
+<nav class="mobile-nav">
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home text-lg"></i>
+    <span class="text-[10px] mt-1">首页</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route text-lg"></i>
+    <span class="text-[10px] mt-1">学习</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools text-lg"></i>
+    <span class="text-[10px] mt-1">装机</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad text-lg"></i>
+    <span class="text-[10px] mt-1">测验</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="achievements" onclick="navigateTo('achievements')">
+    <i class="fas fa-trophy text-lg"></i>
+    <span class="text-[10px] mt-1">成就</span>
+  </div>
+</nav>
+
+<main>
+  <div class="page">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <header class="mb-12 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-4">
+          <i class="fas fa-laptop text-[var(--accent-cyan)]"></i>
+          <span class="text-sm">设备知识</span>
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl font-bold mb-4">其他硬件设备</h1>
+        <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">了解笔记本电脑、平板电脑、智能穿戴设备等其他硬件设备的知识</p>
+      </header>
+      
+      <div class="space-y-8">
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-laptop text-[var(--accent-cyan)]"></i>
+            笔记本电脑
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>笔记本电脑是一种便携式计算机，集成了显示器、键盘、触控板和电池等组件。根据用途和性能，笔记本电脑可以分为以下几类：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">轻薄本</div>
+                <p class="text-sm">轻薄便携，适合日常办公和轻度娱乐，电池续航长</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">游戏本</div>
+                <p class="text-sm">性能强劲，适合游戏和创作，通常较厚重</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">商务本</div>
+                <p class="text-sm">安全性能好，稳定性高，适合商务人士</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">二合一笔记本</div>
+                <p class="text-sm">可变形设计，既可以当笔记本也可以当平板使用</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-tablet-alt text-[var(--accent-orange)]"></i>
+            平板电脑
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>平板电脑是一种介于手机和笔记本电脑之间的设备，主要通过触摸屏进行操作。常见的平板电脑类型包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">娱乐平板</div>
+                <p class="text-sm">适合看视频、玩游戏、浏览网页等娱乐活动</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">生产力平板</div>
+                <p class="text-sm">配备键盘和触控笔，适合办公和创作</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">儿童平板</div>
+                <p class="text-sm">专为儿童设计，内容安全， parental controls</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">专业平板</div>
+                <p class="text-sm">针对特定专业领域，如绘图、设计等</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-clock text-[var(--accent-green)]"></i>
+            智能穿戴设备
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>智能穿戴设备是一种可穿戴在身上的智能设备，通常与手机或其他设备连接。常见的智能穿戴设备包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">智能手表</div>
+                <p class="text-sm">监测健康数据，接收通知，追踪运动</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">智能手环</div>
+                <p class="text-sm">轻便简洁，主要功能是运动追踪和健康监测</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">真无线耳机</div>
+                <p class="text-sm">无线连接，降噪功能，便携易用</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">智能眼镜</div>
+                <p class="text-sm">增强现实，信息显示， hands-free 操作</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-tv text-[var(--accent-pink)]"></i>
+            智能电视
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>智能电视是一种集成了互联网和流媒体功能的电视，可以通过网络访问各种内容和应用。智能电视的主要特点包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">显示技术</div>
+                <p class="text-sm">4K、8K分辨率，OLED、QLED、LCD等显示技术</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">智能系统</div>
+                <p class="text-sm">Android TV、WebOS、Tizen等操作系统</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">连接性</div>
+                <p class="text-sm">Wi-Fi、蓝牙、HDMI、USB等接口</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">语音控制</div>
+                <p class="text-sm">支持语音助手，如Alexa、Google Assistant等</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+</body>
+</html>

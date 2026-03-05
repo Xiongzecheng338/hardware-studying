@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成就系统 - 硬件探索者</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <div class="flex items-center gap-3 mb-8 px-2">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div>
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 space-y-2">
+    <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+      <i class="fas fa-home w-5"></i>
+      <span>首页</span>
+    </div>
+    <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+      <i class="fas fa-route w-5"></i>
+      <span>学习路径</span>
+    </div>
+    <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+      <i class="fas fa-book-open w-5"></i>
+      <span>新手入门</span>
+    </div>
+    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+      <i class="fas fa-book w-5"></i>
+      <span>硬件百科</span>
+    </div>
+    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+      <i class="fas fa-mobile-alt w-5"></i>
+      <span>手机硬件</span>
+    </div>
+    <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+      <i class="fas fa-laptop w-5"></i>
+      <span>其他设备</span>
+    </div>
+    <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+      <i class="fas fa-tools w-5"></i>
+      <span>装机模拟</span>
+    </div>
+    <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+      <i class="fas fa-question-circle w-5"></i>
+      <span>知识测验</span>
+    </div>
+    <div class="nav-item active" data-page="achievements" onclick="navigateTo('achievements')">
+      <i class="fas fa-trophy w-5"></i>
+      <span>成就系统</span>
+    </div>
+    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+      <i class="fas fa-user w-5"></i>
+      <span>登录/注册</span>
+    </div>
+  </nav>
+  
+  <div class="glass rounded-xl p-4 mt-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
+      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+    </div>
+    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    </div>
+  </div>
+</aside>
+
+<nav class="mobile-nav">
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home text-lg"></i>
+    <span class="text-[10px] mt-1">首页</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route text-lg"></i>
+    <span class="text-[10px] mt-1">学习</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools text-lg"></i>
+    <span class="text-[10px] mt-1">装机</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad text-lg"></i>
+    <span class="text-[10px] mt-1">测验</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all active" data-mobile="achievements" onclick="navigateTo('achievements')">
+    <i class="fas fa-trophy text-lg"></i>
+    <span class="text-[10px] mt-1">成就</span>
+  </div>
+</nav>
+
+<main>
+  <div class="page">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <header class="mb-12 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-4">
+          <i class="fas fa-trophy text-[var(--accent-cyan)]"></i>
+          <span class="text-sm">激励学习</span>
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl font-bold mb-4">成就系统</h1>
+        <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">通过完成学习任务和测验获得成就，解锁新的学习内容</p>
+      </header>
+      
+      <div class="glass rounded-2xl p-6 mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="font-bold text-xl">我的成就</h2>
+            <p class="text-sm text-[var(--text-secondary)]">已获得 <span class="text-[var(--accent-cyan)] font-bold">3</span> / 20 个成就</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center">
+              <span class="font-bold">12</span>
+            </div>
+            <div>
+              <div class="text-sm text-[var(--text-secondary)]">当前等级</div>
+              <div class="font-bold">硬件新手</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div class="badge unlocked">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="badge unlocked">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="badge unlocked">
+            <i class="fas fa-tools"></i>
+          </div>
+          <div class="badge locked">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="badge locked">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="badge locked">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="badge locked">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="badge locked">
+            <i class="fas fa-lock"></i>
+          </div>
+        </div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 mb-8">
+        <h2 class="font-bold text-xl mb-4">已获得的成就</h2>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge unlocked">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">初次登录</div>
+              <div class="text-sm text-[var(--text-secondary)]">完成第一次登录</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">2026-03-01</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge unlocked">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">学习入门</div>
+              <div class="text-sm text-[var(--text-secondary)]">完成新手入门指南</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">2026-03-02</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge unlocked">
+              <i class="fas fa-tools"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">装机新手</div>
+              <div class="text-sm text-[var(--text-secondary)]">完成装机模拟器的第一次尝试</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">2026-03-03</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6">
+        <h2 class="font-bold text-xl mb-4">成就解锁条件</h2>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">测验达人</div>
+              <div class="text-sm text-[var(--text-secondary)]">完成10次知识测验</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">0/10</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">硬件专家</div>
+              <div class="text-sm text-[var(--text-secondary)]">完成所有硬件百科内容的学习</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">0/7</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">装机大师</div>
+              <div class="text-sm text-[var(--text-secondary)]">成功完成5次装机模拟</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">0/5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+</body>
+</html>

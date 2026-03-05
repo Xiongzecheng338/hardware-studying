@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知识测验 - 硬件探索者</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <div class="flex items-center gap-3 mb-8 px-2">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div>
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 space-y-2">
+    <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+      <i class="fas fa-home w-5"></i>
+      <span>首页</span>
+    </div>
+    <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+      <i class="fas fa-route w-5"></i>
+      <span>学习路径</span>
+    </div>
+    <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+      <i class="fas fa-book-open w-5"></i>
+      <span>新手入门</span>
+    </div>
+    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+      <i class="fas fa-book w-5"></i>
+      <span>硬件百科</span>
+    </div>
+    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+      <i class="fas fa-mobile-alt w-5"></i>
+      <span>手机硬件</span>
+    </div>
+    <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+      <i class="fas fa-laptop w-5"></i>
+      <span>其他设备</span>
+    </div>
+    <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+      <i class="fas fa-tools w-5"></i>
+      <span>装机模拟</span>
+    </div>
+    <div class="nav-item active" data-page="quiz" onclick="navigateTo('quiz')">
+      <i class="fas fa-question-circle w-5"></i>
+      <span>知识测验</span>
+    </div>
+    <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+      <i class="fas fa-trophy w-5"></i>
+      <span>成就系统</span>
+    </div>
+    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+      <i class="fas fa-user w-5"></i>
+      <span>登录/注册</span>
+    </div>
+  </nav>
+  
+  <div class="glass rounded-xl p-4 mt-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
+      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+    </div>
+    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    </div>
+  </div>
+</aside>
+
+<nav class="mobile-nav">
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home text-lg"></i>
+    <span class="text-[10px] mt-1">首页</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route text-lg"></i>
+    <span class="text-[10px] mt-1">学习</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools text-lg"></i>
+    <span class="text-[10px] mt-1">装机</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all active" data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad text-lg"></i>
+    <span class="text-[10px] mt-1">测验</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="achievements" onclick="navigateTo('achievements')">
+    <i class="fas fa-trophy text-lg"></i>
+    <span class="text-[10px] mt-1">成就</span>
+  </div>
+</nav>
+
+<main>
+  <div class="page">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <header class="mb-12 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-4">
+          <i class="fas fa-question-circle text-[var(--accent-cyan)]"></i>
+          <span class="text-sm">检验学习</span>
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl font-bold mb-4">硬件知识测验</h1>
+        <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">通过趣味问答检验你的硬件知识水平</p>
+      </header>
+      
+      <div class="glass rounded-2xl p-6">
+        <div class="text-center mb-8">
+          <h2 class="font-bold text-2xl mb-4">选择测验类型</h2>
+          <p class="text-[var(--text-secondary)] mb-6">根据你的学习进度选择合适的测验</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="knowledge-card group cursor-pointer" onclick="initQuiz('beginner')">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent-green)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i class="fas fa-graduation-cap text-2xl text-[var(--accent-green)]"></i>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-center">入门级测验</h3>
+            <p class="text-sm text-[var(--text-secondary)] text-center mb-4">适合初学者的基础硬件知识</p>
+            <div class="flex items-center justify-center">
+              <button class="btn-primary">开始测验</button>
+            </div>
+          </div>
+          
+          <div class="knowledge-card group cursor-pointer" onclick="initQuiz('intermediate')">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent-blue)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i class="fas fa-certificate text-2xl text-[var(--accent-blue)]"></i>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-center">进阶级测验</h3>
+            <p class="text-sm text-[var(--text-secondary)] text-center mb-4">适合有一定基础的学习者</p>
+            <div class="flex items-center justify-center">
+              <button class="btn-primary">开始测验</button>
+            </div>
+          </div>
+          
+          <div class="knowledge-card group cursor-pointer" onclick="initQuiz('advanced')">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent-orange)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i class="fas fa-diamond text-2xl text-[var(--accent-orange)]"></i>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-center">专家级测验</h3>
+            <p class="text-sm text-[var(--text-secondary)] text-center mb-4">适合硬件知识丰富的专家</p>
+            <div class="flex items-center justify-center">
+              <button class="btn-primary">开始测验</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 glass rounded-2xl p-6">
+        <h2 class="font-bold text-xl mb-4">测验规则</h2>
+        <div class="space-y-4 text-[var(--text-secondary)]">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-[var(--accent-green)] mt-1 flex-shrink-0"></i>
+            <p>每个测验包含10道题目，涵盖硬件基础知识、核心组件、周边设备等方面</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-[var(--accent-green)] mt-1 flex-shrink-0"></i>
+            <p>每道题目有4个选项，只有一个正确答案</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-[var(--accent-green)] mt-1 flex-shrink-0"></i>
+            <p>完成测验后，系统会自动评分并显示详细解析</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-[var(--accent-green)] mt-1 flex-shrink-0"></i>
+            <p>测验结果将计入你的学习进度和成就系统</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-[var(--accent-green)] mt-1 flex-shrink-0"></i>
+            <p>你可以多次参加测验，不断提高你的分数</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 glass rounded-2xl p-6">
+        <h2 class="font-bold text-xl mb-4">最近测验结果</h2>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between p-4 rounded-xl bg-white/5">
+            <div>
+              <div class="font-bold">入门级测验</div>
+              <div class="text-sm text-[var(--text-secondary)]">2026-03-01 14:30</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-2xl font-bold text-[var(--accent-green)]">8/10</div>
+              <div class="text-sm text-[var(--text-secondary)]">80%</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between p-4 rounded-xl bg-white/5">
+            <div>
+              <div class="font-bold">进阶级测验</div>
+              <div class="text-sm text-[var(--text-secondary)]">2026-02-28 10:15</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-2xl font-bold text-[var(--accent-blue)]">6/10</div>
+              <div class="text-sm text-[var(--text-secondary)]">60%</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between p-4 rounded-xl bg-white/5">
+            <div>
+              <div class="font-bold">入门级测验</div>
+              <div class="text-sm text-[var(--text-secondary)]">2026-02-25 16:45</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-2xl font-bold text-[var(--accent-green)]">9/10</div>
+              <div class="text-sm text-[var(--text-secondary)]">90%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+</body>
+</html>

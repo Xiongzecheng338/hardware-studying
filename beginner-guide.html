@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新手入门 - 硬件探索者</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <div class="flex items-center gap-3 mb-8 px-2">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div>
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 space-y-2">
+    <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+      <i class="fas fa-home w-5"></i>
+      <span>首页</span>
+    </div>
+    <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+      <i class="fas fa-route w-5"></i>
+      <span>学习路径</span>
+    </div>
+    <div class="nav-item active" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+      <i class="fas fa-book-open w-5"></i>
+      <span>新手入门</span>
+    </div>
+    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+      <i class="fas fa-book w-5"></i>
+      <span>硬件百科</span>
+    </div>
+    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+      <i class="fas fa-mobile-alt w-5"></i>
+      <span>手机硬件</span>
+    </div>
+    <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+      <i class="fas fa-laptop w-5"></i>
+      <span>其他设备</span>
+    </div>
+    <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+      <i class="fas fa-tools w-5"></i>
+      <span>装机模拟</span>
+    </div>
+    <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+      <i class="fas fa-question-circle w-5"></i>
+      <span>知识测验</span>
+    </div>
+    <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+      <i class="fas fa-trophy w-5"></i>
+      <span>成就系统</span>
+    </div>
+    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+      <i class="fas fa-user w-5"></i>
+      <span>登录/注册</span>
+    </div>
+  </nav>
+  
+  <div class="glass rounded-xl p-4 mt-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
+      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+    </div>
+    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    </div>
+  </div>
+</aside>
+
+<nav class="mobile-nav">
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home text-lg"></i>
+    <span class="text-[10px] mt-1">首页</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route text-lg"></i>
+    <span class="text-[10px] mt-1">学习</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools text-lg"></i>
+    <span class="text-[10px] mt-1">装机</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad text-lg"></i>
+    <span class="text-[10px] mt-1">测验</span>
+  </div>
+  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="achievements" onclick="navigateTo('achievements')">
+    <i class="fas fa-trophy text-lg"></i>
+    <span class="text-[10px] mt-1">成就</span>
+  </div>
+</nav>
+
+<main>
+  <div class="page">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <header class="mb-12 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-4">
+          <i class="fas fa-book-open text-[var(--accent-cyan)]"></i>
+          <span class="text-sm">入门指南</span>
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl font-bold mb-4">新手入门指南</h1>
+        <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">从零开始了解硬件知识，迈出成为硬件达人的第一步</p>
+      </header>
+      
+      <div class="space-y-8">
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-lightbulb text-[var(--accent-yellow)]"></i>
+            为什么要学习硬件知识？
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>在这个数字时代，硬件是所有数字体验的基础。无论是使用电脑、手机还是其他智能设备，了解硬件知识都能帮助你：</p>
+            <ul class="space-y-2 pl-6 list-disc">
+              <li>做出明智的购买决策，不被商家忽悠</li>
+              <li>更好地理解设备性能，充分发挥其潜力</li>
+              <li>自行解决常见硬件问题，节省维修费用</li>
+              <li>根据自己的需求定制适合的设备</li>
+              <li>为未来的学习和职业发展打下基础</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-microchip text-[var(--accent-cyan)]"></i>
+            硬件基础知识
+          </h2>
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-bold text-[var(--accent-cyan)] mb-2">什么是硬件？</h3>
+              <p class="text-[var(--text-secondary)]">硬件是指计算机系统中可见、可触摸的物理组件，是软件运行的基础。</p>
+            </div>
+            <div>
+              <h3 class="font-bold text-[var(--accent-cyan)] mb-2">硬件的分类</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-xl bg-white/5">
+                  <div class="font-bold mb-2">核心硬件</div>
+                  <p class="text-sm text-[var(--text-secondary)]">CPU、GPU、内存、存储设备、主板</p>
+                </div>
+                <div class="p-4 rounded-xl bg-white/5">
+                  <div class="font-bold mb-2">周边硬件</div>
+                  <p class="text-sm text-[var(--text-secondary)]">显示器、键盘、鼠标、音箱、打印机</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-bold text-[var(--accent-cyan)] mb-2">硬件与软件的关系</h3>
+              <p class="text-[var(--text-secondary)]">硬件是软件的载体，软件是硬件的灵魂。两者相互依存，缺一不可。</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-route text-[var(--accent-green)]"></i>
+            学习路径建议
+          </h2>
+          <div class="relative">
+            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-[var(--accent-cyan)]/30"></div>
+            <div class="space-y-8 relative">
+              <div class="flex gap-4">
+                <div class="step-number flex-shrink-0"></div>
+                <div>
+                  <h3 class="font-bold">了解基本概念</h3>
+                  <p class="text-sm text-[var(--text-secondary)]">先了解CPU、内存、硬盘等基本组件的作用</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="step-number flex-shrink-0"></div>
+                <div>
+                  <h3 class="font-bold">学习各组件知识</h3>
+                  <p class="text-sm text-[var(--text-secondary)]">深入学习每个硬件的原理、参数和选购技巧</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="step-number flex-shrink-0"></div>
+                <div>
+                  <h3 class="font-bold">实践装机</h3>
+                  <p class="text-sm text-[var(--text-secondary)]">通过模拟器练习组装电脑，了解安装流程</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="step-number flex-shrink-0"></div>
+                <div>
+                  <h3 class="font-bold">故障排查</h3>
+                  <p class="text-sm text-[var(--text-secondary)]">学习常见硬件问题的诊断和解决方法</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="step-number flex-shrink-0"></div>
+                <div>
+                  <h3 class="font-bold">扩展知识</h3>
+                  <p class="text-sm text-[var(--text-secondary)]">了解手机、笔记本等其他设备的硬件知识</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-question-circle text-[var(--accent-pink)]"></i>
+            常见问题解答
+          </h2>
+          <div class="space-y-4">
+            <div class="p-4 rounded-xl bg-white/5">
+              <div class="font-bold mb-2">Q: 硬件知识很难学吗？</div>
+              <p class="text-sm text-[var(--text-secondary)]">A: 硬件知识并不难，只要按照科学的学习路径，从基础开始，逐步深入，任何人都能掌握。</p>
+            </div>
+            <div class="p-4 rounded-xl bg-white/5">
+              <div class="font-bold mb-2">Q: 我需要购买硬件来学习吗？</div>
+              <p class="text-sm text-[var(--text-secondary)]">A: 不需要。我们提供了模拟器和交互式学习工具，可以在不购买硬件的情况下学习。</p>
+            </div>
+            <div class="p-4 rounded-xl bg-white/5">
+              <div class="font-bold mb-2">Q: 学习硬件知识有什么用？</div>
+              <p class="text-sm text-[var(--text-secondary)]">A: 学习硬件知识可以帮助你更好地理解和使用电子设备，做出明智的购买决策，甚至可以考虑硬件相关的职业发展。</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <button class="btn-primary text-lg" onclick="navigateTo('learning-path')">
+            <i class="fas fa-arrow-right mr-2"></i>开始系统学习
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+</body>
+</html>
