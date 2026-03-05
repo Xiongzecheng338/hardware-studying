@@ -14,91 +14,141 @@
 <div class="bg-glow"></div>
 <canvas id="particles"></canvas>
 
-<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
-  <div class="flex items-center gap-3 mb-8 px-2">
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
       <i class="fas fa-microchip text-white"></i>
     </div>
-    <div>
+    <div class="sidebar-header-text">
       <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
       <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
     </div>
   </div>
   
-  <nav class="flex-1 space-y-2">
-    <div class="nav-item active" data-page="index" onclick="navigateTo('index')">
-      <i class="fas fa-home w-5"></i>
-      <span>首页</span>
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item active" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
-      <i class="fas fa-route w-5"></i>
-      <span>学习路径</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
-      <i class="fas fa-book-open w-5"></i>
-      <span>新手入门</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
-      <i class="fas fa-book w-5"></i>
-      <span>硬件百科</span>
-    </div>
-    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
-      <i class="fas fa-mobile-alt w-5"></i>
-      <span>手机硬件</span>
-    </div>
-    <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
-      <i class="fas fa-laptop w-5"></i>
-      <span>其他设备</span>
-    </div>
-    <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
-      <i class="fas fa-tools w-5"></i>
-      <span>装机模拟</span>
-    </div>
-    <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
-      <i class="fas fa-question-circle w-5"></i>
-      <span>知识测验</span>
-    </div>
-    <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
-      <i class="fas fa-trophy w-5"></i>
-      <span>成就系统</span>
-    </div>
-    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-      <i class="fas fa-user w-5"></i>
-      <span>登录/注册</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">账户</div>
+      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+        <i class="fas fa-user-circle"></i>
+        <span class="nav-text">登录/注册</span>
+      </div>
     </div>
   </nav>
   
-  <div class="glass rounded-xl p-4 mt-4">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
-      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
     </div>
-    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span><i class="fas fa-book-open"></i> 0/200 知识点</span>
+      <span><i class="fas fa-star"></i> 0 成就</span>
     </div>
   </div>
 </aside>
 
 <nav class="mobile-nav">
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all active" data-mobile="index" onclick="navigateTo('index')">
-    <i class="fas fa-home text-lg"></i>
-    <span class="text-[10px] mt-1">首页</span>
+  <div data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home"></i>
+    <span>首页</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="learning-path" onclick="navigateTo('learning-path')">
-    <i class="fas fa-route text-lg"></i>
-    <span class="text-[10px] mt-1">学习</span>
+  <div data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route"></i>
+    <span>学习</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="builder" onclick="navigateTo('builder')">
-    <i class="fas fa-tools text-lg"></i>
-    <span class="text-[10px] mt-1">装机</span>
+  <div data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools"></i>
+    <span>装机</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="quiz" onclick="navigateTo('quiz')">
-    <i class="fas fa-gamepad text-lg"></i>
-    <span class="text-[10px] mt-1">测验</span>
+  <div data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad"></i>
+    <span>测验</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="achievements" onclick="navigateTo('achievements')">
-    <i class="fas fa-trophy text-lg"></i>
-    <span class="text-[10px] mt-1">成就</span>
+  <div class="mobile-nav-more">
+    <i class="fas fa-ellipsis-h"></i>
+    <span>更多</span>
+    <div class="mobile-nav-more-popup">
+      <div class="mobile-nav-more-popup-item" data-page="beginner-guide">
+        <i class="fas fa-graduation-cap"></i>
+        <span>新手入门</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="encyclopedia">
+        <i class="fas fa-book"></i>
+        <span>硬件百科</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="mobile-hardware">
+        <i class="fas fa-mobile-alt"></i>
+        <span>手机硬件</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="other-devices">
+        <i class="fas fa-laptop"></i>
+        <span>其他设备</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="achievements">
+        <i class="fas fa-trophy"></i>
+        <span>成就系统</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="login">
+        <i class="fas fa-user-circle"></i>
+        <span>登录/注册</span>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -109,7 +159,7 @@
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           <div class="text-center lg:text-left">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
-              <span class="w-2 h-2 bg-[var(--accent-green)] rounded-full animate-pulse-slow"></span>
+              <span class="status-indicator online"></span>
               <span class="text-sm text-[var(--accent-cyan)]">全新互动学习体验</span>
             </div>
             
@@ -125,25 +175,25 @@
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button class="btn-primary text-lg" onclick="navigateTo('learning-path')">
-                <i class="fas fa-rocket mr-2"></i>开始学习
+                <i class="fas fa-rocket"></i>开始学习
               </button>
               <button class="btn-secondary" onclick="navigateTo('builder')">
-                <i class="fas fa-tools mr-2"></i>试玩装机
+                <i class="fas fa-tools"></i>试玩装机
               </button>
             </div>
             
             <div class="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-white/10">
-              <div>
-                <div class="font-display text-2xl font-bold text-[var(--accent-cyan)]">15+</div>
-                <div class="text-sm text-[var(--text-secondary)]">硬件类型</div>
+              <div class="stat-card">
+                <div class="stat-value text-[var(--accent-cyan)]">15+</div>
+                <div class="stat-label">硬件类型</div>
               </div>
-              <div>
-                <div class="font-display text-2xl font-bold text-[var(--accent-orange)]">200+</div>
-                <div class="text-sm text-[var(--text-secondary)]">知识点</div>
+              <div class="stat-card">
+                <div class="stat-value text-[var(--accent-orange)]">200+</div>
+                <div class="stat-label">知识点</div>
               </div>
-              <div>
-                <div class="font-display text-2xl font-bold text-[var(--accent-green)]">100+</div>
-                <div class="text-sm text-[var(--text-secondary)]">互动题目</div>
+              <div class="stat-card">
+                <div class="stat-value text-[var(--accent-green)]">100+</div>
+                <div class="stat-label">互动题目</div>
               </div>
             </div>
           </div>
@@ -155,25 +205,24 @@
               
               <div class="absolute inset-16 glass rounded-3xl flex items-center justify-center">
                 <div class="text-center p-6">
-                  <div class="relative inline-block mb-4">
-                    <i class="fas fa-microchip text-6xl text-[var(--accent-cyan)] animate-float"></i>
-                    <div class="absolute -top-2 -right-2 w-5 h-5 bg-[var(--accent-green)] rounded-full flex items-center justify-center text-xs animate-pulse-slow">!</div>
+                  <div class="hero-icon glass mx-auto mb-4 animate-float">
+                    <i class="fas fa-microchip text-[var(--accent-cyan)]"></i>
                   </div>
                   <div class="font-display text-lg font-bold mb-2">INTERACTIVE</div>
                   <div class="text-sm text-[var(--text-secondary)]">点击探索更多</div>
                 </div>
               </div>
               
-              <div class="absolute top-8 left-8 w-12 h-12 glass rounded-xl flex items-center justify-center animate-float" style="animation-delay: 0.2s;">
+              <div class="floating-icon glass absolute top-8 left-8 animate-float" style="animation-delay: 0.2s;">
                 <i class="fas fa-desktop text-[var(--accent-cyan)]"></i>
               </div>
-              <div class="absolute top-8 right-8 w-12 h-12 glass rounded-xl flex items-center justify-center animate-float" style="animation-delay: 0.4s;">
+              <div class="floating-icon glass absolute top-8 right-8 animate-float" style="animation-delay: 0.4s;">
                 <i class="fas fa-mobile-alt text-[var(--accent-orange)]"></i>
               </div>
-              <div class="absolute bottom-8 left-8 w-12 h-12 glass rounded-xl flex items-center justify-center animate-float" style="animation-delay: 0.6s;">
+              <div class="floating-icon glass absolute bottom-8 left-8 animate-float" style="animation-delay: 0.6s;">
                 <i class="fas fa-laptop text-[var(--accent-green)]"></i>
               </div>
-              <div class="absolute bottom-8 right-8 w-12 h-12 glass rounded-xl flex items-center justify-center animate-float" style="animation-delay: 0.8s;">
+              <div class="floating-icon glass absolute bottom-8 right-8 animate-float" style="animation-delay: 0.8s;">
                 <i class="fas fa-tools text-[var(--accent-pink)]"></i>
               </div>
             </div>
@@ -182,32 +231,32 @@
         
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-20">
           <div class="knowledge-card group" onclick="navigateTo('learning-path')">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <i class="fas fa-route text-xl text-[var(--accent-cyan)]"></i>
+            <div class="knowledge-card-icon cyan">
+              <i class="fas fa-route text-[var(--accent-cyan)]"></i>
             </div>
             <h3 class="font-bold text-lg mb-2">学习路径</h3>
             <p class="text-sm text-[var(--text-secondary)]">系统化的学习路线，从零基础到硬件专家</p>
           </div>
           
           <div class="knowledge-card group" onclick="navigateTo('encyclopedia')">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-orange)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <i class="fas fa-book text-xl text-[var(--accent-orange)]"></i>
+            <div class="knowledge-card-icon orange">
+              <i class="fas fa-book text-[var(--accent-orange)]"></i>
             </div>
             <h3 class="font-bold text-lg mb-2">硬件百科</h3>
             <p class="text-sm text-[var(--text-secondary)]">深入了解每个硬件组件的原理和选购技巧</p>
           </div>
           
           <div class="knowledge-card group" onclick="navigateTo('builder')">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-green)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <i class="fas fa-tools text-xl text-[var(--accent-green)]"></i>
+            <div class="knowledge-card-icon green">
+              <i class="fas fa-tools text-[var(--accent-green)]"></i>
             </div>
             <h3 class="font-bold text-lg mb-2">装机模拟</h3>
             <p class="text-sm text-[var(--text-secondary)]">亲手组装虚拟电脑，学习各部件的安装位置</p>
           </div>
           
           <div class="knowledge-card group" onclick="navigateTo('quiz')">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-pink)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <i class="fas fa-gamepad text-xl text-[var(--accent-pink)]"></i>
+            <div class="knowledge-card-icon pink">
+              <i class="fas fa-gamepad text-[var(--accent-pink)]"></i>
             </div>
             <h3 class="font-bold text-lg mb-2">知识测验</h3>
             <p class="text-sm text-[var(--text-secondary)]">通过趣味问答检验你的硬件知识水平</p>
@@ -215,32 +264,39 @@
         </div>
       </div>
       
-      <!-- 评论系统示例 -->
       <div class="max-w-4xl mx-auto mt-20">
         <div class="glass rounded-2xl p-8">
-          <h2 class="font-display text-2xl font-bold mb-6">用户评论</h2>
+          <h2 class="font-display text-2xl font-bold mb-6 flex items-center gap-3">
+            <i class="fas fa-comments text-[var(--accent-cyan)]"></i>
+            用户评论
+          </h2>
           
-          <!-- 评论表单 -->
           <div class="comment-form">
-            <h3 class="font-bold mb-4">发表评论</h3>
+            <h3 class="font-bold mb-4 flex items-center gap-2">
+              <i class="fas fa-pen-fancy text-[var(--accent-cyan)]"></i>
+              发表评论
+            </h3>
             <textarea class="comment-input" placeholder="分享你的硬件学习心得..."></textarea>
             <div class="comment-actions">
-              <button class="btn-secondary" onclick="this.closest('.comment-form').querySelector('.comment-input').value = ''">取消</button>
-              <button class="btn-primary">发表评论</button>
+              <button class="btn-secondary" onclick="this.closest('.comment-form').querySelector('.comment-input').value = ''">
+                <i class="fas fa-times"></i>取消
+              </button>
+              <button class="btn-primary">
+                <i class="fas fa-paper-plane"></i>发表评论
+              </button>
             </div>
           </div>
           
-          <!-- 评论列表 -->
           <div class="comments-list mt-8">
             <div class="comment-item">
               <div class="comment-header">
-                <span class="comment-author">硬件爱好者</span>
+                <span class="comment-author"><i class="fas fa-user-circle"></i> 硬件爱好者</span>
                 <span class="comment-time">2026-03-01 14:30</span>
               </div>
               <div class="comment-content">这个网站的学习路径设计得非常合理，从基础到进阶，让我能够系统地学习硬件知识。装机模拟器也很有趣，帮助我理解了各个组件的安装位置。</div>
               <div class="comment-buttons">
-                <button class="comment-button reply">回复</button>
-                <button class="comment-button delete">删除</button>
+                <button class="comment-button reply"><i class="fas fa-reply"></i> 回复</button>
+                <button class="comment-button delete"><i class="fas fa-trash-alt"></i> 删除</button>
               </div>
               <div class="comment-reply-form">
                 <textarea class="reply-input" placeholder="写下你的回复..."></textarea>
@@ -252,12 +308,12 @@
               <div class="comment-replies">
                 <div class="comment-item">
                   <div class="comment-header">
-                    <span class="comment-author">管理员</span>
+                    <span class="comment-author"><i class="fas fa-user-shield"></i> 管理员</span>
                     <span class="comment-time">2026-03-01 15:15</span>
                   </div>
                   <div class="comment-content">感谢您的反馈！我们会继续完善网站内容，为大家提供更好的学习体验。</div>
                   <div class="comment-buttons">
-                    <button class="comment-button delete">删除</button>
+                    <button class="comment-button delete"><i class="fas fa-trash-alt"></i> 删除</button>
                   </div>
                 </div>
               </div>
@@ -265,13 +321,13 @@
             
             <div class="comment-item">
               <div class="comment-header">
-                <span class="comment-author">新手小白</span>
+                <span class="comment-author"><i class="fas fa-user-circle"></i> 新手小白</span>
                 <span class="comment-time">2026-03-02 09:45</span>
               </div>
               <div class="comment-content">作为一个完全的新手，这个网站对我帮助很大。新手入门指南写得很详细，让我对硬件有了基本的认识。希望能添加更多关于手机硬件的内容。</div>
               <div class="comment-buttons">
-                <button class="comment-button reply">回复</button>
-                <button class="comment-button delete">删除</button>
+                <button class="comment-button reply"><i class="fas fa-reply"></i> 回复</button>
+                <button class="comment-button delete"><i class="fas fa-trash-alt"></i> 删除</button>
               </div>
               <div class="comment-reply-form">
                 <textarea class="reply-input" placeholder="写下你的回复..."></textarea>

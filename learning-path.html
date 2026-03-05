@@ -14,91 +14,141 @@
 <div class="bg-glow"></div>
 <canvas id="particles"></canvas>
 
-<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
-  <div class="flex items-center gap-3 mb-8 px-2">
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
       <i class="fas fa-microchip text-white"></i>
     </div>
-    <div>
+    <div class="sidebar-header-text">
       <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
       <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
     </div>
   </div>
   
-  <nav class="flex-1 space-y-2">
-    <div class="nav-item" data-page="index" onclick="navigateTo('index')">
-      <i class="fas fa-home w-5"></i>
-      <span>首页</span>
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item active" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
     </div>
-    <div class="nav-item active" data-page="learning-path" onclick="navigateTo('learning-path')">
-      <i class="fas fa-route w-5"></i>
-      <span>学习路径</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
-      <i class="fas fa-book-open w-5"></i>
-      <span>新手入门</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
-      <i class="fas fa-book w-5"></i>
-      <span>硬件百科</span>
-    </div>
-    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
-      <i class="fas fa-mobile-alt w-5"></i>
-      <span>手机硬件</span>
-    </div>
-    <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
-      <i class="fas fa-laptop w-5"></i>
-      <span>其他设备</span>
-    </div>
-    <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
-      <i class="fas fa-tools w-5"></i>
-      <span>装机模拟</span>
-    </div>
-    <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
-      <i class="fas fa-question-circle w-5"></i>
-      <span>知识测验</span>
-    </div>
-    <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
-      <i class="fas fa-trophy w-5"></i>
-      <span>成就系统</span>
-    </div>
-    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-      <i class="fas fa-user w-5"></i>
-      <span>登录/注册</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">账户</div>
+      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+        <i class="fas fa-user-circle"></i>
+        <span class="nav-text">登录/注册</span>
+      </div>
     </div>
   </nav>
   
-  <div class="glass rounded-xl p-4 mt-4">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
-      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
     </div>
-    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span><i class="fas fa-book-open"></i> 0/200 知识点</span>
+      <span><i class="fas fa-star"></i> 0 成就</span>
     </div>
   </div>
 </aside>
 
 <nav class="mobile-nav">
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="index" onclick="navigateTo('index')">
-    <i class="fas fa-home text-lg"></i>
-    <span class="text-[10px] mt-1">首页</span>
+  <div data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home"></i>
+    <span>首页</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all active" data-mobile="learning-path" onclick="navigateTo('learning-path')">
-    <i class="fas fa-route text-lg"></i>
-    <span class="text-[10px] mt-1">学习</span>
+  <div data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route"></i>
+    <span>学习</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="builder" onclick="navigateTo('builder')">
-    <i class="fas fa-tools text-lg"></i>
-    <span class="text-[10px] mt-1">装机</span>
+  <div data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools"></i>
+    <span>装机</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="quiz" onclick="navigateTo('quiz')">
-    <i class="fas fa-gamepad text-lg"></i>
-    <span class="text-[10px] mt-1">测验</span>
+  <div data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad"></i>
+    <span>测验</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="achievements" onclick="navigateTo('achievements')">
-    <i class="fas fa-trophy text-lg"></i>
-    <span class="text-[10px] mt-1">成就</span>
+  <div class="mobile-nav-more">
+    <i class="fas fa-ellipsis-h"></i>
+    <span>更多</span>
+    <div class="mobile-nav-more-popup">
+      <div class="mobile-nav-more-popup-item" data-page="beginner-guide">
+        <i class="fas fa-graduation-cap"></i>
+        <span>新手入门</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="encyclopedia">
+        <i class="fas fa-book"></i>
+        <span>硬件百科</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="mobile-hardware">
+        <i class="fas fa-mobile-alt"></i>
+        <span>手机硬件</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="other-devices">
+        <i class="fas fa-laptop"></i>
+        <span>其他设备</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="achievements">
+        <i class="fas fa-trophy"></i>
+        <span>成就系统</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="login">
+        <i class="fas fa-user-circle"></i>
+        <span>登录/注册</span>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -117,263 +167,273 @@
       <div class="space-y-6">
         <div class="glass rounded-2xl p-6">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-green)] to-[var(--accent-cyan)] flex items-center justify-center text-xl font-bold">1</div>
+            <div class="feature-icon green">
+              <span class="font-bold">1</span>
+            </div>
             <div>
               <h2 class="font-bold text-xl">第一阶段：基础认知</h2>
               <p class="text-sm text-[var(--text-secondary)]">了解硬件基本概念，建立知识框架</p>
             </div>
-            <span class="knowledge-level level-beginner ml-auto">入门</span>
+            <span class="knowledge-level level-beginner ml-auto"><i class="fas fa-seedling"></i> 入门</span>
           </div>
           
           <div class="space-y-4 pl-4">
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('beginner-guide')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-cyan)]/20 flex items-center justify-center">
-                <i class="fas fa-play text-sm text-[var(--accent-cyan)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('beginner-guide')">
+              <div class="feature-icon cyan btn-icon-sm">
+                <i class="fas fa-play text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">新手入门指南</div>
                 <div class="text-xs text-[var(--text-secondary)]">了解什么是硬件，为什么学习硬件知识</div>
               </div>
-              <span class="text-xs text-[var(--accent-cyan)]">约15分钟</span>
+              <span class="tag tag-cyan">约15分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('anatomy')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-cyan)]/20 flex items-center justify-center">
-                <i class="fas fa-desktop text-sm text-[var(--accent-cyan)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('encyclopedia')">
+              <div class="feature-icon blue btn-icon-sm">
+                <i class="fas fa-desktop text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">电脑解剖图</div>
                 <div class="text-xs text-[var(--text-secondary)]">认识电脑内部的各个部件</div>
               </div>
-              <span class="text-xs text-[var(--accent-cyan)]">约20分钟</span>
+              <span class="tag tag-cyan">约20分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('cpu')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-cyan)]/20 flex items-center justify-center">
-                <i class="fas fa-microchip text-sm text-[var(--accent-cyan)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('cpu')">
+              <div class="feature-icon orange btn-icon-sm">
+                <i class="fas fa-microchip text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">CPU基础</div>
                 <div class="text-xs text-[var(--text-secondary)]">了解CPU的基本概念和作用</div>
               </div>
-              <span class="text-xs text-[var(--accent-cyan)]">约25分钟</span>
+              <span class="tag tag-cyan">约25分钟</span>
             </div>
           </div>
         </div>
         
         <div class="glass rounded-2xl p-6">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-cyan)] flex items-center justify-center text-xl font-bold">2</div>
+            <div class="feature-icon blue">
+              <span class="font-bold">2</span>
+            </div>
             <div>
               <h2 class="font-bold text-xl">第二阶段：核心组件</h2>
               <p class="text-sm text-[var(--text-secondary)]">深入学习电脑核心硬件知识</p>
             </div>
-            <span class="knowledge-level level-intermediate ml-auto">进阶</span>
+            <span class="knowledge-level level-intermediate ml-auto"><i class="fas fa-layer-group"></i> 进阶</span>
           </div>
           
           <div class="space-y-4 pl-4">
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('cpu')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-blue)]/20 flex items-center justify-center">
-                <i class="fas fa-microchip text-sm text-[var(--accent-blue)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('cpu')">
+              <div class="feature-icon cyan btn-icon-sm">
+                <i class="fas fa-microchip text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">CPU处理器详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">核心参数、品牌对比、选购技巧</div>
               </div>
-              <span class="text-xs text-[var(--accent-blue)]">约40分钟</span>
+              <span class="tag tag-cyan">约40分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('gpu')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-orange)]/20 flex items-center justify-center">
-                <i class="fas fa-gamepad text-sm text-[var(--accent-orange)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('gpu')">
+              <div class="feature-icon orange btn-icon-sm">
+                <i class="fas fa-gamepad text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">显卡GPU详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">图形处理、游戏性能、创作加速</div>
               </div>
-              <span class="text-xs text-[var(--accent-orange)]">约40分钟</span>
+              <span class="tag tag-orange">约40分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('ram')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-green)]/20 flex items-center justify-center">
-                <i class="fas fa-memory text-sm text-[var(--accent-green)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('ram')">
+              <div class="feature-icon green btn-icon-sm">
+                <i class="fas fa-memory text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">内存RAM详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">容量、频率、双通道</div>
               </div>
-              <span class="text-xs text-[var(--accent-green)]">约30分钟</span>
+              <span class="tag tag-green">约30分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('ssd')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-pink)]/20 flex items-center justify-center">
-                <i class="fas fa-hdd text-sm text-[var(--accent-pink)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('ssd')">
+              <div class="feature-icon pink btn-icon-sm">
+                <i class="fas fa-hdd text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">存储设备详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">SSD、HDD、NVMe协议</div>
               </div>
-              <span class="text-xs text-[var(--accent-pink)]">约30分钟</span>
+              <span class="tag tag-pink">约30分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('motherboard')">
-              <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
-                <i class="fas fa-th text-sm text-amber-500"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('motherboard')">
+              <div class="feature-icon yellow btn-icon-sm">
+                <i class="fas fa-th text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">主板详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">芯片组、板型、接口</div>
               </div>
-              <span class="text-xs text-amber-500">约35分钟</span>
+              <span class="tag tag-orange">约35分钟</span>
             </div>
           </div>
         </div>
         
         <div class="glass rounded-2xl p-6">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-orange)] to-[var(--accent-pink)] flex items-center justify-center text-xl font-bold">3</div>
+            <div class="feature-icon orange">
+              <span class="font-bold">3</span>
+            </div>
             <div>
               <h2 class="font-bold text-xl">第三阶段：周边组件</h2>
               <p class="text-sm text-[var(--text-secondary)]">掌握电源、散热、机箱等辅助硬件</p>
             </div>
-            <span class="knowledge-level level-advanced ml-auto">高级</span>
+            <span class="knowledge-level level-advanced ml-auto"><i class="fas fa-fire"></i> 高级</span>
           </div>
           
           <div class="space-y-4 pl-4">
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('psu')">
-              <div class="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-                <i class="fas fa-bolt text-sm text-yellow-500"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('psu')">
+              <div class="feature-icon yellow btn-icon-sm">
+                <i class="fas fa-bolt text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">电源PSU详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">功率计算、认证等级、模组类型</div>
               </div>
-              <span class="text-xs text-yellow-500">约25分钟</span>
+              <span class="tag tag-orange">约25分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('cooler')">
-              <div class="w-8 h-8 rounded-lg bg-sky-500/20 flex items-center justify-center">
-                <i class="fas fa-fan text-sm text-sky-500"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('cooler')">
+              <div class="feature-icon cyan btn-icon-sm">
+                <i class="fas fa-fan text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">散热系统详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">风冷、水冷、散热原理</div>
               </div>
-              <span class="text-xs text-sky-500">约30分钟</span>
+              <span class="tag tag-cyan">约30分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="showHardwareModal('monitor')">
-              <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center">
-                <i class="fas fa-tv text-sm text-indigo-500"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="showHardwareModal('monitor')">
+              <div class="feature-icon purple btn-icon-sm">
+                <i class="fas fa-tv text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">显示器详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">分辨率、刷新率、面板类型</div>
               </div>
-              <span class="text-xs text-indigo-500">约30分钟</span>
+              <span class="tag tag-pink">约30分钟</span>
             </div>
           </div>
         </div>
         
         <div class="glass rounded-2xl p-6">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-pink)] to-[var(--accent-purple)] flex items-center justify-center text-xl font-bold">4</div>
+            <div class="feature-icon pink">
+              <span class="font-bold">4</span>
+            </div>
             <div>
               <h2 class="font-bold text-xl">第四阶段：移动设备</h2>
               <p class="text-sm text-[var(--text-secondary)]">了解手机、笔记本等移动设备硬件</p>
             </div>
-            <span class="knowledge-level level-expert ml-auto">专家</span>
+            <span class="knowledge-level level-expert ml-auto"><i class="fas fa-crown"></i> 专家</span>
           </div>
           
           <div class="space-y-4 pl-4">
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('mobile-hardware')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-orange)]/20 flex items-center justify-center">
-                <i class="fas fa-mobile-alt text-sm text-[var(--accent-orange)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('mobile-hardware')">
+              <div class="feature-icon orange btn-icon-sm">
+                <i class="fas fa-mobile-alt text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">手机硬件详解</div>
                 <div class="text-xs text-[var(--text-secondary)]">处理器、屏幕、电池、摄像头</div>
               </div>
-              <span class="text-xs text-[var(--accent-orange)]">约45分钟</span>
+              <span class="tag tag-orange">约45分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('other-devices')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-purple)]/20 flex items-center justify-center">
-                <i class="fas fa-laptop text-sm text-[var(--accent-purple)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('other-devices')">
+              <div class="feature-icon purple btn-icon-sm">
+                <i class="fas fa-laptop text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">笔记本与平板</div>
                 <div class="text-xs text-[var(--text-secondary)]">轻薄本、游戏本、平板电脑</div>
               </div>
-              <span class="text-xs text-[var(--accent-purple)]">约40分钟</span>
+              <span class="tag tag-pink">约40分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('other-devices')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-blue)]/20 flex items-center justify-center">
-                <i class="fas fa-clock text-sm text-[var(--accent-blue)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('other-devices')">
+              <div class="feature-icon blue btn-icon-sm">
+                <i class="fas fa-clock text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">智能穿戴设备</div>
                 <div class="text-xs text-[var(--text-secondary)]">智能手表、真无线耳机</div>
               </div>
-              <span class="text-xs text-[var(--accent-blue)]">约30分钟</span>
+              <span class="tag tag-cyan">约30分钟</span>
             </div>
           </div>
         </div>
         
         <div class="glass rounded-2xl p-6">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-blue)] flex items-center justify-center text-xl font-bold">5</div>
+            <div class="feature-icon purple">
+              <span class="font-bold">5</span>
+            </div>
             <div>
               <h2 class="font-bold text-xl">第五阶段：实战应用</h2>
               <p class="text-sm text-[var(--text-secondary)]">装机、故障排查、维护保养</p>
             </div>
-            <span class="knowledge-level level-expert ml-auto">专家</span>
+            <span class="knowledge-level level-expert ml-auto"><i class="fas fa-crown"></i> 专家</span>
           </div>
           
           <div class="space-y-4 pl-4">
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('builder')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-green)]/20 flex items-center justify-center">
-                <i class="fas fa-tools text-sm text-[var(--accent-green)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('builder')">
+              <div class="feature-icon green btn-icon-sm">
+                <i class="fas fa-tools text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">装机模拟器</div>
                 <div class="text-xs text-[var(--text-secondary)]">练习电脑组装，掌握安装流程</div>
               </div>
-              <span class="text-xs text-[var(--accent-green)]">约30分钟</span>
+              <span class="tag tag-green">约30分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('builds')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-cyan)]/20 flex items-center justify-center">
-                <i class="fas fa-sliders-h text-sm text-[var(--accent-cyan)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('encyclopedia')">
+              <div class="feature-icon cyan btn-icon-sm">
+                <i class="fas fa-sliders-h text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">配置推荐</div>
                 <div class="text-xs text-[var(--text-secondary)]">不同预算和用途的硬件配置</div>
               </div>
-              <span class="text-xs text-[var(--accent-cyan)]">约25分钟</span>
+              <span class="tag tag-cyan">约25分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('troubleshoot')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-orange)]/20 flex items-center justify-center">
-                <i class="fas fa-tools text-sm text-[var(--accent-orange)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('encyclopedia')">
+              <div class="feature-icon orange btn-icon-sm">
+                <i class="fas fa-wrench text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">故障排查</div>
                 <div class="text-xs text-[var(--text-secondary)]">常见硬件问题诊断与解决</div>
               </div>
-              <span class="text-xs text-[var(--accent-orange)]">约40分钟</span>
+              <span class="tag tag-orange">约40分钟</span>
             </div>
             
-            <div class="chapter-card flex items-center gap-4" onclick="navigateTo('quiz')">
-              <div class="w-8 h-8 rounded-lg bg-[var(--accent-pink)]/20 flex items-center justify-center">
-                <i class="fas fa-question-circle text-sm text-[var(--accent-pink)]"></i>
+            <div class="chapter-card flex items-center gap-4 cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all" onclick="navigateTo('quiz')">
+              <div class="feature-icon pink btn-icon-sm">
+                <i class="fas fa-question-circle text-sm"></i>
               </div>
               <div class="flex-1">
                 <div class="font-bold">知识测验</div>
                 <div class="text-xs text-[var(--text-secondary)]">检验学习成果，巩固知识点</div>
               </div>
-              <span class="text-xs text-[var(--accent-pink)]">约20分钟</span>
+              <span class="tag tag-pink">约20分钟</span>
             </div>
           </div>
         </div>

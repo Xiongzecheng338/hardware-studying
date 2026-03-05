@@ -14,91 +14,141 @@
 <div class="bg-glow"></div>
 <canvas id="particles"></canvas>
 
-<aside class="sidebar fixed left-0 top-0 bottom-0 w-64 glass-strong z-40 p-4 hidden md:flex flex-col">
-  <div class="flex items-center gap-3 mb-8 px-2">
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-orange)] flex items-center justify-center animate-glow">
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
       <i class="fas fa-microchip text-white"></i>
     </div>
-    <div>
+    <div class="sidebar-header-text">
       <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
       <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
     </div>
   </div>
   
-  <nav class="flex-1 space-y-2">
-    <div class="nav-item" data-page="index" onclick="navigateTo('index')">
-      <i class="fas fa-home w-5"></i>
-      <span>首页</span>
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
-      <i class="fas fa-route w-5"></i>
-      <span>学习路径</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
-      <i class="fas fa-book-open w-5"></i>
-      <span>新手入门</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item active" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
     </div>
-    <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
-      <i class="fas fa-book w-5"></i>
-      <span>硬件百科</span>
-    </div>
-    <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
-      <i class="fas fa-mobile-alt w-5"></i>
-      <span>手机硬件</span>
-    </div>
-    <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
-      <i class="fas fa-laptop w-5"></i>
-      <span>其他设备</span>
-    </div>
-    <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
-      <i class="fas fa-tools w-5"></i>
-      <span>装机模拟</span>
-    </div>
-    <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
-      <i class="fas fa-question-circle w-5"></i>
-      <span>知识测验</span>
-    </div>
-    <div class="nav-item active" data-page="achievements" onclick="navigateTo('achievements')">
-      <i class="fas fa-trophy w-5"></i>
-      <span>成就系统</span>
-    </div>
-    <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-      <i class="fas fa-user w-5"></i>
-      <span>登录/注册</span>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">账户</div>
+      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
+        <i class="fas fa-user-circle"></i>
+        <span class="nav-text">登录/注册</span>
+      </div>
     </div>
   </nav>
   
-  <div class="glass rounded-xl p-4 mt-4">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-sm text-[var(--text-secondary)]">学习进度</span>
-      <span class="text-sm font-bold text-[var(--accent-cyan)]" id="progressText">0%</span>
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
     </div>
-    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-      <div class="h-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span><i class="fas fa-book-open"></i> 0/200 知识点</span>
+      <span><i class="fas fa-star"></i> 0 成就</span>
     </div>
   </div>
 </aside>
 
 <nav class="mobile-nav">
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="index" onclick="navigateTo('index')">
-    <i class="fas fa-home text-lg"></i>
-    <span class="text-[10px] mt-1">首页</span>
+  <div data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home"></i>
+    <span>首页</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="learning-path" onclick="navigateTo('learning-path')">
-    <i class="fas fa-route text-lg"></i>
-    <span class="text-[10px] mt-1">学习</span>
+  <div data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route"></i>
+    <span>学习</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="builder" onclick="navigateTo('builder')">
-    <i class="fas fa-tools text-lg"></i>
-    <span class="text-[10px] mt-1">装机</span>
+  <div data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools"></i>
+    <span>装机</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all" data-mobile="quiz" onclick="navigateTo('quiz')">
-    <i class="fas fa-gamepad text-lg"></i>
-    <span class="text-[10px] mt-1">测验</span>
+  <div data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad"></i>
+    <span>测验</span>
   </div>
-  <div class="flex flex-col items-center p-2 rounded-xl cursor-pointer transition-all active" data-mobile="achievements" onclick="navigateTo('achievements')">
-    <i class="fas fa-trophy text-lg"></i>
-    <span class="text-[10px] mt-1">成就</span>
+  <div class="mobile-nav-more">
+    <i class="fas fa-ellipsis-h"></i>
+    <span>更多</span>
+    <div class="mobile-nav-more-popup">
+      <div class="mobile-nav-more-popup-item" data-page="beginner-guide">
+        <i class="fas fa-graduation-cap"></i>
+        <span>新手入门</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="encyclopedia">
+        <i class="fas fa-book"></i>
+        <span>硬件百科</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="mobile-hardware">
+        <i class="fas fa-mobile-alt"></i>
+        <span>手机硬件</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="other-devices">
+        <i class="fas fa-laptop"></i>
+        <span>其他设备</span>
+      </div>
+      <div class="mobile-nav-more-popup-item active" data-page="achievements">
+        <i class="fas fa-trophy"></i>
+        <span>成就系统</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="login">
+        <i class="fas fa-user-circle"></i>
+        <span>登录/注册</span>
+      </div>
+    </div>
   </div>
 </nav>
 

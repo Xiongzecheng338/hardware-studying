@@ -1,15 +1,11 @@
-// 导航功能
 function navigateTo(pageName) {
   window.location.href = `${pageName}.html`;
 }
 
-// 初始化导航状态
 function initNavigation() {
-  // 获取当前页面名称
   const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
   const pageName = currentPage || 'index';
   
-  // 更新侧边栏导航状态
   const navItems = document.querySelectorAll('.nav-item');
   navItems.forEach(item => {
     const pageId = item.dataset.page;
@@ -18,8 +14,7 @@ function initNavigation() {
     }
   });
   
-  // 更新移动端导航状态
-  const mobileNavItems = document.querySelectorAll('.mobile-nav > div');
+  const mobileNavItems = document.querySelectorAll('.mobile-nav > div[data-mobile]');
   mobileNavItems.forEach(item => {
     const pageId = item.dataset.mobile;
     if (pageId === pageName) {
@@ -28,31 +23,82 @@ function initNavigation() {
   });
 }
 
-// 页面加载完成后初始化
+function initSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const mainContent = document.querySelector('main');
+  const toggleBtn = document.querySelector('.sidebar-toggle');
+  
+  if (!sidebar || !toggleBtn) return;
+  
+  const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+  if (isCollapsed) {
+    sidebar.classList.add('collapsed');
+    if (mainContent) mainContent.classList.add('sidebar-collapsed');
+  }
+  
+  toggleBtn.addEventListener('click', function() {
+    sidebar.classList.toggle('collapsed');
+    if (mainContent) mainContent.classList.toggle('sidebar-collapsed');
+    localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+  });
+  
+  const navItems = sidebar.querySelectorAll('.nav-item');
+  navItems.forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      if (sidebar.classList.contains('collapsed')) {
+        const tooltip = this.querySelector('.nav-text')?.textContent;
+        if (tooltip) {
+          this.setAttribute('title', tooltip);
+        }
+      }
+    });
+  });
+}
+
+function initMobileNav() {
+  const moreBtn = document.querySelector('.mobile-nav-more');
+  const morePopup = document.querySelector('.mobile-nav-more-popup');
+  
+  if (!moreBtn || !morePopup) return;
+  
+  moreBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    morePopup.classList.toggle('show');
+  });
+  
+  document.addEventListener('click', function(e) {
+    if (!moreBtn.contains(e.target) && !morePopup.contains(e.target)) {
+      morePopup.classList.remove('show');
+    }
+  });
+  
+  const popupItems = morePopup.querySelectorAll('.mobile-nav-more-popup-item');
+  popupItems.forEach(item => {
+    item.addEventListener('click', function() {
+      const page = this.dataset.page;
+      if (page) {
+        navigateTo(page);
+      }
+      morePopup.classList.remove('show');
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-  // 初始化导航状态
   initNavigation();
-  
-  // 初始化粒子效果
+  initSidebar();
+  initMobileNav();
   initParticles();
-  
-  // 初始化学习进度
   updateProgress();
-  
-  // 初始化登录功能
   initLogin();
-  
-  // 初始化评论系统
   initComments();
   
-  // 硬件百科过滤功能
   const filterTags = document.querySelectorAll('.filter-tag');
   const hardwareCards = document.querySelectorAll('.hardware-card');
   
   if (filterTags.length > 0) {
     filterTags.forEach(tag => {
       tag.addEventListener('click', function() {
-        // 更新标签状态
         filterTags.forEach(t => t.classList.remove('active', 'bg-[var(--accent-cyan)]/20', 'text-[var(--accent-cyan)]', 'border-[var(--accent-cyan)]/30'));
         filterTags.forEach(t => t.classList.add('bg-white/5', 'text-[var(--text-secondary)]', 'border-white/10'));
         this.classList.add('active', 'bg-[var(--accent-cyan)]/20', 'text-[var(--accent-cyan)]', 'border-[var(--accent-cyan)]/30');
@@ -60,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const filter = this.dataset.filter;
         
-        // 过滤硬件卡片
         hardwareCards.forEach(card => {
           if (filter === 'all' || card.dataset.category === filter) {
             card.style.display = 'block';
@@ -71,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // 硬件卡片点击事件
     hardwareCards.forEach(card => {
       card.addEventListener('click', function() {
         const hardwareType = this.dataset.hardware;
@@ -81,16 +125,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// 粒子效果
 function initParticles() {
   const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  
   const ctx = canvas.getContext('2d');
   
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   
   const particles = [];
-  const particleCount = 100;
+  const particleCount = 80;
   
   for (let i = 0; i < particleCount; i++) {
     particles.push({
@@ -131,21 +176,19 @@ function initParticles() {
   });
 }
 
-// 硬件模态框
 function showHardwareModal(hardwareType) {
-  // 这里可以实现硬件详情模态框
   console.log('Showing modal for:', hardwareType);
-  // 实际项目中，这里应该显示对应的硬件详细信息
 }
 
-// 更新学习进度
 function updateProgress() {
-  const progress = 0; // 实际项目中应该从本地存储或服务器获取
-  document.getElementById('progressBar').style.width = `${progress}%`;
-  document.getElementById('progressText').textContent = `${progress}%`;
+  const progress = 0;
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  
+  if (progressBar) progressBar.style.width = `${progress}%`;
+  if (progressText) progressText.textContent = `${progress}%`;
 }
 
-// 登录功能
 function initLogin() {
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
@@ -155,44 +198,33 @@ function initLogin() {
       const password = document.getElementById('password').value;
       const remember = document.getElementById('remember').checked;
       
-      // 模拟登录验证
       console.log('Login attempt:', { username, password, remember });
       
-      // 实际项目中应该发送到服务器验证
-      // 这里只是模拟登录成功
       localStorage.setItem('user', JSON.stringify({ username, loggedIn: true }));
       alert('登录成功！');
-      // 跳转到首页
-      navigateTo('home');
+      navigateTo('index');
     });
   }
   
-  // 检查登录状态
   checkLoginStatus();
 }
 
-// 检查登录状态
 function checkLoginStatus() {
   const user = localStorage.getItem('user');
   if (user) {
     const userObj = JSON.parse(user);
     if (userObj.loggedIn) {
-      // 更新导航栏显示登录状态
       console.log('User logged in:', userObj.username);
-      // 实际项目中应该更新UI显示登录状态
     }
   }
 }
 
-// 登出功能
 function logout() {
   localStorage.removeItem('user');
   alert('已登出');
-  // 跳转到登录页面
   navigateTo('login');
 }
 
-// 评论系统
 function initComments() {
   const commentForms = document.querySelectorAll('.comment-form');
   commentForms.forEach(form => {
@@ -200,7 +232,6 @@ function initComments() {
       e.preventDefault();
       const commentText = this.querySelector('.comment-input').value;
       
-      // 检查登录状态
       const user = localStorage.getItem('user');
       if (!user) {
         alert('请先登录后再评论');
@@ -210,19 +241,14 @@ function initComments() {
       
       const userObj = JSON.parse(user);
       
-      // 模拟评论提交
       console.log('Comment submitted:', { user: userObj.username, content: commentText });
       
-      // 实际项目中应该发送到服务器
-      // 这里只是模拟添加评论
       addComment(userObj.username, commentText);
       
-      // 清空输入框
       this.querySelector('.comment-input').value = '';
     });
   });
   
-  // 回复按钮点击事件
   document.querySelectorAll('.comment-button.reply').forEach(button => {
     button.addEventListener('click', function() {
       const commentItem = this.closest('.comment-item');
@@ -231,7 +257,6 @@ function initComments() {
     });
   });
   
-  // 回复表单提交
   document.querySelectorAll('.comment-reply-form').forEach(form => {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -239,7 +264,6 @@ function initComments() {
       const commentItem = this.closest('.comment-item');
       const parentAuthor = commentItem.querySelector('.comment-author').textContent;
       
-      // 检查登录状态
       const user = localStorage.getItem('user');
       if (!user) {
         alert('请先登录后再回复');
@@ -249,20 +273,15 @@ function initComments() {
       
       const userObj = JSON.parse(user);
       
-      // 模拟回复提交
       console.log('Reply submitted:', { user: userObj.username, content: replyText, parent: parentAuthor });
       
-      // 实际项目中应该发送到服务器
-      // 这里只是模拟添加回复
       addReply(commentItem, userObj.username, replyText);
       
-      // 清空输入框并隐藏表单
       this.querySelector('.reply-input').value = '';
       this.classList.remove('active');
     });
   });
   
-  // 删除评论按钮点击事件
   document.querySelectorAll('.comment-button.delete').forEach(button => {
     button.addEventListener('click', function() {
       if (confirm('确定要删除这条评论吗？')) {
@@ -273,7 +292,6 @@ function initComments() {
   });
 }
 
-// 添加评论
 function addComment(author, content) {
   const commentsList = document.querySelector('.comments-list');
   if (!commentsList) return;
@@ -282,13 +300,13 @@ function addComment(author, content) {
   commentElement.className = 'comment-item';
   commentElement.innerHTML = `
     <div class="comment-header">
-      <span class="comment-author">${author}</span>
+      <span class="comment-author"><i class="fas fa-user-circle"></i> ${author}</span>
       <span class="comment-time">${new Date().toLocaleString()}</span>
     </div>
     <div class="comment-content">${content}</div>
     <div class="comment-buttons">
-      <button class="comment-button reply">回复</button>
-      <button class="comment-button delete">删除</button>
+      <button class="comment-button reply"><i class="fas fa-reply"></i> 回复</button>
+      <button class="comment-button delete"><i class="fas fa-trash-alt"></i> 删除</button>
     </div>
     <div class="comment-reply-form">
       <textarea class="reply-input" placeholder="写下你的回复..."></textarea>
@@ -302,11 +320,9 @@ function addComment(author, content) {
   
   commentsList.appendChild(commentElement);
   
-  // 重新绑定事件
   initComments();
 }
 
-// 添加回复
 function addReply(commentItem, author, content) {
   const repliesContainer = commentItem.querySelector('.comment-replies');
   if (!repliesContainer) return;
@@ -315,73 +331,59 @@ function addReply(commentItem, author, content) {
   replyElement.className = 'comment-item';
   replyElement.innerHTML = `
     <div class="comment-header">
-      <span class="comment-author">${author}</span>
+      <span class="comment-author"><i class="fas fa-user-circle"></i> ${author}</span>
       <span class="comment-time">${new Date().toLocaleString()}</span>
     </div>
     <div class="comment-content">${content}</div>
     <div class="comment-buttons">
-      <button class="comment-button delete">删除</button>
+      <button class="comment-button delete"><i class="fas fa-trash-alt"></i> 删除</button>
     </div>
   `;
   
   repliesContainer.appendChild(replyElement);
   
-  // 重新绑定事件
   initComments();
 }
 
-// 设备标签切换
 function switchDeviceTab(tabId) {
-  // 这里可以实现设备标签切换功能
   console.log('Switching to device tab:', tabId);
-  // 实际项目中应该显示对应的设备内容
 }
 
-// 装机模拟器功能
 function initBuilder() {
-  // 这里可以实现装机模拟器的拖放功能
   console.log('Initializing builder');
-  // 实际项目中应该实现拖放逻辑
 }
 
-// 知识测验功能
 function initQuiz() {
-  // 这里可以实现知识测验功能
   console.log('Initializing quiz');
-  // 实际项目中应该实现测验逻辑
 }
 
-// 性能对比功能
 function initCompare() {
-  // 这里可以实现性能对比功能
   console.log('Initializing compare');
-  // 实际项目中应该实现对比逻辑
 }
 
-// 硬件计算器功能
 function initCalculator() {
-  // 这里可以实现硬件计算器功能
   console.log('Initializing calculator');
-  // 实际项目中应该实现计算逻辑
 }
 
-// 配置推荐功能
 function initBuilds() {
-  // 这里可以实现配置推荐功能
   console.log('Initializing builds');
-  // 实际项目中应该实现推荐逻辑
 }
 
-// 故障排查功能
 function initTroubleshoot() {
-  // 这里可以实现故障排查功能
   console.log('Initializing troubleshoot');
-  // 实际项目中应该实现排查逻辑
 }
 
-// 成就系统功能
 function initAchievements() {
-  // 这里可以实现成就系统功能
   console.log('Initializing achievements');
-  // 实际项目中应该实现成就逻辑
+}
+
+function toggleExpand(element) {
+  const content = element.nextElementSibling;
+  if (content && content.classList.contains('expandable-content')) {
+    content.classList.toggle('expanded');
+    const icon = element.querySelector('i.fa-chevron-down');
+    if (icon) {
+      icon.style.transform = content.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0)';
+    }
+  }
 }

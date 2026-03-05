@@ -1,16 +1,13 @@
 # 💻 硬件小白成神计划 | 交互式电脑硬件学习平台
 (๑•̀ㅂ•́)و✧ 从零开始，手把手带你玩转电脑硬件，告别小白，拒绝踩坑！
 
-![GitHub stars](https://img.shields.io/github/stars/badhope/Visual-Security?style=social)
-![GitHub forks](https://img.shields.io/github/forks/badhope/Visual-Security?style=social)
-![GitHub issues](https://img.shields.io/github/issues/badhope/Visual-Security)
-![GitHub license](https://img.shields.io/github/license/badhope/Visual-Security)
+![GitHub stars](https://img.shields.io/github/stars/badhope/hardware-studying?style=social)
+![GitHub forks](https://img.shields.io/github/forks/badhope/hardware-studying?style=social)
+![GitHub issues](https://img.shields.io/github/issues/badhope/hardware-studying)
+![GitHub license](https://img.shields.io/github/license/badhope/hardware-studying)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![Neuroscience](https://img.shields.io/badge/Neuroscience-005571?style=flat-square&logo=academia&logoColor=white)
-![Optical Art](https://img.shields.io/badge/Optical_Art-FF6F00?style=flat-square&logo=artstation&logoColor=white)
-
 
 ---
 
@@ -47,6 +44,124 @@
 
 ---
 
+## 📁 项目结构
+
+```
+hardware-studying/
+├── index.html              # 首页
+├── learning-path.html      # 学习路径页面
+├── beginner-guide.html     # 新手入门指南
+├── encyclopedia.html       # 硬件百科
+├── mobile-hardware.html    # 手机硬件知识
+├── other-devices.html      # 其他设备知识
+├── builder.html            # 装机模拟器
+├── quiz.html               # 知识测验
+├── achievements.html       # 成就系统
+├── login.html              # 登录/注册页面
+├── src/
+│   ├── css/
+│   │   └── style.css       # 主样式文件
+│   └── js/
+│       └── script.js       # 主脚本文件
+├── netlify.toml            # Netlify部署配置
+├── DEPLOYMENT.md           # 部署说明文档
+└── README.md               # 项目说明文档
+```
+
+---
+
+## 🚀 快速开始
+
+### 本地运行
+
+1. **克隆仓库**
+   ```bash
+   git clone https://github.com/badhope/hardware-studying.git
+   cd hardware-studying
+   ```
+
+2. **启动本地服务器**
+   
+   使用Python内置服务器：
+   ```bash
+   python -m http.server 8000
+   ```
+   
+   或使用Node.js的http-server：
+   ```bash
+   npx http-server
+   ```
+
+3. **访问网站**
+   
+   打开浏览器访问 `http://localhost:8000`
+
+### 在线访问
+
+直接访问部署地址：[硬件学习网站](https://badhope.github.io/hardware-studying/)
+
+---
+
+## 🎨 功能特性
+
+### 可折叠侧边栏
+- 支持展开/折叠切换，节省屏幕空间
+- 平滑的CSS过渡动画
+- 状态持久化（localStorage）
+- 响应式设计，移动端自动隐藏
+
+### 响应式导航
+- 桌面端：侧边栏导航
+- 移动端：底部导航栏 + "更多"弹出菜单
+- 自动适配不同屏幕尺寸
+
+### 视觉优化
+- 玻璃态设计风格（Glassmorphism）
+- 渐变色彩系统
+- 粒子动画背景
+- 流畅的过渡动画
+
+---
+
+## 📦 第三方资源
+
+本项目使用的所有第三方资源均为免费开源，符合商业使用许可：
+
+### 图标库
+| 资源名称 | 许可证 | 说明 |
+|---------|--------|------|
+| [Font Awesome 6.4.0](https://fontawesome.com/) | [Font Awesome Free License](https://fontawesome.com/license/free) | 免费图标库，用于界面图标 |
+
+### CSS框架
+| 资源名称 | 许可证 | 说明 |
+|---------|--------|------|
+| [Tailwind CSS](https://tailwindcss.com/) | [MIT License](https://github.com/tailwindlabs/tailwindcss/blob/master/LICENSE) | 实用优先的CSS框架 |
+
+### 字体
+| 资源名称 | 许可证 | 说明 |
+|---------|--------|------|
+| [Orbitron](https://fonts.google.com/specimen/Orbitron) | [Open Font License](https://scripts.sil.org/OFL) | 科技感显示字体 |
+| [Noto Sans SC](https://fonts.google.com/noto/specimen/Noto+Sans+SC) | [Open Font License](https://scripts.sil.org/OFL) | 中文正文字体 |
+
+### CDN服务
+| 资源名称 | 说明 |
+|---------|------|
+| [jsDelivr](https://www.jsdelivr.com/) | 开源CDN服务 |
+| [Google Fonts](https://fonts.google.com/) | 字体CDN服务 |
+| [cdnjs](https://cdnjs.com/) | Font Awesome CDN |
+
+---
+
+## 🛠️ 技术栈
+
+- **前端框架**: HTML5 + CSS3 + JavaScript (ES6+)
+- **CSS框架**: Tailwind CSS (CDN)
+- **图标库**: Font Awesome 6.4.0
+- **字体**: Google Fonts (Orbitron, Noto Sans SC)
+- **部署平台**: GitHub Pages / Netlify
+
+---
+
 ## 🚀 小白专属学习路线，跟着走就对了！
 超简单5步，带你从硬件小白变身朋友圈装机大神：
 
@@ -66,7 +181,7 @@
 ## 💡 写在最后
 很多人觉得硬件是发烧友的专利，其实不是。在这个人人都能接触AI、数字创作的时代，懂一点硬件知识，就像开车懂一点基础的机械知识一样，能帮你避坑、省钱，还能解锁更多数字世界的乐趣。
 
-不用怕自己学不会，谁还不是从“这是啥？那是啥？”过来的呢~ 只要你愿意点开这个网站，就已经迈出了最棒的一步！
+不用怕自己学不会，谁还不是从"这是啥？那是啥？"过来的呢~ 只要你愿意点开这个网站，就已经迈出了最棒的一步！
 
 ---
 
@@ -77,6 +192,12 @@
 - 也可以把你的想法和建议发送到邮箱：**x18825407105@outlook.com**
 
 不管你是硬件大佬，还是刚入门的小白，你的每一份贡献，都能让这个项目帮助到更多人！
+
+---
+
+## 📄 许可证
+
+本项目采用 [MIT License](LICENSE) 开源协议。
 
 ---
 
