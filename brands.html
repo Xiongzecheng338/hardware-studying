@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="硬件品牌大全，深入介绍 Intel、AMD、NVIDIA、ASUS 等知名硬件品牌的历史、产品线和特色技术">
+<meta name="keywords" content="硬件品牌，Intel,AMD,NVIDIA,华硕，微星，技嘉，品牌介绍，显卡品牌，CPU 品牌">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>硬件品牌大全 - 硬件探索者</title>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+<style>
+.brand-hero {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(6, 182, 212, 0.2));
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.brand-card {
+  background: rgba(16, 26, 41, 0.6);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.brand-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3);
+}
+
+.brand-logo {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: 'Orbitron', sans-serif;
+  margin: 0 auto 20px;
+}
+
+.brand-logo.intel {
+  background: linear-gradient(135deg, #0068B5, #00C7FD);
+  color: white;
+}
+
+.brand-logo.amd {
+  background: linear-gradient(135deg, #ED1C24, #FF4D4D);
+  color: white;
+}
+
+.brand-logo.nvidia {
+  background: linear-gradient(135deg, #76B900, #A4D600);
+  color: white;
+}
+
+.brand-logo.asus {
+  background: linear-gradient(135deg, #004B8D, #0078D7);
+  color: white;
+}
+
+.brand-logo.msi {
+  background: linear-gradient(135deg, #FF0000, #FF4D4D);
+  color: white;
+}
+
+.brand-logo.gigabyte {
+  background: linear-gradient(135deg, #FF6600, #FF8533);
+  color: white;
+}
+
+.brand-logo.corsair {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: black;
+}
+
+.brand-logo.kingston {
+  background: linear-gradient(135deg, #000000, #FF0000);
+  color: white;
+}
+
+.brand-logo.samsung {
+  background: linear-gradient(135deg, #034EA2, #0078D7);
+  color: white;
+}
+
+.brand-logo.western-digital {
+  background: linear-gradient(135deg, #00539B, #0099FF);
+  color: white;
+}
+
+.brand-logo.coolermaster {
+  background: linear-gradient(135deg, #1A1A1A, #4D4D4D);
+  color: white;
+}
+
+.brand-logo.nzxt {
+  background: linear-gradient(135deg, #FFFFFF, #E0E0E0);
+  color: black;
+}
+
+.timeline-vertical {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline-vertical::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent-purple), var(--accent-cyan));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -34px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+.timeline-year {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  margin-bottom: 5px;
+}
+
+.tech-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  color: var(--accent-cyan);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 4px;
+  transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+  background: var(--accent-cyan);
+  color: var(--bg-dark);
+}
+
+.product-line {
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid var(--accent-cyan);
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 0 10px 10px 0;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.comparison-table th {
+  background: rgba(6, 182, 212, 0.1);
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.comparison-table tr:hover {
+  background: rgba(6, 182, 212, 0.05);
+}
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.category-btn {
+  padding: 10px 24px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background: var(--accent-cyan);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .brand-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div class="sidebar-header-text">
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item active" data-page="brands" onclick="navigateTo('brands')">
+        <i class="fas fa-tags"></i>
+        <span class="nav-text">品牌大全</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
+    </div>
+    
+  </nav>
+  
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="sidebar-footer">
+    <div class="sidebar-social">
+      <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+    </div>
+    <div class="sidebar-copyright">
+      &copy; 2024 硬件探索者。All rights reserved.
+    </div>
+  </div>
+</aside>
+
+<button class="mobile-menu-btn md:hidden" aria-label="菜单">
+  <i class="fas fa-bars"></i>
+</button>
+
+<main class="main-content">
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 gradient-text">
+        <i class="fas fa-tags mr-3"></i>硬件品牌大全
+      </h1>
+      <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+        深入了解全球知名硬件品牌的发展历程、产品线、核心技术和市场定位，助您做出明智的选购决策
+      </p>
+    </div>
+
+    <div class="category-filter">
+      <button class="category-btn active" data-category="all">全部品牌</button>
+      <button class="category-btn" data-category="cpu">CPU 处理器</button>
+      <button class="category-btn" data-category="gpu">显卡 GPU</button>
+      <button class="category-btn" data-category="motherboard">主板</button>
+      <button class="category-btn" data-category="memory">内存</button>
+      <button class="category-btn" data-category="storage">存储</button>
+      <button class="category-btn" data-category="peripheral">外设</button>
+    </div>
+
+    <div class="brand-grid">
+      <!-- Intel -->
+      <div class="brand-card rounded-2xl p-6" data-category="cpu">
+        <div class="brand-logo intel">Intel</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">Intel 英特尔</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">美国 • 成立于 1968 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1968 年 7 月 18 日</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">美国加州圣克拉拉</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">创始人</span>
+            <span class="text-white font-medium">罗伯特·诺伊斯、戈登·摩尔</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">高端/主流</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">Core 酷睿系列</div>
+            <div class="text-gray-400 text-xs mt-1">i3/i5/i7/i9 - 主流至旗舰处理器</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Xeon 至强系列</div>
+            <div class="text-gray-400 text-xs mt-1">工作站和服务器处理器</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Arc 锐炫系列</div>
+            <div class="text-gray-400 text-xs mt-1">独立显卡产品</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">超线程技术</span>
+            <span class="tech-badge">Turbo Boost</span>
+            <span class="tech-badge">DL Boost</span>
+            <span class="tech-badge">XeSS</span>
+            <span class="tech-badge">混合架构</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-history mr-2"></i>发展历程</h4>
+          <div class="timeline-vertical">
+            <div class="timeline-item">
+              <div class="timeline-year">1971</div>
+              <div class="text-gray-300 text-sm">推出世界首款微处理器 4004</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1978</div>
+              <div class="text-gray-300 text-sm">发布 8086，确立 x86 架构</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1993</div>
+              <div class="text-gray-300 text-sm">Pentium 处理器问世</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2006</div>
+              <div class="text-gray-300 text-sm">Core 2 Duo 发布，酷睿时代开启</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2020</div>
+              <div class="text-gray-300 text-sm">推出 11 代酷睿，10nm 工艺成熟</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+          <div class="text-blue-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            Intel 作为 x86 架构的奠基者，长期占据 CPU 市场主导地位。以强大的单核性能、稳定的兼容性和完善的生态系统著称。近年来面临 AMD 激烈竞争，但仍在游戏性能和市场占有率方面保持优势。
+          </p>
+        </div>
+      </div>
+
+      <!-- AMD -->
+      <div class="brand-card rounded-2xl p-6" data-category="cpu gpu">
+        <div class="brand-logo amd">AMD</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">AMD 超威半导体</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">美国 • 成立于 1969 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1969 年 5 月 1 日</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">美国加州圣克拉拉</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">创始人</span>
+            <span class="text-white font-medium">杰里·桑德斯等</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">高性价比/多核性能</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">Ryzen 锐龙系列</div>
+            <div class="text-gray-400 text-xs mt-1">R3/R5/R7/R9 - Zen 架构处理器</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Radeon RX 系列</div>
+            <div class="text-gray-400 text-xs mt-1">RX 5000/6000/7000 显卡</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">EPYC 霄龙系列</div>
+            <div class="text-gray-400 text-xs mt-1">数据中心服务器处理器</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">Zen 架构</span>
+            <span class="tech-badge">SMT 同步多线程</span>
+            <span class="tech-badge">3D V-Cache</span>
+            <span class="tech-badge">FSR 超采样</span>
+            <span class="tech-badge">FSR 3.0</span>
+            <span class="tech-badge">AMD 3D</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-history mr-2"></i>发展历程</h4>
+          <div class="timeline-vertical">
+            <div class="timeline-item">
+              <div class="timeline-year">1975</div>
+              <div class="text-gray-300 text-sm">推出 Am2900 系列处理器</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2003</div>
+              <div class="text-gray-300 text-sm">Athlon 64 首款 64 位 CPU</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2006</div>
+              <div class="text-gray-300 text-sm">收购 ATI，进入显卡市场</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2017</div>
+              <div class="text-gray-300 text-sm">Ryzen 发布，Zen 架构崛起</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2020</div>
+              <div class="text-gray-300 text-sm">Ryzen 5000 性能全面领先</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+          <div class="text-red-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            AMD 以"性价比"和"多核性能"著称，Zen 架构后实现华丽转身。CPU 产品核心数量多，多线程性能强劲；GPU 产品支持 FSR 开源超采样技术。是唯一同时拥有 CPU 和 GPU 技术的厂商，异构计算能力强。
+          </p>
+        </div>
+      </div>
+
+      <!-- NVIDIA -->
+      <div class="brand-card rounded-2xl p-6" data-category="gpu">
+        <div class="brand-logo nvidia">NVIDIA</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">NVIDIA 英伟达</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">美国 • 成立于 1993 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1993 年 4 月 5 日</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">美国加州圣克拉拉</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">创始人</span>
+            <span class="text-white font-medium">黄仁勋、克里斯·马拉科夫斯基</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">高端/专业级</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">GeForce RTX 系列</div>
+            <div class="text-gray-400 text-xs mt-1">RTX 30/40 系列游戏显卡</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">GeForce GTX 系列</div>
+            <div class="text-gray-400 text-xs mt-1">GTX 16 系列主流显卡</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Tesla/A100 系列</div>
+            <div class="text-gray-400 text-xs mt-1">数据中心 AI 计算卡</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">RT Core 光追核心</span>
+            <span class="tech-badge">Tensor Core</span>
+            <span class="tech-badge">DLSS 3.5</span>
+            <span class="tech-badge">CUDA</span>
+            <span class="tech-badge">Reflex</span>
+            <span class="tech-badge">Broadcast</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-history mr-2"></i>发展历程</h4>
+          <div class="timeline-vertical">
+            <div class="timeline-item">
+              <div class="timeline-year">1999</div>
+              <div class="text-gray-300 text-sm">GeForce 256 首款 GPU</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2006</div>
+              <div class="text-gray-300 text-sm">推出 CUDA 并行计算架构</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2018</div>
+              <div class="text-gray-300 text-sm">RTX 20 系列引入光线追踪</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2020</div>
+              <div class="text-gray-300 text-sm">RTX 30 系 Ampere 架构</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2022</div>
+              <div class="text-gray-300 text-sm">RTX 40 系 Ada 架构，DLSS 3.0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-green-900/20 border border-green-500/30 rounded-lg">
+          <div class="text-green-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            NVIDIA 是 GPU 技术的先驱和领导者，在图形渲染、AI 计算、深度学习领域占据主导地位。以强大的光追性能、DLSS 超采样技术和完善的 CUDA 生态系统著称。产品线覆盖游戏、专业创作、数据中心全领域。
+          </p>
+        </div>
+      </div>
+
+      <!-- ASUS -->
+      <div class="brand-card rounded-2xl p-6" data-category="motherboard gpu">
+        <div class="brand-logo asus">ASUS</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">ASUS 华硕</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">台湾 • 成立于 1989 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1989 年 4 月 1 日</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">台湾台北市</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">创始人</span>
+            <span class="text-white font-medium">童子贤、谢伟琦等</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">高端/电竞</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">ROG 玩家国度</div>
+            <div class="text-gray-400 text-xs mt-1">旗舰电竞主板、显卡</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">TUF Gaming</div>
+            <div class="text-gray-400 text-xs mt-1">耐用电竞装备</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Prime 大师系列</div>
+            <div class="text-gray-400 text-xs mt-1">商务办公主板</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">AI 超频</span>
+            <span class="tech-badge">Aura Sync</span>
+            <span class="text-badge">ROG BIOS</span>
+            <span class="tech-badge">散热装甲</span>
+            <span class="tech-badge">DrMOS</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+          <div class="text-blue-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            华硕是全球最大的主板制造商，ROG 玩家国度系列代表高端电竞品牌。以出色的 BIOS 设计、强大的供电用料、完善的 RGB 灯效生态著称。产品线丰富，从入门到旗舰全覆盖，售后服务完善。
+          </p>
+        </div>
+      </div>
+
+      <!-- MSI -->
+      <div class="brand-card rounded-2xl p-6" data-category="motherboard gpu">
+        <div class="brand-logo msi">MSI</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">MSI 微星</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">台湾 • 成立于 1986 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1986 年 8 月</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">台湾新北市</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">主流/电竞</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">MEG 系列</div>
+            <div class="text-gray-400 text-xs mt-1">旗舰电竞主板</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">MPG 系列</div>
+            <div class="text-gray-400 text-xs mt-1">游戏玩家主板</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Gaming X 系列</div>
+            <div class="text-gray-400 text-xs mt-1">游戏显卡</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">Mystic Light</span>
+            <span class="tech-badge">Afterburner</span>
+            <span class="tech-badge">Frozr 散热</span>
+            <span class="tech-badge">军规认证</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+          <div class="text-red-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            微星是老牌主板和显卡厂商，以扎实的用料和出色的散热设计闻名。Afterburner 超频软件用户广泛，MEG 系列主板定位高端。性价比高，中端产品竞争力强，电竞产品线丰富。
+          </p>
+        </div>
+      </div>
+
+      <!-- Gigabyte -->
+      <div class="brand-card rounded-2xl p-6" data-category="motherboard gpu">
+        <div class="brand-logo gigabyte">GIGABYTE</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">GIGABYTE 技嘉</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">台湾 • 成立于 1986 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1986 年</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">台湾新北市</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">主流/高端</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">AORUS 雕系列</div>
+            <div class="text-gray-400 text-xs mt-1">高端电竞主板显卡</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Gaming 系列</div>
+            <div class="text-gray-400 text-xs mt-1">游戏主板显卡</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">UD 系列</div>
+            <div class="text-gray-400 text-xs mt-1">入门级主板</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">Ultra Durable</span>
+            <span class="tech-badge">RGB Fusion</span>
+            <span class="tech-badge">WINDFORCE</span>
+            <span class="tech-badge">双 BIOS</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-orange-900/20 border border-orange-500/30 rounded-lg">
+          <div class="text-orange-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            技嘉以"超耐久"技术闻名，主板用料扎实，寿命长。AORUS 雕系列定位高端电竞，设计独特。显卡风之力散热系统口碑良好。产品线齐全，性价比突出，售后服务网络完善。
+          </p>
+        </div>
+      </div>
+
+      <!-- Corsair -->
+      <div class="brand-card rounded-2xl p-6" data-category="memory peripheral">
+        <div class="brand-logo corsair">CORSAIR</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">CORSAIR 美商海盗船</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">美国 • 成立于 1994 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1994 年</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">美国加州弗里蒙特</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">高端/发烧级</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">Vengeance 系列</div>
+            <div class="text-gray-400 text-xs mt-1">高性能内存</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Dominators</div>
+            <div class="text-gray-400 text-xs mt-1">旗舰内存条</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">iCUE 生态</div>
+            <div class="text-gray-400 text-xs mt-1">RGB 外设产品</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">iCUE 灯控</span>
+            <span class="tech-badge">XMS 技术</span>
+            <span class="tech-badge">DHX 散热</span>
+            <span class="tech-badge">RGB 同步</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+          <div class="text-yellow-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            海盗船以高端内存起家，现已扩展到 RGB 外设、电源、散热器等领域。iCUE 生态系统强大，灯效同步出色。产品定位高端，品质可靠，是发烧友和 RGB 爱好者的首选品牌。
+          </p>
+        </div>
+      </div>
+
+      <!-- Kingston -->
+      <div class="brand-card rounded-2xl p-6" data-category="memory storage">
+        <div class="brand-logo kingston">Kingston</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">Kingston 金士顿</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">美国 • 成立于 1987 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1987 年</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">美国加州芳泉谷</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">全价位段</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">Fury 系列</div>
+            <div class="text-gray-400 text-xs mt-1">游戏内存和 SSD</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Predator 系列</div>
+            <div class="text-gray-400 text-xs mt-1">旗舰高性能内存</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">NVMe SSD 系列</div>
+            <div class="text-gray-400 text-xs mt-1">固态硬盘产品</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">Plug N Play</span>
+            <span class="tech-badge">XMP 2.0</span>
+            <span class="tech-badge">散热马甲</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-gray-900/20 border border-gray-500/30 rounded-lg">
+          <div class="text-gray-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            金士顿是全球最大的独立内存产品制造商，以可靠性和兼容性著称。产品线覆盖从入门到旗舰全价位段，性价比高。Fury 系列游戏内存和 Predator 旗舰系列深受玩家喜爱。
+          </p>
+        </div>
+      </div>
+
+      <!-- Samsung -->
+      <div class="brand-card rounded-2xl p-6" data-category="memory storage">
+        <div class="brand-logo samsung">SAMSUNG</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">SAMSUNG 三星</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">韩国 • 成立于 1938 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1938 年 3 月 1 日</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">韩国首尔</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">高端/旗舰</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">990 PRO 系列</div>
+            <div class="text-gray-400 text-xs mt-1">旗舰 PCIe 4.0 SSD</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">980/970 系列</div>
+            <div class="text-gray-400 text-xs mt-1">主流 NVMe SSD</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">DDR5 内存</div>
+            <div class="text-gray-400 text-xs mt-1">新一代内存模组</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">V-NAND</span>
+            <span class="tech-badge">Phoenix 主控</span>
+            <span class="tech-badge">DRAM 缓存</span>
+            <span class="tech-badge">Magician</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+          <div class="text-blue-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            三星是全球最大的存储芯片制造商，垂直整合能力强。SSD 产品性能领先，可靠性高，但价格较贵。Magician 管理软件功能完善，固件更新及时。是追求极致性能用户的首选。
+          </p>
+        </div>
+      </div>
+
+      <!-- Cooler Master -->
+      <div class="brand-card rounded-2xl p-6" data-category="peripheral">
+        <div class="brand-logo coolermaster">CoolerMaster</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">Cooler Master 酷冷至尊</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">台湾 • 成立于 1992 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">1992 年</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">台湾台北市</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">主流/高端</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">ML 系列水冷</div>
+            <div class="text-gray-400 text-xs mt-1">一体式 CPU 水冷散热器</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">Hyper 系列风冷</div>
+            <div class="text-gray-400 text-xs mt-1">塔式 CPU 风冷散热器</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">机箱产品</div>
+            <div class="text-gray-400 text-xs mt-1">中塔/全塔机箱</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">MasterLiquid</span>
+            <span class="tech-badge">RGB 灯效</span>
+            <span class="tech-badge">静音风扇</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-gray-900/20 border border-gray-500/30 rounded-lg">
+          <div class="text-gray-400 text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            酷冷至尊是老牌散热解决方案提供商，产品线覆盖风冷、水冷、机箱、电源。性价比高，产品设计多样化，从入门到高端全覆盖。散热性能可靠，噪音控制良好。
+          </p>
+        </div>
+      </div>
+
+      <!-- NZXT -->
+      <div class="brand-card rounded-2xl p-6" data-category="peripheral">
+        <div class="brand-logo nzxt">NZXT</div>
+        <h3 class="text-2xl font-display font-bold text-white text-center mb-2">NZXT 恩杰</h3>
+        <p class="text-gray-400 text-sm text-center mb-4">美国 • 成立于 2004 年</p>
+        
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">成立时间</span>
+            <span class="text-white font-medium">2004 年</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">总部</span>
+            <span class="text-white font-medium">美国加州洛杉矶</span>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-gray-400 text-sm">市场定位</span>
+            <span class="text-white font-medium">高端/设计感</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-microchip mr-2"></i>核心产品线</h4>
+          <div class="product-line">
+            <div class="text-white font-bold">Kraken 系列水冷</div>
+            <div class="text-gray-400 text-xs mt-1">带屏幕一体式水冷</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">H 系列机箱</div>
+            <div class="text-gray-400 text-xs mt-1">简约设计机箱</div>
+          </div>
+          <div class="product-line">
+            <div class="text-white font-bold">F 系列风扇</div>
+            <div class="text-gray-400 text-xs mt-1">RGB 机箱风扇</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-cyan-400 font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>独家技术</h4>
+          <div class="flex flex-wrap">
+            <span class="tech-badge">CAM 软件</span>
+            <span class="tech-badge">LCD 屏幕</span>
+            <span class="tech-badge">简约设计</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-white/10 border border-white/30 rounded-lg">
+          <div class="text-white text-xs font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>品牌特点</div>
+          <p class="text-gray-300 text-xs">
+            恩杰以简约白色设计闻名，产品颜值高。Kraken 水冷系列配备 LCD 屏幕，可显示温度、GIF 动画。CAM 控制软件界面友好。定位高端，价格较贵，适合追求外观和品质的用户。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 p-8 bg-gradient-to-r from-purple-900/30 via-blue-900/30 to-cyan-900/30 rounded-2xl border border-cyan-500/30">
+      <h3 class="text-2xl font-display font-bold text-white mb-6 text-center">
+        <i class="fas fa-chart-bar mr-2"></i>品牌对比指南
+      </h3>
+      
+      <div class="overflow-x-auto">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>品牌</th>
+              <th>优势领域</th>
+              <th>价格区间</th>
+              <th>适合人群</th>
+              <th>推荐指数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-white">Intel</td>
+              <td class="text-gray-300">CPU 单核性能、游戏优化</td>
+              <td class="text-gray-300">中高</td>
+              <td class="text-gray-300">游戏玩家、办公用户</td>
+              <td class="text-yellow-400">★★★★★</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-white">AMD</td>
+              <td class="text-gray-300">多核性能、性价比</td>
+              <td class="text-gray-300">中</td>
+              <td class="text-gray-300">多任务、内容创作</td>
+              <td class="text-yellow-400">★★★★★</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-white">NVIDIA</td>
+              <td class="text-gray-300">光追性能、AI 加速</td>
+              <td class="text-gray-300">高</td>
+              <td class="text-gray-300">3A 大作、AI 计算</td>
+              <td class="text-yellow-400">★★★★★</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-white">ASUS</td>
+              <td class="text-gray-300">BIOS 设计、RGB 生态</td>
+              <td class="text-gray-300">中高</td>
+              <td class="text-gray-300">发烧友、电竞玩家</td>
+              <td class="text-yellow-400">★★★★☆</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-white">MSI</td>
+              <td class="text-gray-300">散热设计、超频软件</td>
+              <td class="text-gray-300">中</td>
+              <td class="text-gray-300">游戏玩家、超频爱好者</td>
+              <td class="text-yellow-400">★★★★☆</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-white">GIGABYTE</td>
+              <td class="text-gray-300">耐用性、性价比</td>
+              <td class="text-gray-300">中</td>
+              <td class="text-gray-300">实用主义、长期用户</td>
+              <td class="text-yellow-400">★★★★☆</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-12 p-6 bg-black/30 rounded-xl border border-cyan-500/20">
+      <h4 class="text-xl font-display font-bold text-white mb-4">
+        <i class="fas fa-shopping-cart mr-2"></i>选购建议
+      </h4>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <div class="text-cyan-400 font-bold mb-2"><i class="fas fa-money-bill mr-1"></i>预算优先</div>
+          <p class="text-gray-400 text-sm">
+            预算有限时，AMD CPU + 华硕/微星主板是性价比之选。显卡可选择 AMD Radeon 系列，同价位核心数量更多。
+          </p>
+        </div>
+        <div>
+          <div class="text-purple-400 font-bold mb-2"><i class="fas fa-gamepad mr-1"></i>游戏优先</div>
+          <p class="text-gray-400 text-sm">
+            纯游戏用户，Intel 酷睿 i5/i7 + NVIDIA RTX 显卡组合游戏性能最佳。华硕 ROG 或微星 Gaming X 系列是不错选择。
+          </p>
+        </div>
+        <div>
+          <div class="text-blue-400 font-bold mb-2"><i class="fas fa-briefcase mr-1"></i>生产力优先</div>
+          <p class="text-gray-400 text-sm">
+            视频剪辑、3D 渲染等多核应用，AMD Ryzen 7/9 系列性价比更高。搭配大容量高速内存和 NVMe SSD 提升效率。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+<script>
+// 分类筛选
+document.querySelectorAll('.category-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    
+    const category = this.dataset.category;
+    document.querySelectorAll('.brand-card').forEach(card => {
+      if (category === 'all' || card.dataset.category.includes(category)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="硬件探索者功能演示页面，展示整合后的各类资源和功能">
+<meta name="keywords" content="功能演示，资源整合，图表可视化，动画效果">
+<title>功能演示 - 硬件探索者</title>
+
+<!-- 核心资源 -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- 动画库 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- 图表库 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- 自定义样式 -->
+<link rel="stylesheet" href="src/css/enhanced.css">
+<link rel="stylesheet" href="src/css/style.css">
+
+<style>
+.demo-section {
+  min-height: 400px;
+  margin: 40px 0;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(16, 26, 41, 0.5);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<main class="container mx-auto px-4 py-8">
+  <!-- 页面标题 -->
+  <div class="text-center mb-12 animate__animated animate__fadeInDown">
+    <h1 class="text-5xl font-display font-bold mb-4 gradient-text">
+      <i class="fas fa-magic mr-3"></i>功能演示中心
+    </h1>
+    <p class="text-xl text-gray-400">
+      展示整合后的各类前端资源和增强功能
+    </p>
+  </div>
+
+  <!-- 动画效果演示 -->
+  <div class="demo-section">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">
+      <i class="fas fa-film mr-2"></i>动画效果演示
+    </h2>
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="card text-center animate-fade-in" data-animation="fade-in">
+        <div class="text-4xl text-cyan-400 mb-3"><i class="fas fa-sun"></i></div>
+        <div class="text-white font-bold">渐入动画</div>
+        <div class="text-xs text-gray-400 mt-2">animate-fade-in</div>
+      </div>
+      <div class="card text-center animate-fade-in-up" data-animation="fade-in-up">
+        <div class="text-4xl text-purple-400 mb-3"><i class="fas fa-arrow-up"></i></div>
+        <div class="text-white font-bold">渐入向上</div>
+        <div class="text-xs text-gray-400 mt-2">animate-fade-in-up</div>
+      </div>
+      <div class="card text-center animate-scale-in" data-animation="scale-in">
+        <div class="text-4xl text-blue-400 mb-3"><i class="fas fa-expand"></i></div>
+        <div class="text-white font-bold">缩放进入</div>
+        <div class="text-xs text-gray-400 mt-2">animate-scale-in</div>
+      </div>
+      <div class="card text-center animate-pulse" data-animation="pulse">
+        <div class="text-4xl text-green-400 mb-3"><i class="fas fa-heartbeat"></i></div>
+        <div class="text-white font-bold">脉冲动画</div>
+        <div class="text-xs text-gray-400 mt-2">animate-pulse</div>
+      </div>
+    </div>
+    <button class="btn btn-primary mt-6" onclick="replayAnimations()">
+      <i class="fas fa-redo"></i> 重播动画
+    </button>
+  </div>
+
+  <!-- 图表可视化演示 -->
+  <div class="demo-section">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">
+      <i class="fas fa-chart-bar mr-2"></i>图表可视化
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="card">
+        <h3 class="text-lg font-bold text-cyan-400 mb-4">CPU 性能对比</h3>
+        <canvas id="cpuChart" height="200"></canvas>
+      </div>
+      <div class="card">
+        <h3 class="text-lg font-bold text-purple-400 mb-4">GPU 市场份额</h3>
+        <canvas id="gpuChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- 组件样式演示 -->
+  <div class="demo-section">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">
+      <i class="fas fa-cubes mr-2"></i>组件样式
+    </h2>
+    <div class="space-y-6">
+      <!-- 按钮 -->
+      <div>
+        <h3 class="text-lg font-bold text-white mb-4">按钮样式</h3>
+        <div class="flex gap-4 flex-wrap">
+          <button class="btn btn-primary">
+            <i class="fas fa-star"></i> 主要按钮
+          </button>
+          <button class="btn btn-secondary">
+            <i class="fas fa-times"></i> 次要按钮
+          </button>
+          <button class="btn" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white;">
+            <i class="fas fa-check"></i> 成功按钮
+          </button>
+          <button class="btn" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white;">
+            <i class="fas fa-exclamation"></i> 危险按钮
+          </button>
+        </div>
+      </div>
+
+      <!-- 标签 -->
+      <div>
+        <h3 class="text-lg font-bold text-white mb-4">标签样式</h3>
+        <div class="flex gap-3 flex-wrap">
+          <span class="tag tag-cyan">青色标签</span>
+          <span class="tag tag-purple">紫色标签</span>
+          <span class="tag tag-blue">蓝色标签</span>
+          <span class="tag" style="background: rgba(34, 197, 94, 0.15); color: #22c55e; border-color: rgba(34, 197, 94, 0.3);">成功标签</span>
+          <span class="tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">警告标签</span>
+        </div>
+      </div>
+
+      <!-- 进度条 -->
+      <div>
+        <h3 class="text-lg font-bold text-white mb-4">进度条</h3>
+        <div class="space-y-4 max-w-md">
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm text-gray-400">CPU 使用率</span>
+              <span class="text-sm text-cyan-400 font-bold">75%</span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 75%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm text-gray-400">内存使用率</span>
+              <span class="text-sm text-purple-400 font-bold">60%</span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 60%; background: linear-gradient(90deg, #9333ea, #7c3aed);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 交互效果演示 -->
+  <div class="demo-section">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">
+      <i class="fas fa-mouse-pointer mr-2"></i>交互效果
+    </h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card hover:scale-105 transition-transform cursor-pointer">
+        <div class="text-4xl text-cyan-400 mb-3"><i class="fas fa-search"></i></div>
+        <h3 class="text-white font-bold mb-2">搜索功能</h3>
+        <p class="text-gray-400 text-sm">支持全文检索、关键词高亮、实时搜索建议</p>
+      </div>
+      <div class="card hover:scale-105 transition-transform cursor-pointer">
+        <div class="text-4xl text-purple-400 mb-3"><i class="fas fa-bookmark"></i></div>
+        <h3 class="text-white font-bold mb-2">书签系统</h3>
+        <p class="text-gray-400 text-sm">一键收藏页面、本地存储管理、快速访问</p>
+      </div>
+      <div class="card hover:scale-105 transition-transform cursor-pointer">
+        <div class="text-4xl text-blue-400 mb-3"><i class="fas fa-chart-line"></i></div>
+        <h3 class="text-white font-bold mb-2">进度跟踪</h3>
+        <p class="text-gray-400 text-sm">学习进度记录、自动保存、可视化展示</p>
+      </div>
+    </div>
+    <div class="mt-6 flex gap-4">
+      <button class="btn btn-primary" onclick="showNotificationDemo()">
+        <i class="fas fa-bell"></i> 通知演示
+      </button>
+      <button class="btn btn-secondary" onclick="showConfirmDemo()">
+        <i class="fas fa-question"></i> 确认框演示
+      </button>
+    </div>
+  </div>
+
+  <!-- 数据展示演示 -->
+  <div class="demo-section">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">
+      <i class="fas fa-database mr-2"></i>数据服务
+    </h2>
+    <div class="card">
+      <h3 class="text-lg font-bold text-cyan-400 mb-4">硬件数据加载演示</h3>
+      <button class="btn btn-primary mb-4" onclick="loadHardwareData()">
+        <i class="fas fa-download"></i> 加载 CPU 数据
+      </button>
+      <div id="hardwareData" class="grid md:grid-cols-2 gap-4">
+        <div class="text-gray-400">点击上方按钮加载数据</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/core-enhanced.js"></script>
+<script>
+// 初始化粒子效果
+new ParticlesPro('particles');
+
+// 图表初始化
+function initCharts() {
+  // CPU 性能对比图
+  const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+  new Chart(cpuCtx, {
+    type: 'bar',
+    data: {
+      labels: ['i9-14900K', 'R9 7950X3D', 'i7-14700K', 'R7 7800X3D'],
+      datasets: [{
+        label: '单核性能',
+        data: [1850, 1780, 1820, 1900],
+        backgroundColor: 'rgba(6, 182, 212, 0.6)',
+        borderColor: 'rgba(6, 182, 212, 1)',
+        borderWidth: 1
+      }, {
+        label: '多核性能',
+        data: [4200, 4500, 3900, 3600],
+        backgroundColor: 'rgba(147, 51, 234, 0.6)',
+        borderColor: 'rgba(147, 51, 234, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: '#94a3b8' }
+        }
+      },
+      scales: {
+        y: {
+          grid: { color: 'rgba(148, 163, 184, 0.1)' },
+          ticks: { color: '#94a3b8' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { color: '#94a3b8' }
+        }
+      }
+    }
+  });
+
+  // GPU 市场份额图
+  const gpuCtx = document.getElementById('gpuChart').getContext('2d');
+  new Chart(gpuCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['NVIDIA', 'AMD', 'Intel'],
+      datasets: [{
+        data: [65, 25, 10],
+        backgroundColor: [
+          'rgba(118, 185, 0, 0.6)',
+          'rgba(237, 28, 36, 0.6)',
+          'rgba(0, 119, 255, 0.6)'
+        ],
+        borderColor: [
+          'rgba(118, 185, 0, 1)',
+          'rgba(237, 28, 36, 1)',
+          'rgba(0, 119, 255, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#94a3b8' }
+        }
+      }
+    }
+  });
+}
+
+// 重播动画
+function replayAnimations() {
+  const cards = document.querySelectorAll('.demo-section:first-child .card');
+  cards.forEach((card, index) => {
+    card.style.animation = 'none';
+    setTimeout(() => {
+      card.style.animation = '';
+    }, 10);
+  });
+}
+
+// 通知演示
+function showNotificationDemo() {
+  if (window.UI) {
+    UI.notify('这是一个成功通知！', 'success');
+    setTimeout(() => UI.notify('这是一个信息通知！', 'info'), 1500);
+    setTimeout(() => UI.notify('这是一个警告通知！', 'warning'), 3000);
+  } else {
+    alert('通知系统已加载');
+  }
+}
+
+// 确认框演示
+async function showConfirmDemo() {
+  if (window.UI) {
+    const result = await UI.confirm('这是一个确认对话框，您确定要继续吗？');
+    console.log('用户选择:', result);
+  } else {
+    alert('确认框功能已加载');
+  }
+}
+
+// 加载硬件数据
+async function loadHardwareData() {
+  const container = document.getElementById('hardwareData');
+  container.innerHTML = '<div class="col-span-2 text-center py-8"><div class="spinner mx-auto mb-4"></div><div class="text-cyan-400">正在加载数据...</div></div>';
+  
+  try {
+    const response = await fetch('src/data/hardware.json');
+    const data = await response.json();
+    
+    const html = data.cpus.slice(0, 4).map(cpu => `
+      <div class="card p-4">
+        <div class="flex items-center justify-between mb-3">
+          <h4 class="text-white font-bold">${cpu.name}</h4>
+          <span class="text-cyan-400 font-bold">¥${cpu.price}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-xs text-gray-400">
+          <div><i class="fas fa-microchip mr-1"></i>${cpu.cores}核心</div>
+          <div><i class="fas fa-layer-group mr-1"></i>${cpu.threads}线程</div>
+          <div><i class="fas fa-tachometer-alt mr-1"></i>${cpu.boostClock}</div>
+          <div><i class="fas fa-bolt mr-1"></i>${cpu.tdp}</div>
+        </div>
+        <div class="mt-3 flex gap-2">
+          <span class="text-xs px-2 py-1 bg-cyan-900/30 text-cyan-400 rounded">单核：${cpu.score.single}</span>
+          <span class="text-xs px-2 py-1 bg-purple-900/30 text-purple-400 rounded">多核：${cpu.score.multi}</span>
+        </div>
+      </div>
+    `).join('');
+    
+    container.innerHTML = html;
+  } catch (error) {
+    container.innerHTML = '<div class="text-red-400 text-center py-8">加载失败：' + error.message + '</div>';
+  }
+}
+
+// 页面加载完成
+document.addEventListener('DOMContentLoaded', () => {
+  initCharts();
+  
+  // GSAP 动画演示
+  gsap.from('.demo-section', {
+    scrollTrigger: {
+      trigger: '.demo-section',
+      start: 'top 80%',
+    },
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.2
+  });
+});
+</script>
+</body>
+</html>

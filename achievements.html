@@ -3,10 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="成就系统，通过完成学习任务和测验获得成就，解锁新的学习内容">
+<meta name="keywords" content="成就系统,学习成就,硬件达人,等级系统,学习激励">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>成就系统 - 硬件探索者</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
@@ -79,13 +92,6 @@
       </div>
     </div>
     
-    <div class="nav-section">
-      <div class="nav-section-title">账户</div>
-      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-        <i class="fas fa-user-circle"></i>
-        <span class="nav-text">登录/注册</span>
-      </div>
-    </div>
   </nav>
   
   <div class="progress-section">
@@ -143,10 +149,6 @@
       <div class="mobile-nav-more-popup-item active" data-page="achievements">
         <i class="fas fa-trophy"></i>
         <span>成就系统</span>
-      </div>
-      <div class="mobile-nav-more-popup-item" data-page="login">
-        <i class="fas fa-user-circle"></i>
-        <span>登录/注册</span>
       </div>
     </div>
   </div>
@@ -277,6 +279,122 @@
               <div class="text-sm text-[var(--text-secondary)]">成功完成5次装机模拟</div>
             </div>
             <div class="text-sm text-[var(--text-secondary)]">0/5</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">满分学员</div>
+              <div class="text-sm text-[var(--text-secondary)]">在任意测验中获得满分</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">未解锁</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">学习狂人</div>
+              <div class="text-sm text-[var(--text-secondary)]">连续7天登录学习</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">0/7</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">手机达人</div>
+              <div class="text-sm text-[var(--text-secondary)]">完成手机硬件模块学习</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">未解锁</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">设备专家</div>
+              <div class="text-sm text-[var(--text-secondary)]">完成其他设备模块学习</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">未解锁</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="badge locked">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">评论互动</div>
+              <div class="text-sm text-[var(--text-secondary)]">发表10条评论或回复</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">0/10</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 glass rounded-2xl p-6">
+        <h2 class="font-bold text-xl mb-4">等级系统</h2>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gray-500 to-gray-600 flex items-center justify-center">
+              <span class="font-bold">1</span>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">硬件新手</div>
+              <div class="text-sm text-[var(--text-secondary)]">0-100 经验值</div>
+            </div>
+            <div class="text-sm text-[var(--accent-cyan)]">当前等级</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 opacity-60">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+              <span class="font-bold">2</span>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">硬件学徒</div>
+              <div class="text-sm text-[var(--text-secondary)]">100-300 经验值</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">需要 88 经验值</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 opacity-60">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+              <span class="font-bold">3</span>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">硬件爱好者</div>
+              <div class="text-sm text-[var(--text-secondary)]">300-600 经验值</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">需要 288 经验值</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 opacity-60">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+              <span class="font-bold">4</span>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">硬件达人</div>
+              <div class="text-sm text-[var(--text-secondary)]">600-1000 经验值</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">需要 588 经验值</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 opacity-60">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
+              <span class="font-bold">5</span>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">硬件专家</div>
+              <div class="text-sm text-[var(--text-secondary)]">1000-2000 经验值</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">需要 988 经验值</div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 opacity-60">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
+              <span class="font-bold">6</span>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold">硬件大师</div>
+              <div class="text-sm text-[var(--text-secondary)]">2000+ 经验值</div>
+            </div>
+            <div class="text-sm text-[var(--text-secondary)]">需要 1988 经验值</div>
           </div>
         </div>
       </div>

@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GPU 技术深度解析：从图形渲染到 AI 计算的完整技术指南，包含架构详解、性能评测和选购建议">
+    <meta name="keywords" content="GPU,显卡，图形处理器，CUDA,光线追踪，AI 计算，深度学习，硬件评测">
+    <meta name="author" content="硬件探索者">
+    <meta name="theme-color" content="#7c3aed">
+    <title>GPU 技术深度解析 - 硬件探索者</title>
+    
+    <!-- 预连接关键资源 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" defer>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 自定义 CSS -->
+    <link rel="stylesheet" href="../src/css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#7c3aed',
+                        secondary: '#06b6d4',
+                        accent: '#f59e0b'
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        sans: ['Noto Sans SC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- 导航栏 -->
+    <nav class="navbar-fixed glass navbar z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-2 text-xl font-bold font-orbitron">
+                    <i class="fas fa-microchip text-primary"></i>
+                    <span class="gradient-text">硬件探索者</span>
+                </a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="../index.html" class="nav-link">首页</a>
+                    <a href="../encyclopedia.html" class="nav-link">百科全书</a>
+                    <a href="../beginner-guide.html" class="nav-link">入门指南</a>
+                    <a href="../learning-path.html" class="nav-link">学习路径</a>
+                    <a href="../quiz.html" class="nav-link">测验挑战</a>
+                    <a href="../achievements.html" class="nav-link">成就系统</a>
+                </div>
+                <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="mobile-menu glass">
+        <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="../encyclopedia.html" class="nav-link">百科全书</a>
+            <a href="../beginner-guide.html" class="nav-link">入门指南</a>
+            <a href="../learning-path.html" class="nav-link">学习路径</a>
+            <a href="../quiz.html" class="nav-link">测验挑战</a>
+            <a href="../achievements.html" class="nav-link">成就系统</a>
+        </div>
+    </div>
+
+    <!-- 文章头部 -->
+    <header class="article-header">
+        <div class="container mx-auto px-4 py-16">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center space-x-2 mb-4 px-4 py-2 rounded-full bg-purple-900/50 border border-purple-500/30">
+                    <i class="fas fa-video text-purple-400"></i>
+                    <span class="text-purple-300 text-sm">图形处理技术</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 font-orbitron gradient-text">
+                    GPU 技术深度解析
+                </h1>
+                <p class="text-xl text-gray-300 mb-8">
+                    从图形渲染到 AI 计算的完整技术指南
+                </p>
+                <div class="flex flex-wrap justify-center items-center gap-6 text-gray-400 text-sm">
+                    <span><i class="fas fa-clock mr-2"></i>阅读时间：约 28 分钟</span>
+                    <span><i class="fas fa-calendar mr-2"></i>更新日期：2026-03-06</span>
+                    <span><i class="fas fa-eye mr-2"></i>浏览次数：<span class="view-count">1,234</span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 文章主体 -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <!-- 左侧目录 -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24 glass rounded-2xl p-6 border border-purple-500/20">
+                    <h3 class="text-lg font-bold mb-4 font-orbitron text-purple-400">
+                        <i class="fas fa-list mr-2"></i>目录导航
+                    </h3>
+                    <nav class="space-y-2 text-sm">
+                        <a href="#section1" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">1. GPU 的基本架构</span>
+                        </a>
+                        <a href="#section2" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">2. 图形渲染管线</span>
+                        </a>
+                        <a href="#section3" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">3. CUDA 与并行计算</span>
+                        </a>
+                        <a href="#section4" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">4. 光线追踪技术</span>
+                        </a>
+                        <a href="#section5" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">5. 显存技术详解</span>
+                        </a>
+                        <a href="#section6" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">6. NVIDIA vs AMD vs Intel</span>
+                        </a>
+                        <a href="#section7" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">7. AI 与深度学习应用</span>
+                        </a>
+                        <a href="#section8" class="block py-2 px-3 rounded-lg hover:bg-purple-900/30 transition-colors">
+                            <span class="text-purple-300">8. 选购建议与推荐</span>
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- 文章内容 -->
+            <article class="lg:col-span-3 space-y-12">
+                <!-- 第 1 节：GPU 的基本架构 -->
+                <section id="section1" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-microchip mr-3"></i>GPU 的基本架构
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            GPU（Graphics Processing Unit，图形处理器）是专门用于图像和图形运算的处理器。与 CPU 不同，GPU 拥有数千个小型计算核心，专为并行处理大量数据而设计。
+                        </p>
+                        <div class="highlight-box">
+                            <p class="text-purple-200">
+                                <strong>核心概念：</strong>GPU 的并行架构使其在处理图形渲染、科学计算、人工智能等需要大量并行计算的任务时具有显著优势。
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">1.1 GPU 与 CPU 的架构差异</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3"><i class="fas fa-brain mr-2"></i>CPU 架构</h4>
+                            <ul class="space-y-2 text-gray-300">
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>少量高性能核心（4-64 核）</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>强大的单线程性能</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>复杂的控制逻辑</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>大容量缓存</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>适合串行任务</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-3"><i class="fas fa-layer-group mr-2"></i>GPU 架构</h4>
+                            <ul class="space-y-2 text-gray-300">
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>数千个小型核心</li>
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>高吞吐量并行计算</li>
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>简化的控制逻辑</li>
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>高带宽显存</li>
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>适合并行任务</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8 overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-purple-500/30">
+                                    <th class="text-left py-3 px-4 text-purple-400">特性</th>
+                                    <th class="text-left py-3 px-4 text-blue-400">CPU</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">GPU</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">核心数量</td>
+                                    <td class="py-3 px-4">4-64 个</td>
+                                    <td class="py-3 px-4">1000-10000+ 个</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">设计目标</td>
+                                    <td class="py-3 px-4">低延迟</td>
+                                    <td class="py-3 px-4">高吞吐量</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">缓存大小</td>
+                                    <td class="py-3 px-4">大（MB 级）</td>
+                                    <td class="py-3 px-4">小（KB 级/核心）</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4">适用场景</td>
+                                    <td class="py-3 px-4">通用计算、系统控制</td>
+                                    <td class="py-3 px-4">图形渲染、并行计算</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">1.2 GPU 的核心组件</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-cube text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-purple-400 mb-2">流处理器（Stream Processors）</h4>
+                                <p class="text-gray-300">
+                                    GPU 的基本计算单元，负责执行着色器程序。NVIDIA 称为 CUDA 核心，AMD 称为流处理器。每个流处理器都能独立执行计算任务。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-cyan-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-memory text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-2">显存（VRAM）</h4>
+                                <p class="text-gray-300">
+                                    专门用于存储图形数据的高速内存，包括纹理、帧缓冲区、几何数据等。现代 GPU 使用 GDDR6/GDDR6X 显存，带宽可达 500GB/s 以上。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-project-diagram text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-orange-400 mb-2">张量核心（Tensor Cores）</h4>
+                                <p class="text-gray-300">
+                                    专门用于矩阵运算的硬件单元，大幅加速深度学习推理和训练。NVIDIA 从 Volta 架构开始引入，RTX 系列标配。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-raygun text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-green-400 mb-2">光线追踪核心（RT Cores）</h4>
+                                <p class="text-gray-300">
+                                    专门用于加速光线追踪计算的硬件单元，可快速计算光线与几何体的交点。NVIDIA RTX 20 系列首次引入。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 第 2 节：图形渲染管线 -->
+                <section id="section2" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-project-diagram mr-3"></i>图形渲染管线
+                    </h2>
+                    
+                    <p class="text-gray-300 mb-8">
+                        图形渲染管线是 GPU 将 3D 模型转换为 2D 图像的完整流程，包含多个阶段，每个阶段都有特定的处理任务。
+                    </p>
+
+                    <div class="timeline mb-8">
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-blue-500">
+                                <i class="fas fa-file-code text-white"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-blue-400 mb-2">1. 应用阶段（Application Stage）</h4>
+                                <p class="text-gray-300">CPU 准备场景数据，包括几何体、材质、光照等信息，并提交给 GPU。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-purple-500">
+                                <i class="fas fa-vector-square text-white"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-purple-400 mb-2">2. 顶点处理（Vertex Processing）</h4>
+                                <p class="text-gray-300">顶点着色器处理每个顶点，执行坐标变换、光照计算等操作。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-pink-500">
+                                <i class="fas fa-shapes text-white"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-pink-400 mb-2">3. 图元装配（Primitive Assembly）</h4>
+                                <p class="text-gray-300">将顶点组装成三角形、线段等图元，进行裁剪和光栅化准备。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-orange-500">
+                                <i class="fas fa-th text-white"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-orange-400 mb-2">4. 光栅化（Rasterization）</h4>
+                                <p class="text-gray-300">将图元转换为像素片段（fragments），确定哪些像素被覆盖。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-green-500">
+                                <i class="fas fa-palette text-white"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-green-400 mb-2">5. 像素处理（Fragment Processing）</h4>
+                                <p class="text-gray-300">像素着色器计算每个像素的颜色，应用纹理、光照等效果。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-cyan-500">
+                                <i class="fas fa-layer-group text-white"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-cyan-400 mb-2">6. 输出合并（Output Merger）</h4>
+                                <p class="text-gray-300">执行深度测试、模板测试、混合等操作，生成最终像素值。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning-box mb-8">
+                        <p class="text-yellow-200">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>性能瓶颈：</strong>图形管线中任何一个阶段都可能成为性能瓶颈。优化时需要分析具体瓶颈所在，而非盲目提升某个阶段的性能。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">2.1 着色器类型</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3">顶点着色器</h4>
+                            <p class="text-gray-300 text-sm mb-3">
+                                处理每个顶点，执行坐标变换、法线计算、纹理坐标生成等任务。
+                            </p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 模型视图变换</li>
+                                <li>• 顶点光照计算</li>
+                                <li>• 顶点动画</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-3">像素着色器</h4>
+                            <p class="text-gray-300 text-sm mb-3">
+                                处理每个像素片段，计算最终颜色值，应用纹理、阴影等效果。
+                            </p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 纹理采样</li>
+                                <li>• 光照和阴影</li>
+                                <li>• 材质效果</li>
+                            </ul>
+                        </div>
+                        <div class="bg-pink-900/30 rounded-xl p-6 border border-pink-500/30">
+                            <h4 class="font-bold text-pink-400 mb-3">几何着色器</h4>
+                            <p class="text-gray-300 text-sm mb-3">
+                                处理图元，可以创建或销毁几何体，实现 tessellation 等功能。
+                            </p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 曲面细分</li>
+                                <li>• 几何体生成</li>
+                                <li>• 粒子系统</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 第 3 节：CUDA 与并行计算 -->
+                <section id="section3" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-code mr-3"></i>CUDA 与并行计算
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            CUDA（Compute Unified Device Architecture）是 NVIDIA 推出的通用并行计算架构，允许开发者直接使用 GPU 进行非图形计算任务。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">3.1 CUDA 编程模型</h3>
+                    
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8 font-mono text-sm overflow-x-auto">
+                        <pre class="text-gray-300"><code><span class="text-purple-400">// CUDA 内核函数示例</span>
+<span class="text-cyan-400">__global__</span> <span class="text-green-400">void</span> <span class="text-yellow-400">vectorAdd</span>(<span class="text-green-400">float</span> *a, <span class="text-green-400">float</span> *b, <span class="text-green-400">float</span> *c, <span class="text-green-400">int</span> n) {
+    <span class="text-gray-400">// 计算全局线程 ID</span>
+    <span class="text-green-400">int</span> i = <span class="text-yellow-400">blockIdx</span>.x * <span class="text-yellow-400">blockDim</span>.x + <span class="text-yellow-400">threadIdx</span>.x;
+    
+    <span class="text-purple-400">// 边界检查</span>
+    <span class="text-cyan-400">if</span> (i < n) {
+        c[i] = a[i] + b[i];
+    }
+}
+
+<span class="text-gray-400">// 主机代码调用内核</span>
+<span class="text-green-400">int</span> <span class="text-yellow-400">main</span>() {
+    <span class="text-green-400">int</span> n = <span class="text-orange-400">1000000</span>;
+    <span class="text-green-400">int</span> threadsPerBlock = <span class="text-orange-400">256</span>;
+    <span class="text-green-400">int</span> blocksPerGrid = (n + threadsPerBlock - <span class="text-orange-400">1</span>) / threadsPerBlock;
+    
+    <span class="text-yellow-400">vectorAdd</span><<<blocksPerGrid, threadsPerBlock>>>(a, b, c, n);
+}</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">3.2 GPU 并行计算优势</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-purple-400 mb-3"><i class="fas fa-bolt mr-2"></i>高吞吐量</h4>
+                            <p class="text-purple-200 text-sm">
+                                GPU 可同时执行数千个线程，适合数据并行任务。在矩阵运算、图像处理等场景中，性能可达 CPU 的 10-100 倍。
+                            </p>
+                        </div>
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-cyan-400 mb-3"><i class="fas fa-chart-line mr-2"></i>内存带宽</h4>
+                            <p class="text-cyan-200 text-sm">
+                                GDDR6X 显存提供超过 1TB/s 的带宽，远高于 DDR4 内存的 50GB/s，适合大数据量处理。
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">3.3 通用计算应用场景</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-brain text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-blue-400 mb-1">深度学习训练</h4>
+                                <p class="text-gray-300 text-sm">神经网络的前向传播和反向传播都是高度并行的矩阵运算，GPU 可大幅加速训练过程。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-flask text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-purple-400 mb-1">科学计算</h4>
+                                <p class="text-gray-300 text-sm">物理模拟、气象预测、分子动力学等科学计算领域广泛使用 GPU 加速。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-video text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-green-400 mb-1">视频编解码</h4>
+                                <p class="text-gray-300 text-sm">GPU 内置的编解码器可硬件加速 H.264、H.265、AV1 等格式的编码和解码。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-coins text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-orange-400 mb-1">加密货币挖矿</h4>
+                                <p class="text-gray-300 text-sm">GPU 的并行计算能力适合某些加密货币的哈希计算，但能耗较高。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 第 4 节：光线追踪技术 -->
+                <section id="section4" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-raygun mr-3"></i>光线追踪技术
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            光线追踪是一种渲染技术，通过模拟光线在场景中的传播路径，生成高度逼真的图像。与传统光栅化相比，光线追踪能更准确地模拟光照、反射、折射等光学现象。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">4.1 光线追踪原理</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800/50 rounded-xl p-6">
+                            <h4 class="font-bold text-purple-400 mb-4">传统光栅化</h4>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><i class="fas fa-times text-red-400 mr-2"></i>近似的光照模型</li>
+                                <li><i class="fas fa-times text-red-400 mr-2"></i>反射效果有限</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>性能高效</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>实时渲染可行</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-4">光线追踪</h4>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>物理精确的光照</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>真实的反射和折射</li>
+                                <li><i class="fas fa-times text-red-400 mr-2"></i>计算量大</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>RT 核心加速</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8">
+                        <h4 class="font-bold text-purple-400 mb-4">光线追踪基本算法</h4>
+                        <pre class="text-gray-300 text-sm overflow-x-auto"><code><span class="text-cyan-400">for</span> (每个像素) {
+    <span class="text-gray-400">// 从相机发射光线</span>
+    Ray ray = <span class="text-yellow-400">createRay</span>(pixel);
+    
+    <span class="text-gray-400">// 与场景求交</span>
+    HitInfo hit = <span class="text-yellow-400">intersectScene</span>(ray);
+    
+    <span class="text-cyan-400">if</span> (hit.hit) {
+        <span class="text-gray-400">// 计算光照（包括反射、折射）</span>
+        color = <span class="text-yellow-400">calculateLighting</span>(hit);
+        
+        <span class="text-gray-400">// 递归追踪反射和折射光线</span>
+        <span class="text-cyan-400">if</span> (hit.material.isReflective) {
+            Ray reflectedRay = <span class="text-yellow-400">reflect</span>(ray, hit);
+            color += <span class="text-yellow-400">traceRay</span>(reflectedRay, depth + <span class="text-orange-400">1</span>);
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">4.2 NVIDIA RT 核心</h3>
+                    
+                    <p class="text-gray-300 mb-6">
+                        NVIDIA 从 Turing 架构（RTX 20 系列）开始引入 RT 核心，专门用于加速光线追踪计算。RT 核心能快速计算光线与三角形的交点，性能比传统 CUDA 核心高 10 倍以上。
+                    </p>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-purple-500/30">
+                                    <th class="text-left py-3 px-4 text-purple-400">架构</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">RT 核心版本</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">光线/秒</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">代表产品</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">Turing</td>
+                                    <td class="py-3 px-4">第 1 代</td>
+                                    <td class="py-3 px-4">5 GRay/s</td>
+                                    <td class="py-3 px-4">RTX 2060-2080 Ti</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">Ampere</td>
+                                    <td class="py-3 px-4">第 2 代</td>
+                                    <td class="py-3 px-4">10 GRay/s</td>
+                                    <td class="py-3 px-4">RTX 3060-3090</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">Ada Lovelace</td>
+                                    <td class="py-3 px-4">第 3 代</td>
+                                    <td class="py-3 px-4">25 GRay/s</td>
+                                    <td class="py-3 px-4">RTX 4060-4090</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="warning-box mt-6">
+                        <p class="text-yellow-200">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>性能影响：</strong>开启光线追踪会显著降低游戏帧率。建议搭配 DLSS/FSR 等超采样技术使用，以平衡画质和性能。
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 第 5 节：显存技术详解 -->
+                <section id="section5" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-memory mr-3"></i>显存技术详解
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            显存（Video RAM，VRAM）是 GPU 专用的高速内存，用于存储纹理、帧缓冲区、深度缓冲区、几何数据等图形数据。显存容量和带宽直接影响 GPU 性能。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">5.1 显存类型演进</h3>
+                    
+                    <div class="timeline mb-8">
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-gray-500">
+                                <span class="text-white text-xs font-bold">1980s</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-gray-400 mb-2">SRAM / DRAM</h4>
+                                <p class="text-gray-300">早期显卡使用系统内存或专用 SRAM，带宽极低。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-blue-500">
+                                <span class="text-white text-xs font-bold">1990s</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-blue-400 mb-2">SDRAM</h4>
+                                <p class="text-gray-300">同步动态随机存取内存，带宽提升到 GB/s 级别。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-purple-500">
+                                <span class="text-white text-xs font-bold">2000s</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-purple-400 mb-2">GDDR3 / GDDR4</h4>
+                                <p class="text-gray-300">图形专用 DDR 内存，带宽和频率大幅提升。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-pink-500">
+                                <span class="text-white text-xs font-bold">2010s</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-pink-400 mb-2">GDDR5 / GDDR5X</h4>
+                                <p class="text-gray-300">主流显存标准，带宽达到 200-400GB/s。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-orange-500">
+                                <span class="text-white text-xs font-bold">2018+</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-orange-400 mb-2">GDDR6 / GDDR6X</h4>
+                                <p class="text-gray-300">当前主流，带宽可达 500GB/s - 1TB/s。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-green-500">
+                                <span class="text-white text-xs font-bold">2016+</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-green-400 mb-2">HBM / HBM2</h4>
+                                <p class="text-gray-300">高带宽内存，堆叠式设计，带宽超过 1TB/s。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">5.2 显存带宽计算</h3>
+                    
+                    <div class="highlight-box mb-8">
+                        <p class="text-purple-200">
+                            <strong>带宽公式：</strong>显存带宽 = 显存频率 × 显存位宽 ÷ 8
+                        </p>
+                        <p class="text-purple-200 text-sm mt-2">
+                            例如：GDDR6 显存，频率 14Gbps，位宽 256-bit，带宽 = 14 × 256 ÷ 8 = 448 GB/s
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8 overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-purple-500/30">
+                                    <th class="text-left py-3 px-4 text-purple-400">显存类型</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">典型频率</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">位宽</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">带宽</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">代表显卡</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">GDDR5</td>
+                                    <td class="py-3 px-4">7 Gbps</td>
+                                    <td class="py-3 px-4">256-bit</td>
+                                    <td class="py-3 px-4">224 GB/s</td>
+                                    <td class="py-3 px-4">GTX 1070</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">GDDR6</td>
+                                    <td class="py-3 px-4">14 Gbps</td>
+                                    <td class="py-3 px-4">256-bit</td>
+                                    <td class="py-3 px-4">448 GB/s</td>
+                                    <td class="py-3 px-4">RTX 3070</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">GDDR6X</td>
+                                    <td class="py-3 px-4">19 Gbps</td>
+                                    <td class="py-3 px-4">384-bit</td>
+                                    <td class="py-3 px-4">912 GB/s</td>
+                                    <td class="py-3 px-4">RTX 3090</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">HBM2</td>
+                                    <td class="py-3 px-4">2 Gbps</td>
+                                    <td class="py-3 px-4">4096-bit</td>
+                                    <td class="py-3 px-4">1024 GB/s</td>
+                                    <td class="py-3 px-4">RX Vega 64</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">5.3 显存容量需求</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3">4-6GB</h4>
+                            <p class="text-gray-300 text-sm mb-3">入门级游戏</p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 1080p 中低画质</li>
+                                <li>• 电竞网游</li>
+                                <li>• 轻度内容创作</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-3">8-12GB</h4>
+                            <p class="text-gray-300 text-sm mb-3">主流游戏</p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 1440p 高画质</li>
+                                <li>• 3A 大作</li>
+                                <li>• 视频剪辑</li>
+                            </ul>
+                        </div>
+                        <div class="bg-pink-900/30 rounded-xl p-6 border border-pink-500/30">
+                            <h4 class="font-bold text-pink-400 mb-3">16-24GB</h4>
+                            <p class="text-gray-300 text-sm mb-3">高端应用</p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 4K 极致画质</li>
+                                <li>• 3D 渲染</li>
+                                <li>• AI 训练</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 第 6 节：NVIDIA vs AMD vs Intel -->
+                <section id="section6" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-scale-balanced mr-3"></i>NVIDIA vs AMD vs Intel
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            当前独立 GPU 市场主要由 NVIDIA 和 AMD 两家主导，Intel 于 2022 年推出 Arc 系列重新进入独立显卡市场。三家各有优势和技术特色。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">6.1 品牌技术对比</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-green-900/30 rounded-xl p-6 border border-green-500/30">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-eye text-green-400 text-2xl mr-3"></i>
+                                <h4 class="font-bold text-green-400 text-lg">NVIDIA</h4>
+                            </div>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>光线追踪性能领先</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>DLSS 超采样技术</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>CUDA 生态完善</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>AI 和深度学习优势</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>功耗控制优秀</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-900/30 rounded-xl p-6 border border-red-500/30">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-gamepad text-red-400 text-2xl mr-3"></i>
+                                <h4 class="font-bold text-red-400 text-lg">AMD</h4>
+                            </div>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><i class="fas fa-check text-red-400 mr-2"></i>性价比高</li>
+                                <li><i class="fas fa-check text-red-400 mr-2"></i>FSR 开源跨平台</li>
+                                <li><i class="fas fa-check text-red-400 mr-2"></i>大显存配置</li>
+                                <li><i class="fas fa-check text-red-400 mr-2"></i>传统光栅化强劲</li>
+                                <li><i class="fas fa-check text-red-400 mr-2"></i>CPU+GPU 协同优化</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-laptop-code text-blue-400 text-2xl mr-3"></i>
+                                <h4 class="font-bold text-blue-400 text-lg">Intel</h4>
+                            </div>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>价格竞争力强</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>XeSS 超采样技术</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>视频编解码强大</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>DX12 Ultimate 支持</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>CPU 集成方案</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8 overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-purple-500/30">
+                                    <th class="text-left py-3 px-4 text-purple-400">特性</th>
+                                    <th class="text-left py-3 px-4 text-green-400">NVIDIA</th>
+                                    <th class="text-left py-3 px-4 text-red-400">AMD</th>
+                                    <th class="text-left py-3 px-4 text-blue-400">Intel</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">光线追踪</td>
+                                    <td class="py-3 px-4"><i class="fas fa-check text-green-400"></i> RT 核心</td>
+                                    <td class="py-3 px-4"><i class="fas fa-check text-green-400"></i> Ray 加速器</td>
+                                    <td class="py-3 px-4"><i class="fas fa-check text-green-400"></i> Xe 核心</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">超采样</td>
+                                    <td class="py-3 px-4">DLSS 3.5</td>
+                                    <td class="py-3 px-4">FSR 3.0</td>
+                                    <td class="py-3 px-4">XeSS 1.3</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">显存类型</td>
+                                    <td class="py-3 px-4">GDDR6X</td>
+                                    <td class="py-3 px-4">GDDR6</td>
+                                    <td class="py-3 px-4">GDDR6</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">软件生态</td>
+                                    <td class="py-3 px-4">GeForce Experience</td>
+                                    <td class="py-3 px-4">Adrenalin</td>
+                                    <td class="py-3 px-4">Arc Control</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4">价格区间</td>
+                                    <td class="py-3 px-4">中高端</td>
+                                    <td class="py-3 px-4">全价位</td>
+                                    <td class="py-3 px-4">入门中端</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">6.2 产品线对比</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-purple-400">NVIDIA GeForce RTX 40 系列</span>
+                                    <i class="fas fa-chevron-down accordion-icon"></i>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="p-4 text-gray-300">
+                                        <ul class="space-y-2 text-sm">
+                                            <li>• <strong>RTX 4090:</strong> 旗舰型号，24GB GDDR6X，适合 4K 游戏和专业创作</li>
+                                            <li>• <strong>RTX 4080:</strong> 高端型号，16GB GDDR6X，4K 游戏优选</li>
+                                            <li>• <strong>RTX 4070 Ti:</strong> 中高端，12GB GDDR6X，2K 高帧率</li>
+                                            <li>• <strong>RTX 4060 Ti:</strong> 主流型号，8GB GDDR6，1080p/2K游戏</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-red-400">AMD Radeon RX 7000 系列</span>
+                                    <i class="fas fa-chevron-down accordion-icon"></i>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="p-4 text-gray-300">
+                                        <ul class="space-y-2 text-sm">
+                                            <li>• <strong>RX 7900 XTX:</strong> 旗舰型号，24GB GDDR6，传统光栅化强劲</li>
+                                            <li>• <strong>RX 7900 XT:</strong> 高端型号，20GB GDDR6，性价比高</li>
+                                            <li>• <strong>RX 7800 XT:</strong> 中高端，16GB GDDR6，2K 游戏优选</li>
+                                            <li>• <strong>RX 7700 XT:</strong> 主流型号，12GB GDDR6，1080p/2K游戏</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-blue-400">Intel Arc A 系列</span>
+                                    <i class="fas fa-chevron-down accordion-icon"></i>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="p-4 text-gray-300">
+                                        <ul class="space-y-2 text-sm">
+                                            <li>• <strong>A770:</strong> 旗舰型号，16GB GDDR6，支持 XeSS</li>
+                                            <li>• <strong>A750:</strong> 中端型号，8GB GDDR6，性价比突出</li>
+                                            <li>• <strong>A580:</strong> 入门型号，8GB GDDR6，1080p 游戏</li>
+                                            <li>• <strong>A380:</strong> 入门级，6GB GDDR6，轻度游戏和办公</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 第 7 节：AI 与深度学习应用 -->
+                <section id="section7" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-brain mr-3"></i>AI 与深度学习应用
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            GPU 的并行计算架构使其成为 AI 和深度学习任务的理想选择。现代 GPU 内置的张量核心可大幅加速矩阵运算，这是深度学习的基础。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">7.1 张量核心技术</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-purple-400 mb-3">什么是张量核心？</h4>
+                            <p class="text-purple-200 text-sm">
+                                张量核心是专门用于矩阵乘法和累加运算的硬件单元。相比传统 CUDA 核心，张量核心执行 4×4矩阵运算的效率高出 8-12 倍。
+                            </p>
+                        </div>
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-cyan-400 mb-3">应用场景</h4>
+                            <ul class="text-cyan-200 text-sm space-y-1">
+                                <li>• 深度学习训练和推理</li>
+                                <li>• AI 图像生成（Stable Diffusion）</li>
+                                <li>• 自然语言处理</li>
+                                <li>• 科学计算中的矩阵运算</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">7.2 DLSS 技术解析</h3>
+                    
+                    <p class="text-gray-300 mb-6">
+                        DLSS（Deep Learning Super Sampling）是 NVIDIA 推出的 AI 超采样技术，通过深度学习模型在较低分辨率下渲染游戏，然后 upscale 到高分辨率，大幅提升帧率同时保持画质。
+                    </p>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8">
+                        <h4 class="font-bold text-purple-400 mb-4">DLSS 版本对比</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-purple-500/30">
+                                        <th class="text-left py-3 px-4 text-purple-400">版本</th>
+                                        <th class="text-left py-3 px-4 text-purple-400">技术特点</th>
+                                        <th class="text-left py-3 px-4 text-purple-400">性能提升</th>
+                                        <th class="text-left py-3 px-4 text-purple-400">代表游戏</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-300">
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DLSS 2.0</td>
+                                        <td class="py-3 px-4">时空滤波</td>
+                                        <td class="py-3 px-4">2-3 倍</td>
+                                        <td class="py-3 px-4">控制、CS:GO</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DLSS 3.0</td>
+                                        <td class="py-3 px-4">帧生成技术</td>
+                                        <td class="py-3 px-4">3-4 倍</td>
+                                        <td class="py-3 px-4">赛博朋克 2077</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4">DLSS 3.5</td>
+                                        <td class="py-3 px-4">光线重建</td>
+                                        <td class="py-3 px-4">4-5 倍</td>
+                                        <td class="py-3 px-4">心灵杀手 2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">7.3 AI 创作应用</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-palette text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-purple-400 mb-1">Stable Diffusion</h4>
+                                <p class="text-gray-300 text-sm">开源 AI 图像生成模型，RTX 3060 12GB 即可流畅运行，生成速度可达 5-10 秒/张。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-cyan-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-video text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-1">视频超分辨率</h4>
+                                <p class="text-gray-300 text-sm">使用 AI 模型将低分辨率视频提升至 4K，Topaz Video AI 等软件依赖 GPU 加速。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-microphone text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-green-400 mb-1">语音识别与合成</h4>
+                                <p class="text-gray-300 text-sm">Whisper、VITS 等 AI 语音模型需要 GPU 进行训练和推理。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning-box mt-6">
+                        <p class="text-yellow-200">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>显存需求：</strong>AI 创作应用对显存容量要求较高。Stable Diffusion XL 建议 12GB 以上显存，大型模型训练需要 24GB+。
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 第 8 节：选购建议与推荐 -->
+                <section id="section8" class="glass rounded-2xl p-8 border border-purple-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-purple-400">
+                        <i class="fas fa-shopping-cart mr-3"></i>选购建议与推荐
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            选择 GPU 时需要根据预算、用途、显示器分辨率等因素综合考虑。以下是针对不同用户群体的推荐方案。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">8.1 按用途选择</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3"><i class="fas fa-gamepad mr-2"></i>游戏玩家</h4>
+                            <ul class="space-y-2 text-gray-300 text-sm mb-4">
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>优先关注光栅化性能</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>光线追踪按需选择</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>显存 8GB 起步</li>
+                                <li><i class="fas fa-check text-blue-400 mr-2"></i>支持 DLSS/FSR</li>
+                            </ul>
+                            <div class="text-xs text-gray-400">
+                                <p>推荐：RTX 4060 / RX 7700 XT</p>
+                            </div>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-3"><i class="fas fa-pen-fancy mr-2"></i>内容创作者</h4>
+                            <ul class="space-y-2 text-gray-300 text-sm mb-4">
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>大显存优先（12GB+）</li>
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>CUDA 生态优势</li>
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>视频编码能力</li>
+                                <li><i class="fas fa-check text-purple-400 mr-2"></i>稳定性重要</li>
+                            </ul>
+                            <div class="text-xs text-gray-400">
+                                <p>推荐：RTX 4070 Ti / RTX 4080</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-900/30 rounded-xl p-6 border border-green-500/30">
+                            <h4 class="font-bold text-green-400 mb-3"><i class="fas fa-brain mr-2"></i>AI 研究者</h4>
+                            <ul class="space-y-2 text-gray-300 text-sm mb-4">
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>张量核心性能</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>显存容量关键（16GB+）</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>FP16/INT8精度支持</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i>NVIDIA 生态优先</li>
+                            </ul>
+                            <div class="text-xs text-gray-400">
+                                <p>推荐：RTX 4080 / RTX 4090</p>
+                            </div>
+                        </div>
+                        <div class="bg-orange-900/30 rounded-xl p-6 border border-orange-500/30">
+                            <h4 class="font-bold text-orange-400 mb-3"><i class="fas fa-desktop mr-2"></i>办公用户</h4>
+                            <ul class="space-y-2 text-gray-300 text-sm mb-4">
+                                <li><i class="fas fa-check text-orange-400 mr-2"></i>集成显卡足够</li>
+                                <li><i class="fas fa-check text-orange-400 mr-2"></i>轻度游戏选入门独显</li>
+                                <li><i class="fas fa-check text-orange-400 mr-2"></i>多显示器支持</li>
+                                <li><i class="fas fa-check text-orange-400 mr-2"></i>低功耗优先</li>
+                            </ul>
+                            <div class="text-xs text-gray-400">
+                                <p>推荐：UHD Graphics / GTX 1650</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-purple-300">8.2 预算推荐方案</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-r from-blue-900/50 to-blue-800/30 rounded-xl p-6 border border-blue-500/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-blue-400 text-lg">入门级（1500-2500 元）</h4>
+                                <span class="text-xs text-blue-300 bg-blue-900/50 px-3 py-1 rounded-full">1080p 游戏</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>推荐型号：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• NVIDIA GTX 1650 / RTX 3050</li>
+                                        <li>• AMD RX 6600</li>
+                                        <li>• Intel Arc A380</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>性能定位：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 1080p 中画质 60FPS</li>
+                                        <li>• 电竞网游高帧率</li>
+                                        <li>• 轻度内容创作</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-purple-900/50 to-purple-800/30 rounded-xl p-6 border border-purple-500/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-purple-400 text-lg">主流级（2500-4000 元）</h4>
+                                <span class="text-xs text-purple-300 bg-purple-900/50 px-3 py-1 rounded-full">2K 游戏</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>推荐型号：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• NVIDIA RTX 4060 / 4060 Ti</li>
+                                        <li>• AMD RX 7700 XT</li>
+                                        <li>• Intel Arc A750</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>性能定位：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 2K 高画质 60FPS+</li>
+                                        <li>• 光线追踪入门</li>
+                                        <li>• 视频剪辑流畅</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-pink-900/50 to-pink-800/30 rounded-xl p-6 border border-pink-500/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-pink-400 text-lg">高端级（4000-7000 元）</h4>
+                                <span class="text-xs text-pink-300 bg-pink-900/50 px-3 py-1 rounded-full">4K 游戏</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>推荐型号：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• NVIDIA RTX 4070 Ti / 4070 Super</li>
+                                        <li>• AMD RX 7800 XT / 7900 GRE</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>性能定位：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 4K 中高画质 60FPS</li>
+                                        <li>• 光线追踪流畅</li>
+                                        <li>• 专业创作加速</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-orange-900/50 to-orange-800/30 rounded-xl p-6 border border-orange-500/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-orange-400 text-lg">旗舰级（7000 元以上）</h4>
+                                <span class="text-xs text-orange-300 bg-orange-900/50 px-3 py-1 rounded-full">极致性能</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>推荐型号：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• NVIDIA RTX 4080 / 4080 Super</li>
+                                        <li>• AMD RX 7900 XT / 7900 XTX</li>
+                                        <li>• NVIDIA RTX 4090（顶级）</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>性能定位：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 4K 极致画质 120FPS+</li>
+                                        <li>• 光线追踪 + DLSS</li>
+                                        <li>• AI 训练和渲染</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-box mt-8">
+                        <p class="text-green-200">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            <strong>选购提示：</strong>显卡价格波动较大，建议关注电商促销活动。二手市场水较深，新手建议优先选择全新产品。注意电源功率匹配，高端显卡建议 750W 以上电源。
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 文章结尾 -->
+                <div class="text-center py-12">
+                    <div class="inline-block glass rounded-2xl p-8 border border-purple-500/20">
+                        <h3 class="text-2xl font-bold mb-4 font-orbitron gradient-text">继续学习</h3>
+                        <p class="text-gray-300 mb-6">
+                            掌握了 GPU 技术后，你可以继续探索以下内容：
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <a href="cpu-deep-dive.html" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors">
+                                <i class="fas fa-microchip mr-2"></i>CPU 技术解析
+                            </a>
+                            <a href="../encyclopedia.html" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 rounded-lg transition-colors">
+                                <i class="fas fa-book mr-2"></i>硬件百科
+                            </a>
+                            <a href="../builder.html" class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg transition-colors">
+                                <i class="fas fa-puzzle-piece mr-2"></i>装机模拟器
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="glass border-t border-purple-500/20 mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2026 硬件探索者。致力于提供专业、系统的硬件知识学习平台</p>
+                <p class="text-sm mt-2">
+                    <a href="../index.html" class="hover:text-purple-400 transition-colors">首页</a>
+                    <span class="mx-2">|</span>
+                    <a href="../beginner-guide.html" class="hover:text-purple-400 transition-colors">入门指南</a>
+                    <span class="mx-2">|</span>
+                    <a href="../learning-path.html" class="hover:text-purple-400 transition-colors">学习路径</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 自定义 JavaScript -->
+    <script src="../src/js/script.js"></script>
+    <script>
+        // 移动端菜单切换
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // 手风琴组件
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            item.classList.toggle('active');
+            
+            if (item.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                content.style.maxHeight = '0';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // 初始化手风琴
+        document.querySelectorAll('.accordion-item.active').forEach(item => {
+            const content = item.querySelector('.accordion-content');
+            content.style.maxHeight = content.scrollHeight + 'px';
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

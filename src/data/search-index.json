@@ -1,0 +1,114 @@
+[
+  {
+    "id": "index",
+    "url": "index.html",
+    "title": "硬件探索者 - 首页",
+    "category": "主页",
+    "keywords": ["首页", "硬件", "学习", "电脑"],
+    "content": "硬件探索者是一个专业的硬件学习平台，提供 CPU、GPU、内存等硬件知识的详细讲解"
+  },
+  {
+    "id": "encyclopedia",
+    "url": "encyclopedia.html",
+    "title": "硬件百科",
+    "category": "知识库",
+    "keywords": ["百科", "硬件知识", "CPU", "GPU", "内存", "主板"],
+    "content": "全面的硬件百科全书，包含 CPU、GPU、内存、主板、电源、散热等硬件组件的详细介绍"
+  },
+  {
+    "id": "cpu-article",
+    "url": "articles/cpu-deep-dive.html",
+    "title": "CPU 深度解析",
+    "category": "文章",
+    "keywords": ["CPU", "处理器", "核心", "线程", "缓存", "架构"],
+    "content": "深入解析 CPU 架构、核心线程、缓存系统、制程工艺等专业知识"
+  },
+  {
+    "id": "gpu-article",
+    "url": "articles/gpu-deep-dive.html",
+    "title": "GPU 技术详解",
+    "category": "文章",
+    "keywords": ["GPU", "显卡", "渲染", "光线追踪", "CUDA", "显存"],
+    "content": "详解 GPU 技术，包括图形渲染管线、CUDA 计算、光线追踪、显存技术等"
+  },
+  {
+    "id": "ram-article",
+    "url": "articles/ram-advanced-guide.html",
+    "title": "内存技术进阶",
+    "category": "文章",
+    "keywords": ["内存", "RAM", "DDR", "频率", "时序", "超频"],
+    "content": "内存技术进阶指南，涵盖 DDR 技术演进、时序参数、超频方法等"
+  },
+  {
+    "id": "history",
+    "url": "hardware-history.html",
+    "title": "硬件发展史",
+    "category": "专题",
+    "keywords": ["历史", "发展", "时间线", "演进", "里程碑"],
+    "content": "从 1971 年到 2024 年，完整记录计算机硬件的发展历程和重要里程碑"
+  },
+  {
+    "id": "brands",
+    "url": "brands.html",
+    "title": "品牌大全",
+    "category": "专题",
+    "keywords": ["品牌", "Intel", "AMD", "NVIDIA", "华硕", "微星", "技嘉"],
+    "content": "详细介绍 Intel、AMD、NVIDIA 等知名硬件品牌的历史、产品线和技术特色"
+  },
+  {
+    "id": "glossary",
+    "url": "glossary.html",
+    "title": "硬件术语词典",
+    "category": "工具",
+    "keywords": ["术语", "名词解释", "缩写", "专业词汇"],
+    "content": "收录硬件领域专业术语，提供准确易懂的名词解释"
+  },
+  {
+    "id": "tier-list",
+    "url": "tier-list.html",
+    "title": "硬件天梯图",
+    "category": "工具",
+    "keywords": ["天梯图", "排行榜", "性能对比", "排名"],
+    "content": "CPU 和 GPU 性能天梯图，直观展示各型号硬件的性能等级"
+  },
+  {
+    "id": "builds",
+    "url": "builds.html",
+    "title": "装机配置推荐",
+    "category": "工具",
+    "keywords": ["装机", "配置", "推荐", "电脑组装", "DIY"],
+    "content": "提供从入门到旗舰的多种装机配置方案，包含详细配置单和购买建议"
+  },
+  {
+    "id": "beginner",
+    "url": "beginner-guide.html",
+    "title": "新手入门指南",
+    "category": "学习",
+    "keywords": ["新手", "入门", "基础", "教程"],
+    "content": "为零基础用户准备的硬件入门指南，循序渐进学习硬件知识"
+  },
+  {
+    "id": "learning-path",
+    "url": "learning-path.html",
+    "title": "学习路径",
+    "category": "学习",
+    "keywords": ["学习路径", "规划", "系统学习"],
+    "content": "系统化的硬件学习路径，从零基础到专家的完整学习方案"
+  },
+  {
+    "id": "quiz",
+    "url": "quiz.html",
+    "title": "硬件知识测验",
+    "category": "互动",
+    "keywords": ["测验", "考试", "练习", "测试"],
+    "content": "硬件知识测验系统，包含初级、中级、高级三个难度的题目"
+  },
+  {
+    "id": "achievements",
+    "url": "achievements.html",
+    "title": "成就系统",
+    "category": "互动",
+    "keywords": ["成就", "徽章", "等级", "奖励"],
+    "content": "学习成就系统，记录学习进度，解锁各种成就徽章"
+  }
+]

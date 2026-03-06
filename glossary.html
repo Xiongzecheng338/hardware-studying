@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="硬件术语词典，全面解释 CPU、GPU、内存、主板等硬件相关专业术语和技术名词">
+<meta name="keywords" content="硬件术语，技术名词，CPU 术语，GPU 术语，内存术语，硬件词汇，专业名词解释">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>硬件术语词典 - 硬件探索者</title>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+<style>
+.search-box {
+  background: rgba(16, 26, 41, 0.8);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.search-box:focus-within {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+}
+
+.term-card {
+  background: rgba(16, 26, 41, 0.6);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.term-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+}
+
+.term-letter {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.category-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: var(--accent-cyan);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+
+.alphabet-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.alphabet-btn {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: var(--accent-cyan);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.alphabet-btn:hover,
+.alphabet-btn.active {
+  background: var(--accent-cyan);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.difficulty-basic {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.difficulty-intermediate {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.4);
+}
+
+.difficulty-advanced {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.example-box {
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid var(--accent-cyan);
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 0 8px 8px 0;
+}
+
+.related-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.related-term {
+  padding: 4px 10px;
+  background: rgba(147, 51, 234, 0.1);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  color: var(--accent-purple);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.related-term:hover {
+  background: var(--accent-purple);
+  color: white;
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div class="sidebar-header-text">
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item active" data-page="glossary" onclick="navigateTo('glossary')">
+        <i class="fas fa-spell-check"></i>
+        <span class="nav-text">术语词典</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
+    </div>
+    
+  </nav>
+  
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="sidebar-footer">
+    <div class="sidebar-social">
+      <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+    </div>
+    <div class="sidebar-copyright">
+      &copy; 2024 硬件探索者。All rights reserved.
+    </div>
+  </div>
+</aside>
+
+<button class="mobile-menu-btn md:hidden" aria-label="菜单">
+  <i class="fas fa-bars"></i>
+</button>
+
+<main class="main-content">
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 gradient-text">
+        <i class="fas fa-spell-check mr-3"></i>硬件术语词典
+      </h1>
+      <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+        收录计算机硬件领域专业术语和技术名词，提供准确、易懂的名词解释，帮助您快速理解硬件知识
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-8">
+      <div class="search-box rounded-2xl p-2 flex items-center">
+        <i class="fas fa-search text-gray-400 ml-4 text-lg"></i>
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="搜索术语、缩写或关键词..." 
+          class="w-full bg-transparent border-none outline-none px-4 py-3 text-white placeholder-gray-500"
+        />
+        <button class="px-6 py-2 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-xl text-white font-bold hover:opacity-90 transition">
+          搜索
+        </button>
+      </div>
+    </div>
+
+    <div class="alphabet-nav">
+      <button class="alphabet-btn active" data-letter="all">全部</button>
+      <button class="alphabet-btn" data-letter="A">A</button>
+      <button class="alphabet-btn" data-letter="B">B</button>
+      <button class="alphabet-btn" data-letter="C">C</button>
+      <button class="alphabet-btn" data-letter="D">D</button>
+      <button class="alphabet-btn" data-letter="E">E</button>
+      <button class="alphabet-btn" data-letter="F">F</button>
+      <button class="alphabet-btn" data-letter="G">G</button>
+      <button class="alphabet-btn" data-letter="H">H</button>
+      <button class="alphabet-btn" data-letter="I">I</button>
+      <button class="alphabet-btn" data-letter="K">K</button>
+      <button class="alphabet-btn" data-letter="L">L</button>
+      <button class="alphabet-btn" data-letter="M">M</button>
+      <button class="alphabet-btn" data-letter="N">N</button>
+      <button class="alphabet-btn" data-letter="O">O</button>
+      <button class="alphabet-btn" data-letter="P">P</button>
+      <button class="alphabet-btn" data-letter="R">R</button>
+      <button class="alphabet-btn" data-letter="S">S</button>
+      <button class="alphabet-btn" data-letter="T">T</button>
+      <button class="alphabet-btn" data-letter="U">U</button>
+      <button class="alphabet-btn" data-letter="V">V</button>
+      <button class="alphabet-btn" data-letter="X">X</button>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="termsGrid">
+      <!-- A -->
+      <div class="term-card rounded-xl p-5" data-letter="A" data-category="cpu gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">ALU</h3>
+            <div class="text-xs text-gray-400 mt-1">Arithmetic Logic Unit</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          算术逻辑单元，CPU 的核心组件，负责执行所有的算术运算（加减乘除）和逻辑运算（与或非、比较等）。现代 CPU 包含多个 ALU，可并行处理多条指令。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">架构</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-lightbulb mr-1"></i>示例</div>
+          <p class="text-gray-300 text-xs">
+            Intel Core i9-13900K 包含 32 个 ALU，可在一个时钟周期内执行多条整数运算指令。
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="FPU">FPU</span>
+          <span class="related-term" data-term="CUDA Core">CUDA Core</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="A" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">API</h3>
+            <div class="text-xs text-gray-400 mt-1">Application Programming Interface</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          应用程序编程接口，软件与硬件之间的通信协议。图形 API（如 DirectX、Vulkan、OpenGL）允许游戏和应用程序调用 GPU 的图形处理能力。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">软件</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-lightbulb mr-1"></i>常见 API</div>
+          <p class="text-gray-300 text-xs">
+            DirectX 12（Windows）、Vulkan（跨平台）、OpenGL（跨平台）、Metal（Apple）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="DirectX">DirectX</span>
+          <span class="related-term" data-term="Vulkan">Vulkan</span>
+          <span class="related-term" data-term="Ray Tracing">Ray Tracing</span>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="term-card rounded-xl p-5" data-letter="B" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">BIOS</h3>
+            <div class="text-xs text-gray-400 mt-1">Basic Input/Output System</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          基本输入输出系统，主板上的固件，负责开机自检（POST）、硬件初始化和引导操作系统。现代主板多使用 UEFI 替代传统 BIOS，提供更友好的界面和更多功能。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">主板</span>
+          <span class="category-tag">固件</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-cog mr-1"></i>功能</div>
+          <p class="text-gray-300 text-xs">
+            硬件检测、启动顺序设置、CPU 超频、内存 XMP 配置、风扇控制等
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="UEFI">UEFI</span>
+          <span class="related-term" data-term="XMP">XMP</span>
+          <span class="related-term" data-term="Overclocking">Overclocking</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="B" data-category="memory">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Bandwidth</h3>
+            <div class="text-xs text-gray-400 mt-1">带宽</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          带宽指数据传输通道在单位时间内可传输的最大数据量，通常以 GB/s 为单位。内存带宽 = 频率 × 位宽 ÷ 8。带宽越高，数据传输速度越快。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">内存</span>
+          <span class="category-tag">性能</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-calculator mr-1"></i>计算示例</div>
+          <p class="text-gray-300 text-xs">
+            DDR4-3200 内存：3200MHz × 64bit ÷ 8 = 25.6GB/s（单通道）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="DDR">DDR</span>
+          <span class="related-term" data-term="Dual Channel">Dual Channel</span>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="term-card rounded-xl p-5" data-letter="C" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Cache</h3>
+            <div class="text-xs text-gray-400 mt-1">高速缓存</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          缓存是位于 CPU 和内存之间的高速存储器，用于临时存储频繁访问的数据。分为 L1、L2、L3 三级，容量越大、延迟越低，性能越好。L1 最快但容量最小，L3 最慢但容量最大。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">性能</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-info-circle mr-1"></i>典型配置</div>
+          <p class="text-gray-300 text-xs">
+            AMD Ryzen 7 7800X3D：L1 640KB + L2 8MB + L3 96MB（3D V-Cache）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="L1 Cache">L1 Cache</span>
+          <span class="related-term" data-term="L3 Cache">L3 Cache</span>
+          <span class="related-term" data-term="3D V-Cache">3D V-Cache</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="C" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">CUDA</h3>
+            <div class="text-xs text-gray-400 mt-1">Compute Unified Device Architecture</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          CUDA 是 NVIDIA 推出的并行计算平台和编程模型，允许软件利用 GPU 的强大计算能力进行通用计算（GPGPU）。广泛应用于科学计算、AI 训练、视频编码等领域。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">计算</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-chart-line mr-1"></i>应用</div>
+          <p class="text-gray-300 text-xs">
+            AI 深度学习、视频渲染（CUDA 加速）、科学模拟、密码学计算
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="CUDA Core">CUDA Core</span>
+          <span class="related-term" data-term="Tensor Core">Tensor Core</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="C" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Core</h3>
+            <div class="text-xs text-gray-400 mt-1">核心</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          核心是 CPU 的实际计算单元，包含完整的指令执行流水线。多核 CPU 可同时执行多个任务，提升多任务处理能力。现代 CPU 通常有 4-16 个物理核心。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">架构</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-microchip mr-1"></i>核心数量</div>
+          <p class="text-gray-300 text-xs">
+            Intel Core i5-13600K：14 核心（6P+8E）20 线程<br>
+            AMD Ryzen 9 7950X：16 核心 32 线程
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="Thread">Thread</span>
+          <span class="related-term" data-term="Hyper-Threading">Hyper-Threading</span>
+        </div>
+      </div>
+
+      <!-- D -->
+      <div class="term-card rounded-xl p-5" data-letter="D" data-category="memory">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">DDR</h3>
+            <div class="text-xs text-gray-400 mt-1">Double Data Rate</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          双倍速率同步动态随机存取存储器，在每个时钟周期的上升沿和下降沿各传输一次数据，带宽是传统 SDRAM 的两倍。已发展至 DDR5 代，频率和带宽持续提升。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">内存</span>
+          <span class="category-tag">标准</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-history mr-1"></i>DDR 代数</div>
+          <p class="text-gray-300 text-xs">
+            DDR（2000）→ DDR2（2004）→ DDR3（2007）→ DDR4（2014）→ DDR5（2020）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="DDR4">DDR4</span>
+          <span class="related-term" data-term="DDR5">DDR5</span>
+          <span class="related-term" data-term="Bandwidth">Bandwidth</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="D" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">DirectX</h3>
+            <div class="text-xs text-gray-400 mt-1">DX</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          微软开发的多媒体编程接口集合，包含图形（Direct3D）、声音、输入等 API。DirectX 12 是最新版本，支持光线追踪、可变速率着色等先进特性，仅适用于 Windows。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">API</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-gamepad mr-1"></i>DX12 特性</div>
+          <p class="text-gray-300 text-xs">
+            异步计算、光线追踪（DXR）、可变速率着色（VRS）、网格着色器
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="API">API</span>
+          <span class="related-term" data-term="Ray Tracing">Ray Tracing</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="D" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">DLSS</h3>
+            <div class="text-xs text-gray-400 mt-1">Deep Learning Super Sampling</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          深度学习超级采样，NVIDIA RTX 显卡独占技术。利用 AI 和 Tensor Core，将低分辨率画面智能放大到高分辨率，在几乎不损失画质的情况下大幅提升帧率。DLSS 3.0 还支持帧生成技术。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">AI</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-chart-line mr-1"></i>性能提升</div>
+          <p class="text-gray-300 text-xs">
+            DLSS 质量模式：2K 渲染→4K 输出，帧率提升 50-100%<br>
+            DLSS 3.0 帧生成：帧率可翻倍
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="Tensor Core">Tensor Core</span>
+          <span class="related-term" data-term="RTX">RTX</span>
+          <span class="related-term" data-term="FSR">FSR</span>
+        </div>
+      </div>
+
+      <!-- E -->
+      <div class="term-card rounded-xl p-5" data-letter="E" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">E-Core</h3>
+            <div class="text-xs text-gray-400 mt-1">Efficiency Core</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          能效核心，Intel 第 12 代酷睿引入的混合架构设计。E-Core 专注于低功耗处理后台任务和轻量级负载，与高性能的 P-Core 协同工作，提升能效比。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">架构</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-microchip mr-1"></i>混合架构</div>
+          <p class="text-gray-300 text-xs">
+            Intel i9-13900K：8 个 P-Core + 16 个 E-Core = 24 核心 32 线程
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="P-Core">P-Core</span>
+          <span class="related-term" data-term="Hybrid Architecture">Hybrid Architecture</span>
+        </div>
+      </div>
+
+      <!-- F -->
+      <div class="term-card rounded-xl p-5" data-letter="F" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">FPU</h3>
+            <div class="text-xs text-gray-400 mt-1">Floating Point Unit</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          浮点运算单元，专门负责浮点数（小数）运算的硬件单元。现代 CPU 的 FPU 支持 SIMD 指令集（如 AVX、SSE），可并行处理多个浮点运算，大幅提升科学计算和图形处理能力。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">架构</span>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="ALU">ALU</span>
+          <span class="related-term" data-term="AVX">AVX</span>
+          <span class="related-term" data-term="SIMD">SIMD</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="F" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">FSR</h3>
+            <div class="text-xs text-gray-400 mt-1">FidelityFX Super Resolution</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          AMD 开发的开源超采样技术，通过算法将低分辨率画面放大到高分辨率，提升游戏帧率。FSR 3.0 支持帧生成技术，兼容 NVIDIA 和 Intel 显卡，适用范围广。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">开源</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-check-circle mr-1"></i>优势</div>
+          <p class="text-gray-300 text-xs">
+            开源免费、兼容所有显卡、无需 AI 硬件、性能提升明显
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="DLSS">DLSS</span>
+          <span class="related-term" data-term="XeSS">XeSS</span>
+        </div>
+      </div>
+
+      <!-- G -->
+      <div class="term-card rounded-xl p-5" data-letter="G" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">GPU</h3>
+            <div class="text-xs text-gray-400 mt-1">Graphics Processing Unit</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          图形处理器，专门负责图形和图像处理的微处理器。拥有数千个流处理器，擅长并行计算。除图形渲染外，还用于 AI 计算、科学计算、加密货币挖矿等领域。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">基础</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-desktop mr-1"></i>主要厂商</div>
+          <p class="text-gray-300 text-xs">
+            NVIDIA（GeForce）、AMD（Radeon）、Intel（Arc）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="CUDA">CUDA</span>
+          <span class="related-term" data-term="Ray Tracing">Ray Tracing</span>
+        </div>
+      </div>
+
+      <!-- H -->
+      <div class="term-card rounded-xl p-5" data-letter="H" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Hyper-Threading</h3>
+            <div class="text-xs text-gray-400 mt-1">超线程技术</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          Intel 的同步多线程技术，允许一个物理核心模拟出两个逻辑核心，同时处理两条线程。通过充分利用 CPU 资源，提升多任务性能约 15-30%。AMD 的类似技术称为 SMT。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">多线程</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-calculator mr-1"></i>示例</div>
+          <p class="text-gray-300 text-xs">
+            Intel i7-13700K：8P+8E = 16 核心，支持超线程 = 24 线程（P 核支持，E 核不支持）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="SMT">SMT</span>
+          <span class="related-term" data-term="Thread">Thread</span>
+        </div>
+      </div>
+
+      <!-- I -->
+      <div class="term-card rounded-xl p-5" data-letter="I" data-category="general">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">IPC</h3>
+            <div class="text-xs text-gray-400 mt-1">Instructions Per Clock</div>
+          </div>
+          <span class="difficulty-badge difficulty-advanced">高级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          每时钟周期指令数，衡量 CPU 架构效率的关键指标。IPC 越高，同频率下性能越强。Zen 3 架构 IPC 提升 19%，Zen 4 再提升 13%，是 AMD 性能反超的关键。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">性能</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-chart-line mr-1"></i>IPC 提升</div>
+          <p class="text-gray-300 text-xs">
+            AMD Zen 2 → Zen 3：IPC +19%<br>
+            Intel 11 代→12 代：IPC +18%
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="Architecture">Architecture</span>
+          <span class="related-term" data-term="Clock Speed">Clock Speed</span>
+        </div>
+      </div>
+
+      <!-- L -->
+      <div class="term-card rounded-xl p-5" data-letter="L" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Latency</h3>
+            <div class="text-xs text-gray-400 mt-1">延迟</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          延迟指数据从请求到传输完成所需的时间，通常以纳秒（ns）为单位。内存延迟 = 时序 CL 值 ÷ 频率 × 2000。低延迟对游戏性能影响显著。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">内存</span>
+          <span class="category-tag">性能</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-calculator mr-1"></i>计算示例</div>
+          <p class="text-gray-300 text-xs">
+            DDR4-3600 CL16：16 ÷ 3600 × 2000 = 8.89ns<br>
+            DDR5-6000 CL30：30 ÷ 6000 × 2000 = 10ns
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="CL">CL</span>
+          <span class="related-term" data-term="Bandwidth">Bandwidth</span>
+        </div>
+      </div>
+
+      <!-- N -->
+      <div class="term-card rounded-xl p-5" data-letter="N" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Node</h3>
+            <div class="text-xs text-gray-400 mt-1">制程节点</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          制程节点指芯片制造工艺的精细程度，以纳米（nm）为单位。节点数字越小，晶体管越密集，功耗越低，性能越强。主流已进入 5nm、7nm 时代。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">工艺</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-microchip mr-1"></i>主流制程</div>
+          <p class="text-gray-300 text-xs">
+            Intel：Intel 7（10nm Enhanced）<br>
+            AMD：TSMC 5nm、7nm<br>
+            NVIDIA：TSMC 4N（定制 5nm）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="Transistor">Transistor</span>
+          <span class="related-term" data-term="TSMC">TSMC</span>
+        </div>
+      </div>
+
+      <!-- O -->
+      <div class="term-card rounded-xl p-5" data-letter="O" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Overclocking</h3>
+            <div class="text-xs text-gray-400 mt-1">超频</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          超频是通过提高 CPU、GPU 或内存的工作频率和电压，使其运行在高于出厂设置的状态，从而获得额外性能。需要良好的散热和稳定的电源支持。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">性能</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-exclamation-triangle mr-1"></i>风险提示</div>
+          <p class="text-gray-300 text-xs">
+            可能导致系统不稳定、硬件损坏、失去保修。建议谨慎操作，逐步测试。
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="PBO">PBO</span>
+          <span class="related-term" data-term="XMP">XMP</span>
+        </div>
+      </div>
+
+      <!-- P -->
+      <div class="term-card rounded-xl p-5" data-letter="P" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">P-Core</h3>
+            <div class="text-xs text-gray-400 mt-1">Performance Core</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          性能核心，Intel 第 12 代酷睿引入的混合架构设计。P-Core 专注于高性能计算，支持超线程，频率高，适合游戏和重负载应用。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">架构</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-microchip mr-1"></i>混合架构</div>
+          <p class="text-gray-300 text-xs">
+            Intel i5-13600K：6 个 P-Core（支持超线程）+ 8 个 E-Core
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="E-Core">E-Core</span>
+          <span class="related-term" data-term="Hybrid Architecture">Hybrid Architecture</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="P" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">PCIe</h3>
+            <div class="text-xs text-gray-400 mt-1">Peripheral Component Interconnect Express</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          高速串行计算机扩展总线标准，用于连接显卡、SSD、网卡等设备。PCIe 4.0 带宽 16GT/s，PCIe 5.0 翻倍至 32GT/s。显卡通常使用 x16 通道。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">主板</span>
+          <span class="category-tag">接口</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-bolt mr-1"></i>带宽对比</div>
+          <p class="text-gray-300 text-xs">
+            PCIe 3.0 x16：15.75GB/s<br>
+            PCIe 4.0 x16：31.51GB/s<br>
+            PCIe 5.0 x16：63.02GB/s
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="NVMe">NVMe</span>
+          <span class="related-term" data-term="GPU">GPU</span>
+        </div>
+      </div>
+
+      <!-- R -->
+      <div class="term-card rounded-xl p-5" data-letter="R" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Ray Tracing</h3>
+            <div class="text-xs text-gray-400 mt-1">光线追踪</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          一种渲染技术，通过模拟光线在虚拟环境中的传播路径，生成逼真的光影效果。RTX 显卡的 RT Core 专门加速光线追踪计算，使实时光追成为可能。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">渲染</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-gamepad mr-1"></i>应用场景</div>
+          <p class="text-gray-300 text-xs">
+            反射（水面、镜面）、阴影（软阴影）、全局光照（间接照明）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="RT Core">RT Core</span>
+          <span class="related-term" data-term="DLSS">DLSS</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="R" data-category="memory">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">RGB</h3>
+            <div class="text-xs text-gray-400 mt-1">Red Green Blue</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          红绿蓝三原色 LED 灯效系统，用于硬件外观装饰。通过软件控制颜色和闪烁模式，打造个性化电脑外观。主流同步协议有 ASUS Aura Sync、MSI Mystic Light 等。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">外观</span>
+          <span class="category-tag">灯效</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-palette mr-1"></i>控制软件</div>
+          <p class="text-gray-300 text-xs">
+            ASUS Aura Sync、MSI Mystic Light、GIGABYTE RGB Fusion、Corsair iCUE
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="ARGB">ARGB</span>
+          <span class="related-term" data-term="iCUE">iCUE</span>
+        </div>
+      </div>
+
+      <!-- S -->
+      <div class="term-card rounded-xl p-5" data-letter="S" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">SMT</h3>
+            <div class="text-xs text-gray-400 mt-1">Simultaneous Multi-Threading</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          同步多线程技术，AMD 版超线程。允许一个物理核心同时执行两条线程，提升 CPU 资源利用率。Ryzen 全系列支持 SMT，16 核心可实现 32 线程。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">多线程</span>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="Hyper-Threading">Hyper-Threading</span>
+          <span class="related-term" data-term="Thread">Thread</span>
+        </div>
+      </div>
+
+      <!-- T -->
+      <div class="term-card rounded-xl p-5" data-letter="T" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Tensor Core</h3>
+            <div class="text-xs text-gray-400 mt-1">张量核心</div>
+          </div>
+          <span class="difficulty-badge difficulty-advanced">高级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          NVIDIA RTX 显卡专用的 AI 计算单元，擅长矩阵运算。用于加速深度学习、DLSS 超采样、AI 降噪等功能。RTX 40 系第三代 Tensor Core 算力达 1.32 TFLOPS。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">AI</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-robot mr-1"></i>应用</div>
+          <p class="text-gray-300 text-xs">
+            DLSS 超采样、AI 降噪、广播背景虚化、光线重建（DLSS 3.5）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="DLSS">DLSS</span>
+          <span class="related-term" data-term="RT Core">RT Core</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="T" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Thread</h3>
+            <div class="text-xs text-gray-400 mt-1">线程</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          线程是 CPU 调度的最小单位。通过超线程/SMT 技术，一个物理核心可模拟出两个逻辑线程。线程数越多，多任务处理能力越强。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">多线程</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-microchip mr-1"></i>核心 vs 线程</div>
+          <p class="text-gray-300 text-xs">
+            AMD Ryzen 9 7950X：16 核心 32 线程<br>
+            Intel i9-13900K：24 核心（8P+16E）32 线程
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="Core">Core</span>
+          <span class="related-term" data-term="Hyper-Threading">Hyper-Threading</span>
+        </div>
+      </div>
+
+      <div class="term-card rounded-xl p-5" data-letter="T" data-category="cpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">Transistor</h3>
+            <div class="text-xs text-gray-400 mt-1">晶体管</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          晶体管是芯片的基本开关单元，控制电流的通断。晶体管数量越多，芯片功能越强大。现代 CPU/GPU 包含数百亿个晶体管，采用纳米级工艺制造。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">CPU</span>
+          <span class="category-tag">基础</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-chart-line mr-1"></i>晶体管数量</div>
+          <p class="text-gray-300 text-xs">
+            Intel 4004（1971）：2300 个<br>
+            NVIDIA RTX 4090（2022）：763 亿个<br>
+            AMD Ryzen 9 7950X：133 亿个
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="Node">Node</span>
+          <span class="related-term" data-term="Moore's Law">Moore's Law</span>
+        </div>
+      </div>
+
+      <!-- U -->
+      <div class="term-card rounded-xl p-5" data-letter="U" data-category="motherboard">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">UEFI</h3>
+            <div class="text-xs text-gray-400 mt-1">Unified Extensible Firmware Interface</div>
+          </div>
+          <span class="difficulty-badge difficulty-intermediate">中级</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          统一可扩展固件接口，替代传统 BIOS 的现代固件标准。提供图形化界面、鼠标支持、网络功能、安全启动等特性。支持大于 2TB 的硬盘启动。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">主板</span>
+          <span class="category-tag">固件</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-check-circle mr-1"></i>UEFI 优势</div>
+          <p class="text-gray-300 text-xs">
+            图形化界面、支持大容量硬盘、启动更快、安全启动、网络更新
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="BIOS">BIOS</span>
+          <span class="related-term" data-term="Secure Boot">Secure Boot</span>
+        </div>
+      </div>
+
+      <!-- V -->
+      <div class="term-card rounded-xl p-5" data-letter="V" data-category="gpu">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">VRAM</h3>
+            <div class="text-xs text-gray-400 mt-1">Video Random Access Memory</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          显存，显卡专用的图像存储器，用于存储纹理、帧缓冲等图形数据。容量越大，可处理的分辨率和画质越高。主流显卡配备 8-24GB GDDR6/GDDR6X 显存。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">GPU</span>
+          <span class="category-tag">显存</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-memory mr-1"></i>显存类型</div>
+          <p class="text-gray-300 text-xs">
+            GDDR6（主流）、GDDR6X（高端）、HBM2/HBM3（专业卡）
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="GDDR6">GDDR6</span>
+          <span class="related-term" data-term="Bandwidth">Bandwidth</span>
+        </div>
+      </div>
+
+      <!-- X -->
+      <div class="term-card rounded-xl p-5" data-letter="X" data-category="memory">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <h3 class="text-xl font-display font-bold text-white">XMP</h3>
+            <div class="text-xs text-gray-400 mt-1">Extreme Memory Profile</div>
+          </div>
+          <span class="difficulty-badge difficulty-basic">基础</span>
+        </div>
+        <p class="text-gray-300 text-sm mb-3">
+          Intel 制定的内存超频配置文件标准，由内存厂商预设好频率、时序和电压。在 BIOS 中一键开启 XMP，即可让内存运行在标称的高性能状态，无需手动超频。
+        </p>
+        <div class="flex flex-wrap mb-3">
+          <span class="category-tag">内存</span>
+          <span class="category-tag">超频</span>
+        </div>
+        <div class="example-box">
+          <div class="text-xs text-gray-400 mb-1"><i class="fas fa-bolt mr-1"></i>使用示例</div>
+          <p class="text-gray-300 text-xs">
+            购买 DDR4-3600 内存 → BIOS 开启 XMP Profile 1 → 自动运行在 3600MHz CL18
+          </p>
+        </div>
+        <div class="related-terms">
+          <span class="related-term" data-term="BIOS">BIOS</span>
+          <span class="related-term" data-term="Overclocking">Overclocking</span>
+          <span class="related-term" data-term="EXPO">EXPO</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 p-6 bg-gradient-to-r from-purple-900/30 via-blue-900/30 to-cyan-900/30 rounded-2xl border border-cyan-500/30">
+      <h3 class="text-2xl font-display font-bold text-white mb-4 text-center">
+        <i class="fas fa-book-reader mr-2"></i>如何使用术语词典
+      </h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="text-4xl text-cyan-400 mb-3"><i class="fas fa-search"></i></div>
+          <h4 class="text-lg font-bold text-white mb-2">搜索术语</h4>
+          <p class="text-gray-400 text-sm">在搜索框输入术语名称、缩写或关键词，快速定位目标术语</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl text-purple-400 mb-3"><i class="fas fa-filter"></i></div>
+          <h4 class="text-lg font-bold text-white mb-2">分类筛选</h4>
+          <p class="text-gray-400 text-sm">点击字母导航或分类标签，按首字母或硬件类型筛选术语</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl text-blue-400 mb-3"><i class="fas fa-link"></i></div>
+          <h4 class="text-lg font-bold text-white mb-2">关联学习</h4>
+          <p class="text-gray-400 text-sm">点击相关术语标签，跳转到关联术语，构建知识网络</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+<script>
+// 搜索功能
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function() {
+  const query = this.value.toLowerCase();
+  document.querySelectorAll('.term-card').forEach(card => {
+    const term = card.querySelector('h3').textContent.toLowerCase();
+    const desc = card.querySelector('p').textContent.toLowerCase();
+    const categories = card.dataset.category;
+    
+    if (term.includes(query) || desc.includes(query) || categories.includes(query)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+});
+
+// 字母导航
+document.querySelectorAll('.alphabet-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.alphabet-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    
+    const letter = this.dataset.letter;
+    document.querySelectorAll('.term-card').forEach(card => {
+      if (letter === 'all' || card.dataset.letter === letter) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+// 相关术语点击
+document.querySelectorAll('.related-term').forEach(term => {
+  term.addEventListener('click', function() {
+    const targetTerm = this.dataset.term;
+    searchInput.value = targetTerm;
+    searchInput.dispatchEvent(new Event('input'));
+    
+    // 滚动到匹配的术语
+    document.querySelectorAll('.term-card').forEach(card => {
+      if (card.querySelector('h3').textContent === targetTerm) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.style.animation = 'pulse 1s ease';
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

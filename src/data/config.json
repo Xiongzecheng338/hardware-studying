@@ -1,0 +1,69 @@
+{
+  "app": {
+    "name": "硬件探索者",
+    "nameEn": "Hardware Explorer",
+    "version": "3.0.0",
+    "description": "专业的硬件学习平台",
+    "author": "硬件探索者团队",
+    "website": "https://hardware-explorer.com"
+  },
+  "features": {
+    "search": {
+      "enabled": true,
+      "fuzzySearch": true,
+      "highlightResults": true,
+      "maxResults": 10
+    },
+    "animations": {
+      "enabled": true,
+      "scrollAnimations": true,
+      "particleBackground": true,
+      "counterAnimations": true
+    },
+    "charts": {
+      "enabled": true,
+      "defaultType": "bar",
+      "colors": ["#06b6d4", "#9333ea", "#3b82f6"]
+    },
+    "pwa": {
+      "enabled": false,
+      "offlineSupport": false,
+      "pushNotifications": false
+    }
+  },
+  "theme": {
+    "default": "dark",
+    "allowSwitch": true,
+    "colors": {
+      "primary": "#06b6d4",
+      "secondary": "#9333ea",
+      "accent": "#3b82f6",
+      "success": "#22c55e",
+      "warning": "#f59e0b",
+      "error": "#ef4444"
+    }
+  },
+  "performance": {
+    "lazyLoad": true,
+    "cacheEnabled": true,
+    "prefetch": true,
+    "compression": true
+  },
+  "analytics": {
+    "enabled": false,
+    "trackPageViews": true,
+    "trackInteractions": true
+  },
+  "externalResources": {
+    "cdn": {
+      "tailwindcss": "https://cdn.tailwindcss.com",
+      "fontawesome": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+      "googleFonts": "https://fonts.googleapis.com"
+    },
+    "libraries": {
+      "chartjs": "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js",
+      "gsap": "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
+      "animatecss": "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    }
+  }
+}

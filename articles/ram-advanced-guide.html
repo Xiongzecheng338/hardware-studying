@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="内存技术进阶指南：深入解析 DDR 架构、时序参数、超频技巧和选购建议">
+    <meta name="keywords" content="内存，RAM,DDR5,DDR4，超频，时序，硬件评测">
+    <meta name="author" content="硬件探索者">
+    <meta name="theme-color" content="#06b6d4">
+    <title>内存技术进阶指南 - 硬件探索者</title>
+    
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" defer>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#06b6d4',
+                        secondary: '#7c3aed',
+                        accent: '#f59e0b'
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        sans: ['Noto Sans SC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <nav class="navbar-fixed glass navbar z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-2 text-xl font-bold font-orbitron">
+                    <i class="fas fa-microchip text-primary"></i>
+                    <span class="gradient-text">硬件探索者</span>
+                </a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="../index.html" class="nav-link">首页</a>
+                    <a href="../encyclopedia.html" class="nav-link">百科全书</a>
+                    <a href="../beginner-guide.html" class="nav-link">入门指南</a>
+                    <a href="../learning-path.html" class="nav-link">学习路径</a>
+                    <a href="../quiz.html" class="nav-link">测验挑战</a>
+                    <a href="../achievements.html" class="nav-link">成就系统</a>
+                </div>
+                <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobileMenu" class="mobile-menu glass">
+        <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="../encyclopedia.html" class="nav-link">百科全书</a>
+            <a href="../beginner-guide.html" class="nav-link">入门指南</a>
+            <a href="../learning-path.html" class="nav-link">学习路径</a>
+            <a href="../quiz.html" class="nav-link">测验挑战</a>
+            <a href="../achievements.html" class="nav-link">成就系统</a>
+        </div>
+    </div>
+
+    <header class="article-header">
+        <div class="container mx-auto px-4 py-16">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center space-x-2 mb-4 px-4 py-2 rounded-full bg-cyan-900/50 border border-cyan-500/30">
+                    <i class="fas fa-memory text-cyan-400"></i>
+                    <span class="text-cyan-300 text-sm">存储技术</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 font-orbitron gradient-text">
+                    内存技术进阶指南
+                </h1>
+                <p class="text-xl text-gray-300 mb-8">
+                    从 DDR 架构到超频优化的完整技术解析
+                </p>
+                <div class="flex flex-wrap justify-center items-center gap-6 text-gray-400 text-sm">
+                    <span><i class="fas fa-clock mr-2"></i>阅读时间：约 25 分钟</span>
+                    <span><i class="fas fa-calendar mr-2"></i>更新日期：2026-03-06</span>
+                    <span><i class="fas fa-eye mr-2"></i>浏览次数：<span class="view-count">987</span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24 glass rounded-2xl p-6 border border-cyan-500/20">
+                    <h3 class="text-lg font-bold mb-4 font-orbitron text-cyan-400">
+                        <i class="fas fa-list mr-2"></i>目录导航
+                    </h3>
+                    <nav class="space-y-2 text-sm">
+                        <a href="#section1" class="block py-2 px-3 rounded-lg hover:bg-cyan-900/30 transition-colors">
+                            <span class="text-cyan-300">1. 内存基础架构</span>
+                        </a>
+                        <a href="#section2" class="block py-2 px-3 rounded-lg hover:bg-cyan-900/30 transition-colors">
+                            <span class="text-cyan-300">2. DDR 技术演进</span>
+                        </a>
+                        <a href="#section3" class="block py-2 px-3 rounded-lg hover:bg-cyan-900/30 transition-colors">
+                            <span class="text-cyan-300">3. 时序参数详解</span>
+                        </a>
+                        <a href="#section4" class="block py-2 px-3 rounded-lg hover:bg-cyan-900/30 transition-colors">
+                            <span class="text-cyan-300">4. 超频技术指南</span>
+                        </a>
+                        <a href="#section5" class="block py-2 px-3 rounded-lg hover:bg-cyan-900/30 transition-colors">
+                            <span class="text-cyan-300">5. 双通道与多通道</span>
+                        </a>
+                        <a href="#section6" class="block py-2 px-3 rounded-lg hover:bg-cyan-900/30 transition-colors">
+                            <span class="text-cyan-300">6. 选购建议与推荐</span>
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="lg:col-span-3 space-y-12">
+                <section id="section1" class="glass rounded-2xl p-8 border border-cyan-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-cyan-400">
+                        <i class="fas fa-microchip mr-3"></i>内存基础架构
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            内存（RAM，Random Access Memory）是计算机中用于临时存储数据的硬件设备。它作为 CPU 和存储设备之间的高速缓冲，对系统性能有着至关重要的影响。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">1.1 DRAM 存储单元结构</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3"><i class="fas fa-circle mr-2"></i>电容（Capacitor）</h4>
+                            <p class="text-gray-300 text-sm">
+                                用于存储电荷，代表二进制数据（0 或 1）。电容会缓慢漏电，因此需要定期刷新（Refresh）。
+                            </p>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-3"><i class="fas fa-power-off mr-2"></i>晶体管（Transistor）</h4>
+                            <p class="text-gray-300 text-sm">
+                                作为开关控制电容的读写操作。每个 DRAM 单元由 1 个晶体管 +1 个电容组成（1T1C 结构）。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box mb-8">
+                        <p class="text-cyan-200">
+                            <strong>关键概念：</strong>DRAM 是易失性存储器，断电后数据会丢失。这与 NAND Flash（SSD/手机存储）不同，后者是非易失性存储器。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">1.2 内存 Bank 架构</h3>
+                    
+                    <p class="text-gray-300 mb-6">
+                        现代 DRAM 芯片内部被划分为多个 Bank（存储库），每个 Bank 可以独立操作，提高并行性。
+                    </p>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8 overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-cyan-500/30">
+                                    <th class="text-left py-3 px-4 text-cyan-400">DDR 代数</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">Bank 数量</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">Bank Group</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">特性</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">DDR3</td>
+                                    <td class="py-3 px-4">8 Banks</td>
+                                    <td class="py-3 px-4">无</td>
+                                    <td class="py-3 px-4">基础并行</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">DDR4</td>
+                                    <td class="py-3 px-4">16 Banks</td>
+                                    <td class="py-3 px-4">4 Bank Groups</td>
+                                    <td class="py-3 px-4">Bank Group 并行</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">DDR5</td>
+                                    <td class="py-3 px-4">32 Banks</td>
+                                    <td class="py-3 px-4">8 Bank Groups</td>
+                                    <td class="py-3 px-4">增强并行 + 决策反馈均衡</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="section2" class="glass rounded-2xl p-8 border border-cyan-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-cyan-400">
+                        <i class="fas fa-history mr-3"></i>DDR 技术演进
+                    </h2>
+                    
+                    <div class="timeline mb-8">
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-gray-500">
+                                <span class="text-white text-xs font-bold">2000</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-gray-400 mb-2">DDR SDRAM</h4>
+                                <p class="text-gray-300">200-400 MHz，2.5V/2.6V，单周期 2 次传输</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-blue-500">
+                                <span class="text-white text-xs font-bold">2004</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-blue-400 mb-2">DDR2 SDRAM</h4>
+                                <p class="text-gray-300">400-1066 MHz，1.8V，预取 4bit</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-purple-500">
+                                <span class="text-white text-xs font-bold">2007</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-purple-400 mb-2">DDR3 SDRAM</h4>
+                                <p class="text-gray-300">800-2133 MHz，1.5V/1.35V，预取 8bit</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-pink-500">
+                                <span class="text-white text-xs font-bold">2014</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-pink-400 mb-2">DDR4 SDRAM</h4>
+                                <p class="text-gray-300">1600-3200 MHz，1.2V，预取 8bit，Bank Group 架构</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-cyan-500">
+                                <span class="text-white text-xs font-bold">2020</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-cyan-400 mb-2">DDR5 SDRAM</h4>
+                                <p class="text-gray-300">4800-8400+ MHz，1.1V，预取 16n，片上 ECC，双 32 位通道</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">2.1 DDR5 关键技术升级</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-cyan-400 mb-3">双通道架构</h4>
+                            <p class="text-cyan-200 text-sm">
+                                每个 DIMM 分为两个独立的 32 位通道，相比 DDR4 的 64 位单通道，有效带宽利用率更高。
+                            </p>
+                        </div>
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-purple-400 mb-3">片上 ECC</h4>
+                            <p class="text-purple-200 text-sm">
+                                内置 On-die ECC 纠错功能，提高高频率下的数据完整性，但不等同于内存条 ECC。
+                            </p>
+                        </div>
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-green-400 mb-3">电源管理 IC</h4>
+                            <p class="text-green-200 text-sm">
+                                PMIC 集成到内存条上，提供更稳定的电压控制和更低的功耗。
+                            </p>
+                        </div>
+                        <div class="highlight-box">
+                            <h4 class="font-bold text-orange-400 mb-3">决策反馈均衡</h4>
+                            <p class="text-orange-200 text-sm">
+                                DFE 技术减少信号反射和干扰，支持更高频率运行。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8 overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-cyan-500/30">
+                                    <th class="text-left py-3 px-4 text-cyan-400">特性</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">DDR4</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">DDR5</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">提升</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">起始频率</td>
+                                    <td class="py-3 px-4">1600 MT/s</td>
+                                    <td class="py-3 px-4">4800 MT/s</td>
+                                    <td class="py-3 px-4">3 倍</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">工作电压</td>
+                                    <td class="py-3 px-4">1.2V</td>
+                                    <td class="py-3 px-4">1.1V</td>
+                                    <td class="py-3 px-4">-8%</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">单条容量</td>
+                                    <td class="py-3 px-4">最高 32GB</td>
+                                    <td class="py-3 px-4">最高 128GB</td>
+                                    <td class="py-3 px-4">4 倍</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">Bank 数量</td>
+                                    <td class="py-3 px-4">16 Banks</td>
+                                    <td class="py-3 px-4">32 Banks</td>
+                                    <td class="py-3 px-4">2 倍</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4">ECC 支持</td>
+                                    <td class="py-3 px-4">仅服务器</td>
+                                    <td class="py-3 px-4">片上 ECC</td>
+                                    <td class="py-3 px-4">新增</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="section3" class="glass rounded-2xl p-8 border border-cyan-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-cyan-400">
+                        <i class="fas fa-sliders-h mr-3"></i>时序参数详解
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            内存时序（Timing）描述了内存访问的延迟参数，通常表示为 CL-tRCD-tRP-tRAS 四个主要时序。时序越低，延迟越小，性能越好。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">3.1 主要时序参数</h3>
+                    
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                                <span class="text-white font-bold">CL</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-blue-400 mb-2">CAS Latency (CL)</h4>
+                                <p class="text-gray-300 text-sm mb-2">
+                                    列地址选通脉冲延迟，表示从发出读命令到数据输出的时钟周期数。这是最重要的时序参数。
+                                </p>
+                                <div class="text-xs text-gray-400">
+                                    <strong>示例：</strong>DDR4-3200 CL16，实际延迟 = 16 × (1/1600MHz) = 10ns
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                                <span class="text-white font-bold">tRCD</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-purple-400 mb-2">RAS to CAS Delay</h4>
+                                <p class="text-gray-300 text-sm mb-2">
+                                    行地址到列地址的延迟，表示激活行到读写操作的等待时间。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-pink-600 rounded-lg flex items-center justify-center">
+                                <span class="text-white font-bold">tRP</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-pink-400 mb-2">Row Precharge Time</h4>
+                                <p class="text-gray-300 text-sm mb-2">
+                                    行预充电时间，表示关闭一行并打开另一行所需的时间。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center">
+                                <span class="text-white font-bold">tRAS</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-orange-400 mb-2">Row Active Time</h4>
+                                <p class="text-gray-300 text-sm mb-2">
+                                    行激活时间，表示同一行内两次操作之间的最小间隔。
+                                </p>
+                                <div class="text-xs text-gray-400 mt-1">
+                                    <strong>经验法则：</strong>tRAS ≈ CL + tRCD + tRP
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8">
+                        <h4 class="font-bold text-cyan-400 mb-4">常见内存时序对照表</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-cyan-500/30">
+                                        <th class="text-left py-3 px-4 text-cyan-400">规格</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">典型时序</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">实际延迟</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">带宽</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-300">
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR4-2666</td>
+                                        <td class="py-3 px-4">CL19-19-19</td>
+                                        <td class="py-3 px-4">14.25ns</td>
+                                        <td class="py-3 px-4">21.3 GB/s</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR4-3200</td>
+                                        <td class="py-3 px-4">CL16-18-18</td>
+                                        <td class="py-3 px-4">10ns</td>
+                                        <td class="py-3 px-4">25.6 GB/s</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR4-3600</td>
+                                        <td class="py-3 px-4">CL18-22-22</td>
+                                        <td class="py-3 px-4">10ns</td>
+                                        <td class="py-3 px-4">28.8 GB/s</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR5-4800</td>
+                                        <td class="py-3 px-4">CL40-40-40</td>
+                                        <td class="py-3 px-4">16.67ns</td>
+                                        <td class="py-3 px-4">38.4 GB/s</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR5-6000</td>
+                                        <td class="py-3 px-4">CL30-36-36</td>
+                                        <td class="py-3 px-4">10ns</td>
+                                        <td class="py-3 px-4">48 GB/s</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4">DDR5-7200</td>
+                                        <td class="py-3 px-4">CL34-40-40</td>
+                                        <td class="py-3 px-4">9.44ns</td>
+                                        <td class="py-3 px-4">57.6 GB/s</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <p class="text-yellow-200">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>注意：</strong>DDR5 由于频率大幅提升，时序数值看起来比 DDR4 高很多，但实际延迟（纳秒）可能更低。比较不同代内存时应使用实际延迟而非时钟周期数。
+                        </p>
+                    </div>
+                </section>
+
+                <section id="section4" class="glass rounded-2xl p-8 border border-cyan-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-cyan-400">
+                        <i class="fas fa-tachometer-alt mr-3"></i>超频技术指南
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            内存超频是通过提高频率、收紧时序或增加电压来提升内存性能的技术。合理超频可带来 10-30% 的性能提升，但需要谨慎操作。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">4.1 超频前准备</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3"><i class="fas fa-tools mr-2"></i>必备工具</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• CPU-Z（查看信息）</li>
+                                <li>• HWiNFO64（监控）</li>
+                                <li>• MemTest86（稳定性测试）</li>
+                                <li>• AIDA64（性能测试）</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-3"><i class="fas fa-check-circle mr-2"></i>前提条件</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• 支持超频的主板（Z/X 系列）</li>
+                                <li>• 优质内存颗粒（三星 B-die 等）</li>
+                                <li>• 良好的散热条件</li>
+                                <li>• 稳定的电源供应</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-900/30 rounded-xl p-6 border border-green-500/30">
+                            <h4 class="font-bold text-green-400 mb-3"><i class="fas fa-exclamation-triangle mr-2"></i>风险提示</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• 可能失去保修</li>
+                                <li>• 硬件损坏风险</li>
+                                <li>• 系统不稳定</li>
+                                <li>• 数据丢失可能</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">4.2 超频步骤</h3>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-2">进入 BIOS</h4>
+                                <p class="text-gray-300 text-sm">开机时按 Del/F2 进入 BIOS，找到内存超频选项（DRAM Configuration / AI Tweaker / OC Tweaker）。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-2">启用 XMP/EXPO</h4>
+                                <p class="text-gray-300 text-sm">加载内存预设的 XMP（Intel）或 EXPO（AMD）配置文件，这是最简单的超频方式。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-2">调整频率</h4>
+                                <p class="text-gray-300 text-sm">逐步提高内存频率（如从 3200 → 3400 → 3600），每次增加 200-266MT/s。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm">4</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-2">收紧时序</h4>
+                                <p class="text-gray-300 text-sm">在稳定频率下，逐步降低主要时序（CL、tRCD、tRP、tRAS），每次减少 1-2 个周期。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm">5</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-2">调整电压</h4>
+                                <p class="text-gray-300 text-sm">适当增加 DRAM 电压（DDR4 建议≤1.5V，DDR5 建议≤1.4V），提高稳定性。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm">6</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-cyan-400 mb-2">稳定性测试</h4>
+                                <p class="text-gray-300 text-sm">使用 MemTest86 跑满 400% 无错误，或 TM5 with Anta777 Extreme 测试通过。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8">
+                        <h4 class="font-bold text-cyan-400 mb-4">安全电压范围参考</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-cyan-500/30">
+                                        <th class="text-left py-3 px-4 text-cyan-400">电压类型</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">日常使用</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">极限超频</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">风险等级</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-300">
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR4 DRAM</td>
+                                        <td class="py-3 px-4">1.35-1.45V</td>
+                                        <td class="py-3 px-4">1.5-1.6V</td>
+                                        <td class="py-3 px-4">中</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR5 DRAM</td>
+                                        <td class="py-3 px-4">1.25-1.35V</td>
+                                        <td class="py-3 px-4">1.4-1.5V</td>
+                                        <td class="py-3 px-4">中高</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR4 VCCSA</td>
+                                        <td class="py-3 px-4">1.15-1.25V</td>
+                                        <td class="py-3 px-4">1.3-1.35V</td>
+                                        <td class="py-3 px-4">低</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">DDR5 VDD/VDDQ</td>
+                                        <td class="py-3 px-4">1.25-1.35V</td>
+                                        <td class="py-3 px-4">1.4-1.5V</td>
+                                        <td class="py-3 px-4">中</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <p class="text-yellow-200">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>重要提示：</strong>超频有风险，操作需谨慎！建议先在低端平台练习，熟悉后再对主力机进行超频。超频前务必备份重要数据。
+                        </p>
+                    </div>
+                </section>
+
+                <section id="section5" class="glass rounded-2xl p-8 border border-cyan-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-cyan-400">
+                        <i class="fas fa-link mr-3"></i>双通道与多通道
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            多通道内存技术通过并行访问多个内存模块，大幅提升内存带宽。正确安装和配置多通道内存对性能至关重要。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">5.1 通道模式对比</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-3 text-center">单通道</h4>
+                            <div class="text-center mb-4">
+                                <i class="fas fa-arrows-alt-h text-4xl text-blue-400"></i>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-2">
+                                <li>• 64 位数据位宽</li>
+                                <li>• 带宽最低</li>
+                                <li>• 办公足够</li>
+                                <li>• 不推荐游戏</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-3 text-center">双通道</h4>
+                            <div class="text-center mb-4">
+                                <i class="fas fa-arrows-alt-h text-4xl text-purple-400"></i>
+                                <i class="fas fa-arrows-alt-h text-4xl text-purple-400"></i>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-2">
+                                <li>• 128 位数据位宽</li>
+                                <li>• 带宽翻倍</li>
+                                <li>• 游戏推荐</li>
+                                <li>• 性价比最高</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-900/30 rounded-xl p-6 border border-green-500/30">
+                            <h4 class="font-bold text-green-400 mb-3 text-center">四通道</h4>
+                            <div class="text-center mb-4">
+                                <i class="fas fa-arrows-alt-h text-4xl text-green-400"></i>
+                                <i class="fas fa-arrows-alt-h text-4xl text-green-400"></i>
+                                <i class="fas fa-arrows-alt-h text-4xl text-green-400"></i>
+                                <i class="fas fa-arrows-alt-h text-4xl text-green-400"></i>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-2">
+                                <li>• 256 位数据位宽</li>
+                                <li>• 带宽最高</li>
+                                <li>• 工作站/服务器</li>
+                                <li>• 需要高端平台</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">5.2 内存插槽安装指南</h3>
+                    
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8">
+                        <h4 class="font-bold text-cyan-400 mb-4">双通道正确安装方式</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-cyan-500/30">
+                                        <th class="text-left py-3 px-4 text-cyan-400">内存数量</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">推荐插槽</th>
+                                        <th class="text-left py-3 px-4 text-cyan-400">说明</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-300">
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">1 条</td>
+                                        <td class="py-3 px-4">A2（从 CPU 数第 2 槽）</td>
+                                        <td class="py-3 px-4">单条无通道优势</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">2 条</td>
+                                        <td class="py-3 px-4">A2 + B2（第 2、4 槽）</td>
+                                        <td class="py-3 px-4">标准双通道，信号完整性最佳</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 px-4">4 条</td>
+                                        <td class="py-3 px-4">全满</td>
+                                        <td class="py-3 px-4">双通道满载，可能影响超频潜力</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="success-box">
+                        <p class="text-green-200">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            <strong>优化建议：</strong>对于大多数用户，2 条 8GB 或 2 条 16GB 组成双通道是最佳选择。相比 4 条内存，2 条对内存控制器压力更小，更容易超频到高频。
+                        </p>
+                    </div>
+                </section>
+
+                <section id="section6" class="glass rounded-2xl p-8 border border-cyan-500/20">
+                    <h2 class="text-3xl font-bold mb-6 font-orbitron text-cyan-400">
+                        <i class="fas fa-shopping-cart mr-3"></i>选购建议与推荐
+                    </h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-gray-300 mb-4">
+                            选择内存时需要根据平台、用途、预算等因素综合考虑。以下是针对不同用户群体的推荐方案。
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">6.1 容量选择建议</h3>
+                    
+                    <div class="grid md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-500/30">
+                            <h4 class="font-bold text-blue-400 mb-2 text-center">8GB</h4>
+                            <p class="text-gray-300 text-sm text-center mb-3">入门级</p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 办公文档处理</li>
+                                <li>• 网页浏览</li>
+                                <li>• 轻度网游</li>
+                                <li>• 预算紧张</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-900/30 rounded-xl p-6 border border-purple-500/30">
+                            <h4 class="font-bold text-purple-400 mb-2 text-center">16GB</h4>
+                            <p class="text-gray-300 text-sm text-center mb-3">主流级</p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 游戏推荐</li>
+                                <li>• 多任务处理</li>
+                                <li>• 轻度内容创作</li>
+                                <li>• 性价比之选</li>
+                            </ul>
+                        </div>
+                        <div class="bg-pink-900/30 rounded-xl p-6 border border-pink-500/30">
+                            <h4 class="font-bold text-pink-400 mb-2 text-center">32GB</h4>
+                            <p class="text-gray-300 text-sm text-center mb-3">进阶级</p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 大型 3A 游戏</li>
+                                <li>• 视频剪辑</li>
+                                <li>• 3D 建模</li>
+                                <li>• 直播推流</li>
+                            </ul>
+                        </div>
+                        <div class="bg-orange-900/30 rounded-xl p-6 border border-orange-500/30">
+                            <h4 class="font-bold text-orange-400 mb-2 text-center">64GB+</h4>
+                            <p class="text-gray-300 text-sm text-center mb-3">专业级</p>
+                            <ul class="text-xs text-gray-400 space-y-1">
+                                <li>• 4K 视频剪辑</li>
+                                <li>• 大型渲染</li>
+                                <li>• 虚拟机</li>
+                                <li>• 工作站</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">6.2 平台兼容性</h3>
+                    
+                    <div class="bg-gray-800/50 rounded-xl p-6 mb-8 overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-cyan-500/30">
+                                    <th class="text-left py-3 px-4 text-cyan-400">平台</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">支持内存</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">最佳频率</th>
+                                    <th class="text-left py-3 px-4 text-cyan-400">注意事项</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">Intel 12/13/14 代</td>
+                                    <td class="py-3 px-4">DDR4 / DDR5</td>
+                                    <td class="py-3 px-4">DDR4-3600 / DDR5-6000</td>
+                                    <td class="py-3 px-4">注意主板类型</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">AMD Ryzen 5000</td>
+                                    <td class="py-3 px-4">DDR4</td>
+                                    <td class="py-3 px-4">DDR4-3600-3800</td>
+                                    <td class="py-3 px-4">FCLK 1800-1900MHz</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4">AMD Ryzen 7000</td>
+                                    <td class="py-3 px-4">DDR5</td>
+                                    <td class="py-3 px-4">DDR5-6000</td>
+                                    <td class="py-3 px-4">仅支持 DDR5</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4">AMD Ryzen 8000G</td>
+                                    <td class="py-3 px-4">DDR5</td>
+                                    <td class="py-3 px-4">DDR5-6400+</td>
+                                    <td class="py-3 px-4">核显对频率敏感</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-4 text-cyan-300">6.3 预算推荐方案</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-r from-blue-900/50 to-blue-800/30 rounded-xl p-6 border border-blue-500/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-blue-400 text-lg">入门办公（200-300 元）</h4>
+                                <span class="text-xs text-blue-300 bg-blue-900/50 px-3 py-1 rounded-full">8GB×2</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>推荐型号：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 金士顿 Fury DDR4-3200 8GB×2</li>
+                                        <li>• 威刚 XPG DDR4-3200 8GB×2</li>
+                                        <li>• 光威弈 Pro DDR4-3200 8GB×2</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>适用场景：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 办公电脑</li>
+                                        <li>• 家用娱乐</li>
+                                        <li>• 轻度网游</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-purple-900/50 to-purple-800/30 rounded-xl p-6 border border-purple-500/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-purple-400 text-lg">主流游戏（400-600 元）</h4>
+                                <span class="text-xs text-purple-300 bg-purple-900/50 px-3 py-1 rounded-full">16GB×2</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>推荐型号：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 芝奇幻锋戟 DDR4-3600 16GB×2</li>
+                                        <li>• 美商海盗船复仇者 DDR4-3600 16GB×2</li>
+                                        <li>• 宏碁掠夺者 DDR5-6000 16GB×2</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>适用场景：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 3A 游戏大作</li>
+                                        <li>• 直播推流</li>
+                                        <li>• 内容创作入门</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-pink-900/50 to-pink-800/30 rounded-xl p-6 border border-pink-500/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-pink-400 text-lg">高端创作（800-1200 元）</h4>
+                                <span class="text-xs text-pink-300 bg-pink-900/50 px-3 py-1 rounded-full">32GB×2</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>推荐型号：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 芝奇幻锋戟 DDR5-6400 32GB×2</li>
+                                        <li>• 美商海盗船 Dominator DDR5-6400 32GB×2</li>
+                                        <li>• 宏碁掠夺者 Apollo DDR5-6800 32GB×2</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-gray-300 text-sm mb-2"><strong>适用场景：</strong></p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li>• 4K 视频剪辑</li>
+                                        <li>• 3D 渲染</li>
+                                        <li>• 专业工作站</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-box mt-8">
+                        <p class="text-green-200">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            <strong>选购提示：</strong>内存价格波动较大，建议在电商促销时入手。优先选择知名品牌，质保更有保障。DDR5 目前性价比逐渐提升，新平台建议直接上 DDR5。
+                        </p>
+                    </div>
+                </section>
+
+                <div class="text-center py-12">
+                    <div class="inline-block glass rounded-2xl p-8 border border-cyan-500/20">
+                        <h3 class="text-2xl font-bold mb-4 font-orbitron gradient-text">继续学习</h3>
+                        <p class="text-gray-300 mb-6">
+                            掌握了内存技术后，你可以继续探索以下内容：
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <a href="cpu-deep-dive.html" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors">
+                                <i class="fas fa-microchip mr-2"></i>CPU 技术解析
+                            </a>
+                            <a href="gpu-deep-dive.html" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 rounded-lg transition-colors">
+                                <i class="fas fa-video mr-2"></i>GPU 技术解析
+                            </a>
+                            <a href="../encyclopedia.html" class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg transition-colors">
+                                <i class="fas fa-book mr-2"></i>硬件百科
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="glass border-t border-cyan-500/20 mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2026 硬件探索者。致力于提供专业、系统的硬件知识学习平台</p>
+                <p class="text-sm mt-2">
+                    <a href="../index.html" class="hover:text-cyan-400 transition-colors">首页</a>
+                    <span class="mx-2">|</span>
+                    <a href="../beginner-guide.html" class="hover:text-cyan-400 transition-colors">入门指南</a>
+                    <span class="mx-2">|</span>
+                    <a href="../learning-path.html" class="hover:text-cyan-400 transition-colors">学习路径</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../src/js/script.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

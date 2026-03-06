@@ -3,10 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="手机硬件详解，了解智能手机的处理器、屏幕、电池、摄像头等核心硬件组件和技术规格">
+<meta name="keywords" content="手机硬件,手机处理器,手机屏幕,手机电池,手机摄像头,骁龙,天玑">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>手机硬件 - 硬件探索者</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
@@ -79,13 +92,6 @@
       </div>
     </div>
     
-    <div class="nav-section">
-      <div class="nav-section-title">账户</div>
-      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-        <i class="fas fa-user-circle"></i>
-        <span class="nav-text">登录/注册</span>
-      </div>
-    </div>
   </nav>
   
   <div class="progress-section">
@@ -143,10 +149,6 @@
       <div class="mobile-nav-more-popup-item" data-page="achievements">
         <i class="fas fa-trophy"></i>
         <span>成就系统</span>
-      </div>
-      <div class="mobile-nav-more-popup-item" data-page="login">
-        <i class="fas fa-user-circle"></i>
-        <span>登录/注册</span>
       </div>
     </div>
   </div>
@@ -300,6 +302,90 @@
               <div class="p-4 rounded-xl bg-white/5">
                 <div class="font-bold mb-2">eMMC存储</div>
                 <p class="text-sm">嵌入式多媒体卡，成本较低，速度较慢</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-wifi text-[var(--accent-cyan)]"></i>
+            手机通信
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>手机通信技术决定了网络连接速度和稳定性。主要的通信技术包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">5G网络</div>
+                <p class="text-sm">第五代移动通信技术，速度更快，延迟更低</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">4G LTE</div>
+                <p class="text-sm">第四代移动通信技术，覆盖广泛，速度稳定</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">Wi-Fi 6/6E</div>
+                <p class="text-sm">新一代无线网络标准，传输速度更快，支持更多设备</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">蓝牙5.x</div>
+                <p class="text-sm">无线连接技术，支持音频传输、数据同步和设备控制</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-fingerprint text-[var(--accent-purple)]"></i>
+            生物识别
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>生物识别技术为手机提供安全便捷的解锁方式。常见的生物识别技术包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">指纹识别</div>
+                <p class="text-sm">光学、电容、超声波三种技术，识别速度快，准确率高</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">面部识别</div>
+                <p class="text-sm">3D结构光、双目立体视觉等技术，安全性更高</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">虹膜识别</div>
+                <p class="text-sm">利用虹膜独特纹理进行身份验证，安全性极高</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">屏下指纹</div>
+                <p class="text-sm">集成在屏幕下方的指纹识别，美观且实用</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-shield-alt text-[var(--accent-orange)]"></i>
+            防护等级
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>手机防护等级决定了设备的耐用性和使用场景。常见的防护标准包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">IP67</div>
+                <p class="text-sm">防尘等级6，防水等级7，可短时间浸入水中</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">IP68</div>
+                <p class="text-sm">防尘等级6，防水等级8，可长时间浸入水中</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">康宁大猩猩玻璃</div>
+                <p class="text-sm">高强度玻璃，抗刮擦、抗摔落能力强</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">军用标准</div>
+                <p class="text-sm">MIL-STD-810G等军用防护标准，适合恶劣环境</p>
               </div>
             </div>
           </div>

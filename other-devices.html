@@ -3,10 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="了解笔记本电脑、平板电脑、智能穿戴设备、智能电视等其他硬件设备的知识">
+<meta name="keywords" content="笔记本电脑,平板电脑,智能手表,智能穿戴,智能电视,硬件设备">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>其他设备 - 硬件探索者</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
@@ -79,13 +92,6 @@
       </div>
     </div>
     
-    <div class="nav-section">
-      <div class="nav-section-title">账户</div>
-      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-        <i class="fas fa-user-circle"></i>
-        <span class="nav-text">登录/注册</span>
-      </div>
-    </div>
   </nav>
   
   <div class="progress-section">
@@ -143,10 +149,6 @@
       <div class="mobile-nav-more-popup-item" data-page="achievements">
         <i class="fas fa-trophy"></i>
         <span>成就系统</span>
-      </div>
-      <div class="mobile-nav-more-popup-item" data-page="login">
-        <i class="fas fa-user-circle"></i>
-        <span>登录/注册</span>
       </div>
     </div>
   </div>
@@ -272,6 +274,118 @@
               <div class="p-4 rounded-xl bg-white/5">
                 <div class="font-bold mb-2">语音控制</div>
                 <p class="text-sm">支持语音助手，如Alexa、Google Assistant等</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-gamepad text-[var(--accent-purple)]"></i>
+            游戏主机
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>游戏主机是专门用于游戏的电子设备，提供高品质的游戏体验。常见的游戏主机包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">家用主机</div>
+                <p class="text-sm">PlayStation、Xbox、Nintendo Switch等，连接电视使用</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">掌上主机</div>
+                <p class="text-sm">Steam Deck、Nintendo Switch Lite等，便携式游戏设备</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">性能参数</div>
+                <p class="text-sm">CPU、GPU性能，内存容量，存储空间等影响游戏体验</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">独占游戏</div>
+                <p class="text-sm">各平台独占游戏阵容，是选择主机的重要因素</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-server text-[var(--accent-cyan)]"></i>
+            服务器与NAS
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>服务器和NAS是为数据存储和网络服务设计的专业设备。常见的类型包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">家用NAS</div>
+                <p class="text-sm">网络存储设备，适合家庭数据备份和共享</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">企业服务器</div>
+                <p class="text-sm">高性能计算设备，用于企业级应用和数据服务</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">RAID阵列</div>
+                <p class="text-sm">磁盘阵列技术，提供数据冗余和性能提升</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">远程访问</div>
+                <p class="text-sm">支持远程访问和同步，随时随地获取数据</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-print text-[var(--accent-orange)]"></i>
+            打印机与外设
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>打印机和外设是办公和创作的重要工具。常见的类型包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">喷墨打印机</div>
+                <p class="text-sm">适合照片打印和彩色文档，成本较低</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">激光打印机</div>
+                <p class="text-sm">适合大量黑白文档打印，速度快，成本低</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">扫描仪</div>
+                <p class="text-sm">将纸质文档数字化，支持多种格式输出</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">3D打印机</div>
+                <p class="text-sm">创建三维实体模型，用于原型制作和创意设计</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-bold text-xl mb-4 flex items-center gap-2">
+            <i class="fas fa-vr-cardboard text-[var(--accent-green)]"></i>
+            VR/AR设备
+          </h2>
+          <div class="space-y-4 text-[var(--text-secondary)]">
+            <p>VR和AR设备提供沉浸式的虚拟和增强现实体验。常见的设备类型包括：</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">VR头显</div>
+                <p class="text-sm">完全沉浸式虚拟现实体验，如Meta Quest、HTC Vive</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">AR眼镜</div>
+                <p class="text-sm">增强现实显示，将数字信息叠加到现实世界</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">混合现实</div>
+                <p class="text-sm">MR设备结合VR和AR，如Microsoft HoloLens</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5">
+                <div class="font-bold mb-2">追踪系统</div>
+                <p class="text-sm">Inside-out和Outside-in追踪技术，影响定位精度</p>
               </div>
             </div>
           </div>

@@ -3,10 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="硬件百科全书，详细了解CPU、GPU、内存、主板等电脑硬件组件的原理和选购技巧">
+<meta name="keywords" content="硬件百科,CPU,GPU,内存,主板,SSD,电源,机箱,硬件知识">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>硬件百科 - 硬件探索者</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
@@ -79,13 +92,6 @@
       </div>
     </div>
     
-    <div class="nav-section">
-      <div class="nav-section-title">账户</div>
-      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-        <i class="fas fa-user-circle"></i>
-        <span class="nav-text">登录/注册</span>
-      </div>
-    </div>
   </nav>
   
   <div class="progress-section">
@@ -143,10 +149,6 @@
       <div class="mobile-nav-more-popup-item" data-page="achievements">
         <i class="fas fa-trophy"></i>
         <span>成就系统</span>
-      </div>
-      <div class="mobile-nav-more-popup-item" data-page="login">
-        <i class="fas fa-user-circle"></i>
-        <span>登录/注册</span>
       </div>
     </div>
   </div>
@@ -274,6 +276,111 @@
           <div class="flex items-center justify-between text-sm">
             <span class="text-[var(--text-secondary)]">已学习 <span class="text-teal-500 knowledge-progress">0</span>/6 知识点</span>
             <i class="fas fa-chevron-right text-teal-500"></i>
+          </div>
+        </div>
+        
+        <div class="knowledge-card hardware-card" data-category="peripheral" data-hardware="cooler">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500/20 to-transparent flex items-center justify-center">
+              <i class="fas fa-fan text-2xl text-sky-500"></i>
+            </div>
+            <span class="tag bg-sky-500/10 text-sky-500">周边</span>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">散热器</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">CPU和GPU散热解决方案，保障系统稳定运行</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-[var(--text-secondary)]">已学习 <span class="text-sky-500 knowledge-progress">0</span>/8 知识点</span>
+            <i class="fas fa-chevron-right text-sky-500"></i>
+          </div>
+        </div>
+        
+        <div class="knowledge-card hardware-card" data-category="peripheral" data-hardware="monitor">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500/20 to-transparent flex items-center justify-center">
+              <i class="fas fa-tv text-2xl text-violet-500"></i>
+            </div>
+            <span class="tag bg-violet-500/10 text-violet-500">周边</span>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">显示器</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">输出图像的设备，影响视觉体验和工作效率</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-[var(--text-secondary)]">已学习 <span class="text-violet-500 knowledge-progress">0</span>/10 知识点</span>
+            <i class="fas fa-chevron-right text-violet-500"></i>
+          </div>
+        </div>
+        
+        <div class="knowledge-card hardware-card" data-category="storage" data-hardware="hdd">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500/20 to-transparent flex items-center justify-center">
+              <i class="fas fa-database text-2xl text-rose-500"></i>
+            </div>
+            <span class="tag bg-rose-500/10 text-rose-500">存储</span>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">HDD 机械硬盘</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">大容量存储设备，适合数据备份和存储</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-[var(--text-secondary)]">已学习 <span class="text-rose-500 knowledge-progress">0</span>/6 知识点</span>
+            <i class="fas fa-chevron-right text-rose-500"></i>
+          </div>
+        </div>
+        
+        <div class="knowledge-card hardware-card" data-category="peripheral" data-hardware="keyboard">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-transparent flex items-center justify-center">
+              <i class="fas fa-keyboard text-2xl text-indigo-500"></i>
+            </div>
+            <span class="tag bg-indigo-500/10 text-indigo-500">周边</span>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">键盘</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">输入设备，机械键盘、薄膜键盘各有特点</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-[var(--text-secondary)]">已学习 <span class="text-indigo-500 knowledge-progress">0</span>/8 知识点</span>
+            <i class="fas fa-chevron-right text-indigo-500"></i>
+          </div>
+        </div>
+        
+        <div class="knowledge-card hardware-card" data-category="peripheral" data-hardware="mouse">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-transparent flex items-center justify-center">
+              <i class="fas fa-mouse text-2xl text-emerald-500"></i>
+            </div>
+            <span class="tag bg-emerald-500/10 text-emerald-500">周边</span>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">鼠标</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">指针输入设备，DPI、传感器、握持方式影响体验</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-[var(--text-secondary)]">已学习 <span class="text-emerald-500 knowledge-progress">0</span>/6 知识点</span>
+            <i class="fas fa-chevron-right text-emerald-500"></i>
+          </div>
+        </div>
+        
+        <div class="knowledge-card hardware-card" data-category="peripheral" data-hardware="network">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-transparent flex items-center justify-center">
+              <i class="fas fa-wifi text-2xl text-cyan-500"></i>
+            </div>
+            <span class="tag bg-cyan-500/10 text-cyan-500">周边</span>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">网卡</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">网络连接设备，有线网卡和无线网卡的选择</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-[var(--text-secondary)]">已学习 <span class="text-cyan-500 knowledge-progress">0</span>/6 知识点</span>
+            <i class="fas fa-chevron-right text-cyan-500"></i>
+          </div>
+        </div>
+        
+        <div class="knowledge-card hardware-card" data-category="peripheral" data-hardware="sound">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500/20 to-transparent flex items-center justify-center">
+              <i class="fas fa-volume-up text-2xl text-pink-500"></i>
+            </div>
+            <span class="tag bg-pink-500/10 text-pink-500">周边</span>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">声卡</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">音频处理设备，提升音质和录音效果</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-[var(--text-secondary)]">已学习 <span class="text-pink-500 knowledge-progress">0</span>/5 知识点</span>
+            <i class="fas fa-chevron-right text-pink-500"></i>
           </div>
         </div>
       </div>

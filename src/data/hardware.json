@@ -1,0 +1,196 @@
+{
+  "cpus": [
+    {
+      "id": "i9-14900k",
+      "name": "Intel Core i9-14900K",
+      "brand": "Intel",
+      "series": "14th Gen",
+      "cores": 24,
+      "threads": 32,
+      "pCores": 8,
+      "eCores": 16,
+      "baseClock": "3.2 GHz",
+      "boostClock": "6.0 GHz",
+      "cache": "36MB",
+      "tdp": "125W",
+      "process": "Intel 7",
+      "socket": "LGA1700",
+      "price": 4899,
+      "score": {
+        "single": 1850,
+        "multi": 4200,
+        "gaming": 95
+      },
+      "releaseDate": "2023-10"
+    },
+    {
+      "id": "r9-7950x3d",
+      "name": "AMD Ryzen 9 7950X3D",
+      "brand": "AMD",
+      "series": "Ryzen 7000",
+      "cores": 16,
+      "threads": 32,
+      "baseClock": "4.2 GHz",
+      "boostClock": "5.7 GHz",
+      "cache": "128MB",
+      "tdp": "120W",
+      "process": "5nm",
+      "socket": "AM5",
+      "price": 5299,
+      "score": {
+        "single": 1780,
+        "multi": 4500,
+        "gaming": 98
+      },
+      "releaseDate": "2023-02"
+    },
+    {
+      "id": "i7-14700k",
+      "name": "Intel Core i7-14700K",
+      "brand": "Intel",
+      "series": "14th Gen",
+      "cores": 20,
+      "threads": 28,
+      "pCores": 8,
+      "eCores": 12,
+      "baseClock": "3.4 GHz",
+      "boostClock": "5.6 GHz",
+      "cache": "33MB",
+      "tdp": "125W",
+      "process": "Intel 7",
+      "socket": "LGA1700",
+      "price": 3399,
+      "score": {
+        "single": 1820,
+        "multi": 3900,
+        "gaming": 92
+      },
+      "releaseDate": "2023-10"
+    },
+    {
+      "id": "r7-7800x3d",
+      "name": "AMD Ryzen 7 7800X3D",
+      "brand": "AMD",
+      "series": "Ryzen 7000",
+      "cores": 8,
+      "threads": 16,
+      "baseClock": "4.2 GHz",
+      "boostClock": "5.0 GHz",
+      "cache": "96MB",
+      "tdp": "120W",
+      "process": "5nm",
+      "socket": "AM5",
+      "price": 3199,
+      "score": {
+        "single": 1900,
+        "multi": 3600,
+        "gaming": 99
+      },
+      "releaseDate": "2023-04"
+    }
+  ],
+  "gpus": [
+    {
+      "id": "rtx-4090",
+      "name": "NVIDIA GeForce RTX 4090",
+      "brand": "NVIDIA",
+      "series": "RTX 40",
+      "cudaCores": 16384,
+      "memory": "24GB GDDR6X",
+      "memoryBus": "384-bit",
+      "baseClock": "2230 MHz",
+      "boostClock": "2520 MHz",
+      "tdp": "450W",
+      "price": 12999,
+      "score": {
+        "gaming": 100,
+        "rendering": 100,
+        "ai": 100
+      },
+      "features": ["DLSS 3.0", "Ray Tracing", "CUDA", "Tensor Core"]
+    },
+    {
+      "id": "rtx-4080-super",
+      "name": "NVIDIA GeForce RTX 4080 SUPER",
+      "brand": "NVIDIA",
+      "series": "RTX 40",
+      "cudaCores": 10240,
+      "memory": "16GB GDDR6X",
+      "memoryBus": "256-bit",
+      "baseClock": "2295 MHz",
+      "boostClock": "2550 MHz",
+      "tdp": "320W",
+      "price": 8099,
+      "score": {
+        "gaming": 85,
+        "rendering": 88,
+        "ai": 90
+      },
+      "features": ["DLSS 3.0", "Ray Tracing", "CUDA"]
+    },
+    {
+      "id": "rx-7900-xtx",
+      "name": "AMD Radeon RX 7900 XTX",
+      "brand": "AMD",
+      "series": "RX 7000",
+      "streamProcessors": 6144,
+      "memory": "24GB GDDR6",
+      "memoryBus": "384-bit",
+      "baseClock": "1900 MHz",
+      "boostClock": "2500 MHz",
+      "tdp": "355W",
+      "price": 7999,
+      "score": {
+        "gaming": 82,
+        "rendering": 85,
+        "ai": 75
+      },
+      "features": ["FSR 3.0", "Ray Tracing", "Infinity Cache"]
+    }
+  ],
+  "ram": [
+    {
+      "id": "ddr5-6000-32gb",
+      "name": "金士顿 Fury DDR5 6000 32GB",
+      "brand": "Kingston",
+      "type": "DDR5",
+      "capacity": "32GB",
+      "speed": "6000 MT/s",
+      "timing": "CL30",
+      "voltage": "1.35V",
+      "price": 799,
+      "compatibility": ["Intel 12/13/14 代", "AMD AM5"]
+    },
+    {
+      "id": "ddr4-3600-16gb",
+      "name": "芝奇 Ripjaws V DDR4 3600 16GB",
+      "brand": "G.Skill",
+      "type": "DDR4",
+      "capacity": "16GB",
+      "speed": "3600 MT/s",
+      "timing": "CL18",
+      "voltage": "1.35V",
+      "price": 299,
+      "compatibility": ["Intel 10/11/12 代", "AMD AM4"]
+    }
+  ],
+  "ssd": [
+    {
+      "id": "990-pro-1tb",
+      "name": "三星 990 PRO 1TB",
+      "brand": "Samsung",
+      "type": "NVMe PCIe 4.0",
+      "capacity": "1TB",
+      "readSpeed": "7450 MB/s",
+      "writeSpeed": "6900 MB/s",
+      "price": 699,
+      "tbw": 600
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "lastUpdate": "2024-01",
+    "totalItems": 12,
+    "categories": ["cpus", "gpus", "ram", "ssd"]
+  }
+}

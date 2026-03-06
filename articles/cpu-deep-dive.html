@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CPU 深度解析 - 从架构到性能，全面理解中央处理器的工作原理和技术演进">
+<meta name="keywords" content="CPU,处理器，架构，核心，线程，缓存，超频，Intel,AMD">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CPU 深度解析 - 硬件探索者</title>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../src/css/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div class="sidebar-header-text">
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
+    </div>
+    
+  </nav>
+  
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
+    </div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span><i class="fas fa-book-open"></i> 0/200 知识点</span>
+      <span><i class="fas fa-star"></i> 0 成就</span>
+    </div>
+  </div>
+</aside>
+
+<nav class="mobile-nav">
+  <div data-mobile="index" onclick="navigateTo('index')">
+    <i class="fas fa-home"></i>
+    <span>首页</span>
+  </div>
+  <div data-mobile="learning-path" onclick="navigateTo('learning-path')">
+    <i class="fas fa-route"></i>
+    <span>学习</span>
+  </div>
+  <div data-mobile="builder" onclick="navigateTo('builder')">
+    <i class="fas fa-tools"></i>
+    <span>装机</span>
+  </div>
+  <div data-mobile="quiz" onclick="navigateTo('quiz')">
+    <i class="fas fa-gamepad"></i>
+    <span>测验</span>
+  </div>
+  <div class="mobile-nav-more">
+    <i class="fas fa-ellipsis-h"></i>
+    <span>更多</span>
+    <div class="mobile-nav-more-popup">
+      <div class="mobile-nav-more-popup-item" data-page="beginner-guide">
+        <i class="fas fa-graduation-cap"></i>
+        <span>新手入门</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="encyclopedia">
+        <i class="fas fa-book"></i>
+        <span>硬件百科</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="mobile-hardware">
+        <i class="fas fa-mobile-alt"></i>
+        <span>手机硬件</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="other-devices">
+        <i class="fas fa-laptop"></i>
+        <span>其他设备</span>
+      </div>
+      <div class="mobile-nav-more-popup-item" data-page="achievements">
+        <i class="fas fa-trophy"></i>
+        <span>成就系统</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="page">
+    <article class="max-w-5xl mx-auto px-4 py-12">
+      <header class="mb-12">
+        <div class="flex items-center gap-4 mb-6">
+          <a href="../encyclopedia.html" class="text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i>返回百科
+          </a>
+          <span class="tag tag-cyan">核心硬件</span>
+          <span class="tag tag-orange">进阶</span>
+        </div>
+        
+        <div class="flex items-start gap-6 mb-8">
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--accent-cyan)]/20 to-transparent flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-microchip text-4xl text-[var(--accent-cyan)]"></i>
+          </div>
+          <div>
+            <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">CPU 深度解析</h1>
+            <p class="text-xl text-[var(--text-secondary)]">全面理解中央处理器的工作原理、技术演进和性能指标</p>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap items-center gap-6 text-sm text-[var(--text-secondary)]">
+          <span><i class="fas fa-clock mr-2"></i>阅读时间：约 25 分钟</span>
+          <span><i class="fas fa-calendar mr-2"></i>更新时间：2026-03-06</span>
+          <span><i class="fas fa-eye mr-2"></i>阅读次数：1,234</span>
+        </div>
+      </header>
+      
+      <div class="glass rounded-2xl p-8 mb-8">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="text-center p-6 rounded-xl bg-white/5">
+            <div class="text-3xl font-bold text-[var(--accent-cyan)] mb-2">15+</div>
+            <div class="text-sm text-[var(--text-secondary)]">核心知识点</div>
+          </div>
+          <div class="text-center p-6 rounded-xl bg-white/5">
+            <div class="text-3xl font-bold text-[var(--accent-orange)] mb-2">50+</div>
+            <div class="text-sm text-[var(--text-secondary)]">技术术语解析</div>
+          </div>
+          <div class="text-center p-6 rounded-xl bg-white/5">
+            <div class="text-3xl font-bold text-[var(--accent-green)] mb-2">100%</div>
+            <div class="text-sm text-[var(--text-secondary)]">实战指南</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="glass rounded-2xl p-8 mb-8">
+        <h2 class="font-display text-2xl font-bold mb-6 flex items-center gap-3">
+          <i class="fas fa-list-ul text-[var(--accent-cyan)]"></i>
+          目录
+        </h2>
+        <nav class="space-y-2">
+          <a href="#section1" class="block p-3 rounded-xl hover:bg-white/5 transition-colors">
+            <span class="text-[var(--accent-cyan)] font-bold mr-2">01</span>
+            CPU 的基本架构
+          </a>
+          <a href="#section2" class="block p-3 rounded-xl hover:bg-white/5 transition-colors">
+            <span class="text-[var(--accent-cyan)] font-bold mr-2">02</span>
+            核心与线程技术
+          </a>
+          <a href="#section3" class="block p-3 rounded-xl hover:bg-white/5 transition-colors">
+            <span class="text-[var(--accent-cyan)] font-bold mr-2">03</span>
+            缓存系统详解
+          </a>
+          <a href="#section4" class="block p-3 rounded-xl hover:bg-white/5 transition-colors">
+            <span class="text-[var(--accent-cyan)] font-bold mr-2">04</span>
+            制程工艺与功耗
+          </a>
+          <a href="#section5" class="block p-3 rounded-xl hover:bg-white/5 transition-colors">
+            <span class="text-[var(--accent-cyan)] font-bold mr-2">05</span>
+            Intel vs AMD 对比
+          </a>
+          <a href="#section6" class="block p-3 rounded-xl hover:bg-white/5 transition-colors">
+            <span class="text-[var(--accent-cyan)] font-bold mr-2">06</span>
+            超频技术指南
+          </a>
+          <a href="#section7" class="block p-3 rounded-xl hover:bg-white/5 transition-colors">
+            <span class="text-[var(--accent-cyan)] font-bold mr-2">07</span>
+            选购建议与推荐
+          </a>
+        </nav>
+      </div>
+      
+      <div class="space-y-12">
+        <section id="section1" class="scroll-mt-24">
+          <h2 class="font-display text-3xl font-bold mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-blue)] flex items-center justify-center text-white font-bold">1</span>
+            CPU 的基本架构
+          </h2>
+          
+          <div class="mb-8">
+            <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+              CPU（Central Processing Unit，中央处理器）是计算机的"大脑"，负责执行程序指令和处理数据。理解 CPU 的架构对于选择合适的处理器和优化系统性能至关重要。
+            </p>
+            
+            <div class="highlight-box mb-6">
+              <div class="font-bold mb-2"><i class="fas fa-lightbulb text-[var(--accent-yellow)] mr-2"></i>核心概念</div>
+              <p class="text-sm text-[var(--text-secondary)]">CPU 架构是指处理器内部的设计和组织方式，包括指令集、执行单元、缓存层次等关键组件的布局和交互方式。</p>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <h3 class="font-bold text-xl mb-4">主要架构组件</h3>
+            <div class="feature-grid mb-6">
+              <div class="p-6 rounded-xl bg-white/5 border border-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-cyan)]/10 flex items-center justify-center">
+                    <i class="fas fa-microchip text-[var(--accent-cyan)]"></i>
+                  </div>
+                  <div class="font-bold">控制单元（CU）</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">负责从内存中提取指令、解码并控制其他单元执行指令，是 CPU 的"指挥中心"。</p>
+              </div>
+              
+              <div class="p-6 rounded-xl bg-white/5 border border-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-orange)]/10 flex items-center justify-center">
+                    <i class="fas fa-calculator text-[var(--accent-orange)]"></i>
+                  </div>
+                  <div class="font-bold">算术逻辑单元（ALU）</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">执行算术运算（加减乘除）和逻辑运算（与或非、比较），是 CPU 的"计算引擎"。</p>
+              </div>
+              
+              <div class="p-6 rounded-xl bg-white/5 border border-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-green)]/10 flex items-center justify-center">
+                    <i class="fas fa-database text-[var(--accent-green)]"></i>
+                  </div>
+                  <div class="font-bold">寄存器组</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">CPU 内部的高速存储单元，用于暂存指令、数据和地址，速度比缓存更快。</p>
+              </div>
+              
+              <div class="p-6 rounded-xl bg-white/5 border border-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--accent-purple)]/10 flex items-center justify-center">
+                    <i class="fas fa-project-diagram text-[var(--accent-purple)]"></i>
+                  </div>
+                  <div class="font-bold">总线接口单元</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">负责 CPU 与外部（内存、芯片组）的数据传输，影响整体系统带宽。</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <h3 class="font-bold text-xl mb-4">指令集架构（ISA）</h3>
+            <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+              指令集是 CPU 能够理解和执行的基本操作命令的集合。现代 CPU 主要采用两种指令集架构：
+            </p>
+            
+            <div class="accordion mb-6">
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="font-bold">x86 架构（复杂指令集 CISC）</span>
+                  <i class="fas fa-chevron-down text-[var(--text-secondary)]"></i>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body text-[var(--text-secondary)]">
+                    <p class="mb-3">由 Intel 开发，是目前桌面和服务器市场的主流架构。特点包括：</p>
+                    <ul class="list-arrow space-y-2">
+                      <li>指令长度可变，功能丰富</li>
+                      <li>支持复杂操作，单条指令可完成多个步骤</li>
+                      <li>向后兼容性好，可运行旧软件</li>
+                      <li>代表产品：Intel Core 系列、AMD Ryzen 系列</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="font-bold">ARM 架构（精简指令集 RISC）</span>
+                  <i class="fas fa-chevron-down text-[var(--text-secondary)]"></i>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body text-[var(--text-secondary)]">
+                    <p class="mb-3">由 ARM Holdings 设计，主要用于移动设备和嵌入式系统。特点包括：</p>
+                    <ul class="list-arrow space-y-2">
+                      <li>指令长度固定，执行效率高</li>
+                      <li>功耗低，适合电池供电设备</li>
+                      <li>结构简单，易于扩展</li>
+                      <li>代表产品：Apple M 系列、高通骁龙、联发科天玑</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="warning-box">
+            <div class="font-bold mb-2"><i class="fas fa-exclamation-triangle text-[var(--accent-orange)] mr-2"></i>注意事项</div>
+            <p class="text-sm text-[var(--text-secondary)]">x86 和 ARM 架构的软件不兼容。为 x86 编译的程序无法直接在 ARM 处理器上运行，需要通过转译或重新编译。</p>
+          </div>
+        </section>
+        
+        <section id="section2" class="scroll-mt-24">
+          <h2 class="font-display text-3xl font-bold mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-blue)] flex items-center justify-center text-white font-bold">2</span>
+            核心与线程技术
+          </h2>
+          
+          <div class="mb-8">
+            <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+              核心（Core）和线程（Thread）是衡量 CPU 性能的重要指标。理解它们的关系对于选择合适的处理器至关重要。
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <div class="p-6 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)]/5 to-transparent border border-[var(--accent-cyan)]/20">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-[var(--accent-cyan)]/10 flex items-center justify-center">
+                    <i class="fas fa-circle text-[var(--accent-cyan)]"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-lg">物理核心</div>
+                    <div class="text-xs text-[var(--text-secondary)]">Physical Cores</div>
+                  </div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)] mb-4">
+                  物理核心是 CPU 内部独立的处理单元，每个核心都能独立执行指令。核心数量越多，并行处理能力越强。
+                </p>
+                <div class="flex items-center gap-2 text-xs text-[var(--accent-cyan)]">
+                  <i class="fas fa-check-circle"></i>
+                  <span>真正的硬件资源</span>
+                </div>
+              </div>
+              
+              <div class="p-6 rounded-xl bg-gradient-to-br from-[var(--accent-blue)]/5 to-transparent border border-[var(--accent-blue)]/20">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-[var(--accent-blue)]/10 flex items-center justify-center">
+                    <i class="fas fa-copy text-[var(--accent-blue)]"></i>
+                  </div>
+                  <div>
+                    <div class="font-bold text-lg">逻辑线程</div>
+                    <div class="text-xs text-[var(--text-secondary)]">Logical Threads</div>
+                  </div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)] mb-4">
+                  线程是通过超线程技术虚拟出的处理单元。一个物理核心可以模拟多个线程，提高资源利用率。
+                </p>
+                <div class="flex items-center gap-2 text-xs text-[var(--accent-blue)]">
+                  <i class="fas fa-bolt"></i>
+                  <span>提升多任务效率</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <h3 class="font-bold text-xl mb-4">超线程技术（Hyper-Threading / SMT）</h3>
+            <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+              超线程技术（Intel 称为 Hyper-Threading，AMD 称为 SMT - Simultaneous Multi-Threading）允许一个物理核心同时处理多个线程，通过复制架构状态寄存器来实现。
+            </p>
+            
+            <div class="p-6 rounded-xl bg-white/5 mb-6">
+              <div class="font-bold mb-4">核心数 vs 线程数对比</div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-white/10">
+                      <th class="text-left py-3 px-4 text-[var(--text-secondary)]">配置</th>
+                      <th class="text-center py-3 px-4 text-[var(--text-secondary)]">物理核心</th>
+                      <th class="text-center py-3 px-4 text-[var(--text-secondary)]">逻辑线程</th>
+                      <th class="text-left py-3 px-4 text-[var(--text-secondary)]">适用场景</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-white/5">
+                      <td class="py-3 px-4 font-bold">4 核 4 线程</td>
+                      <td class="text-center py-3 px-4">4</td>
+                      <td class="text-center py-3 px-4">4</td>
+                      <td class="py-3 px-4 text-[var(--text-secondary)]">入门办公、轻度游戏</td>
+                    </tr>
+                    <tr class="border-b border-white/5">
+                      <td class="py-3 px-4 font-bold">6 核 12 线程</td>
+                      <td class="text-center py-3 px-4">6</td>
+                      <td class="text-center py-3 px-4">12</td>
+                      <td class="py-3 px-4 text-[var(--text-secondary)]">主流游戏、内容创作</td>
+                    </tr>
+                    <tr class="border-b border-white/5">
+                      <td class="py-3 px-4 font-bold">8 核 16 线程</td>
+                      <td class="text-center py-3 px-4">8</td>
+                      <td class="text-center py-3 px-4">16</td>
+                      <td class="py-3 px-4 text-[var(--text-secondary)]">高端游戏、视频剪辑</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-bold">16 核 32 线程</td>
+                      <td class="text-center py-3 px-4">16</td>
+                      <td class="text-center py-3 px-4">32</td>
+                      <td class="py-3 px-4 text-[var(--text-secondary)]">专业工作站、3D 渲染</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="highlight-box">
+              <div class="font-bold mb-2"><i class="fas fa-lightbulb text-[var(--accent-yellow)] mr-2"></i>性能提升</div>
+              <p class="text-sm text-[var(--text-secondary)]">超线程技术通常能带来 15-30% 的多线程性能提升，但对单核性能影响不大。实际效果取决于工作负载类型。</p>
+            </div>
+          </div>
+        </section>
+        
+        <section id="section3" class="scroll-mt-24">
+          <h2 class="font-display text-3xl font-bold mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-blue)] flex items-center justify-center text-white font-bold">3</span>
+            缓存系统详解
+          </h2>
+          
+          <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+            CPU 缓存是位于处理器内部的高速存储器，用于减少访问主内存的延迟。现代 CPU 采用多级缓存架构，每级缓存的速度和容量不同。
+          </p>
+          
+          <div class="mb-8">
+            <div class="flex flex-col gap-4">
+              <div class="p-6 rounded-xl bg-gradient-to-r from-[var(--accent-cyan)]/10 to-transparent border-l-4 border-[var(--accent-cyan)]">
+                <div class="flex items-start justify-between mb-2">
+                  <div>
+                    <div class="font-bold text-lg">L1 缓存（一级缓存）</div>
+                    <div class="text-xs text-[var(--text-secondary)]">最快但最小</div>
+                  </div>
+                  <div class="text-2xl font-bold text-[var(--accent-cyan)]">32-128 KB</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">
+                  分为指令缓存（L1-I）和数据缓存（L1-D），速度最快，通常与 CPU 核心同频运行。每个核心独占 L1 缓存。
+                </p>
+              </div>
+              
+              <div class="p-6 rounded-xl bg-gradient-to-r from-[var(--accent-blue)]/10 to-transparent border-l-4 border-[var(--accent-blue)]">
+                <div class="flex items-start justify-between mb-2">
+                  <div>
+                    <div class="font-bold text-lg">L2 缓存（二级缓存）</div>
+                    <div class="text-xs text-[var(--text-secondary)]">速度与容量的平衡</div>
+                  </div>
+                  <div class="text-2xl font-bold text-[var(--accent-blue)]">256 KB - 1 MB</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">
+                  每个核心或每对核心共享一个 L2 缓存，速度次于 L1，但容量更大。用于存储 L1 未命中的数据。
+                </p>
+              </div>
+              
+              <div class="p-6 rounded-xl bg-gradient-to-r from-[var(--accent-purple)]/10 to-transparent border-l-4 border-[var(--accent-purple)]">
+                <div class="flex items-start justify-between mb-2">
+                  <div>
+                    <div class="font-bold text-lg">L3 缓存（三级缓存）</div>
+                    <div class="text-xs text-[var(--text-secondary)]">共享大容量缓存</div>
+                  </div>
+                  <div class="text-2xl font-bold text-[var(--accent-purple)]">8-128 MB</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">
+                  所有核心共享的缓存，容量最大但速度最慢（仍远快于内存）。用于核心间数据共享和减少内存访问。
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="success-box">
+            <div class="font-bold mb-2"><i class="fas fa-check-circle text-[var(--accent-green)] mr-2"></i>缓存命中率</div>
+            <p class="text-sm text-[var(--text-secondary)]">缓存命中率指 CPU 在缓存中找到所需数据的概率。命中率越高，性能越好。现代 CPU 的 L1 命中率通常在 95% 以上，L2 在 80-90%，L3 在 60-80%。</p>
+          </div>
+        </section>
+        
+        <section id="section4" class="scroll-mt-24">
+          <h2 class="font-display text-3xl font-bold mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-blue)] flex items-center justify-center text-white font-bold">4</span>
+            制程工艺与功耗
+          </h2>
+          
+          <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+            制程工艺（Process Node）指 CPU 制造时使用的晶体管尺寸，通常以纳米（nm）为单位。更小的制程意味着更高的晶体管密度和更低的功耗。
+          </p>
+          
+          <div class="mb-8">
+            <h3 class="font-bold text-xl mb-4">制程演进历程</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="font-bold text-[var(--accent-cyan)] mb-1">1971 年 - 10,000 nm (10 μm)</div>
+                <p class="text-sm text-[var(--text-secondary)]">Intel 4004，世界上第一款商用微处理器，包含 2,300 个晶体管</p>
+              </div>
+              <div class="timeline-item">
+                <div class="font-bold text-[var(--accent-cyan)] mb-1">1989 年 - 1,000 nm (1 μm)</div>
+                <p class="text-sm text-[var(--text-secondary)]">Intel 80486，首次突破百万晶体管大关</p>
+              </div>
+              <div class="timeline-item">
+                <div class="font-bold text-[var(--accent-cyan)] mb-1">2002 年 - 130 nm</div>
+                <p class="text-sm text-[var(--text-secondary)]">Intel Pentium 4，进入深亚微米时代</p>
+              </div>
+              <div class="timeline-item">
+                <div class="font-bold text-[var(--accent-cyan)] mb-1">2011 年 - 32 nm</div>
+                <p class="text-sm text-[var(--text-secondary)]">Intel Sandy Bridge，引入先进架构设计</p>
+              </div>
+              <div class="timeline-item">
+                <div class="font-bold text-[var(--accent-cyan)] mb-1">2019 年 - 7 nm</div>
+                <p class="text-sm text-[var(--text-secondary)]">AMD Ryzen 3000 系列，率先采用 7nm 工艺</p>
+              </div>
+              <div class="timeline-item">
+                <div class="font-bold text-[var(--accent-cyan)] mb-1">2024 年 - 3 nm</div>
+                <p class="text-sm text-[var(--text-secondary)]">Apple M3 系列，目前最先进的量产制程</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <h3 class="font-bold text-xl mb-4">TDP（热设计功耗）</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="p-5 rounded-xl bg-white/5">
+                <div class="text-sm text-[var(--text-secondary)] mb-2">低功耗</div>
+                <div class="font-bold text-2xl text-[var(--accent-green)] mb-2">15-65W</div>
+                <p class="text-xs text-[var(--text-secondary)]">轻薄笔记本、迷你主机、办公电脑</p>
+              </div>
+              <div class="p-5 rounded-xl bg-white/5">
+                <div class="text-sm text-[var(--text-secondary)] mb-2">中功耗</div>
+                <div class="font-bold text-2xl text-[var(--accent-orange)] mb-2">65-125W</div>
+                <p class="text-xs text-[var(--text-secondary)]">主流台式机、游戏电脑</p>
+              </div>
+              <div class="p-5 rounded-xl bg-white/5">
+                <div class="text-sm text-[var(--text-secondary)] mb-2">高功耗</div>
+                <div class="font-bold text-2xl text-[var(--accent-pink)] mb-2">125-350W+</div>
+                <p class="text-xs text-[var(--text-secondary)]">高端工作站、服务器、极限超频</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="warning-box">
+            <div class="font-bold mb-2"><i class="fas fa-exclamation-triangle text-[var(--accent-orange)] mr-2"></i>功耗墙与温度墙</div>
+            <p class="text-sm text-[var(--text-secondary)]">现代 CPU 都有功耗保护机制。当功耗或温度超过设定阈值时，CPU 会自动降频以保护硬件。良好的散热系统可以延缓降频，维持更高性能。</p>
+          </div>
+        </section>
+        
+        <section id="section5" class="scroll-mt-24">
+          <h2 class="font-display text-3xl font-bold mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-blue)] flex items-center justify-center text-white font-bold">5</span>
+            Intel vs AMD 对比
+          </h2>
+          
+          <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+            Intel 和 AMD 是 x86 CPU 市场的两大巨头。两者各有优势，选择合适的品牌需要根据具体需求和预算。
+          </p>
+          
+          <div class="mb-8 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b-2 border-white/10">
+                  <th class="text-left py-4 px-4 font-bold">特性</th>
+                  <th class="text-center py-4 px-4">
+                    <div class="flex items-center gap-2 justify-center">
+                      <div class="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center">
+                        <span class="text-blue-400 font-bold text-xs">Intel</span>
+                      </div>
+                      <span>Intel Core</span>
+                    </div>
+                  </th>
+                  <th class="text-center py-4 px-4">
+                    <div class="flex items-center gap-2 justify-center">
+                      <div class="w-8 h-8 rounded bg-orange-500/20 flex items-center justify-center">
+                        <span class="text-orange-400 font-bold text-xs">AMD</span>
+                      </div>
+                      <span>AMD Ryzen</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-white/5">
+                  <td class="py-4 px-4 font-bold">架构设计</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">混合架构（P-Core + E-Core）</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">全大核 / Zen 架构</td>
+                </tr>
+                <tr class="border-b border-white/5">
+                  <td class="py-4 px-4 font-bold">单核性能</td>
+                  <td class="py-4 px-4 text-center text-[var(--accent-green)]"><i class="fas fa-check mr-1"></i>领先</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">紧随其后</td>
+                </tr>
+                <tr class="border-b border-white/5">
+                  <td class="py-4 px-4 font-bold">多核性能</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">优秀</td>
+                  <td class="py-4 px-4 text-center text-[var(--accent-green)]"><i class="fas fa-check mr-1"></i>优势明显</td>
+                </tr>
+                <tr class="border-b border-white/5">
+                  <td class="py-4 px-4 font-bold">功耗控制</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">较高</td>
+                  <td class="py-4 px-4 text-center text-[var(--accent-green)]"><i class="fas fa-check mr-1"></i>能效比优</td>
+                </tr>
+                <tr class="border-b border-white/5">
+                  <td class="py-4 px-4 font-bold">平台寿命</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">2-3 代</td>
+                  <td class="py-4 px-4 text-center text-[var(--accent-green)]"><i class="fas fa-check mr-1"></i>3-4 代</td>
+                </tr>
+                <tr class="border-b border-white/5">
+                  <td class="py-4 px-4 font-bold">核显性能</td>
+                  <td class="py-4 px-4 text-center text-[var(--accent-green)]"><i class="fas fa-check mr-1"></i>Iris Xe 较强</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">RDNA 架构</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-bold">性价比</td>
+                  <td class="py-4 px-4 text-center text-[var(--text-secondary)]">中高端</td>
+                  <td class="py-4 px-4 text-center text-[var(--accent-green)]"><i class="fas fa-check mr-1"></i>普遍更高</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-xl bg-blue-500/5 border border-blue-500/20">
+              <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                <div class="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center">
+                  <span class="text-blue-400 font-bold text-xs">Intel</span>
+                </div>
+                Intel 优势场景
+              </h3>
+              <ul class="list-check space-y-2 text-[var(--text-secondary)]">
+                <li>追求极致单核性能的游戏玩家</li>
+                <li>需要核显但不想购买独显的用户</li>
+                <li>专业软件优化偏向 Intel 的工作站</li>
+                <li>对 Thunderbolt 接口有需求的用户</li>
+              </ul>
+            </div>
+            
+            <div class="p-6 rounded-xl bg-orange-500/5 border border-orange-500/20">
+              <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                <div class="w-8 h-8 rounded bg-orange-500/20 flex items-center justify-center">
+                  <span class="text-orange-400 font-bold text-xs">AMD</span>
+                </div>
+                AMD 优势场景
+              </h3>
+              <ul class="list-check space-y-2 text-[var(--text-secondary)]">
+                <li>多任务处理和内容创作者</li>
+                <li>追求性价比的游戏玩家</li>
+                <li>希望平台长期升级的用户</li>
+                <li>对功耗和发热敏感的用户</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        
+        <section id="section6" class="scroll-mt-24">
+          <h2 class="font-display text-3xl font-bold mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-blue)] flex items-center justify-center text-white font-bold">6</span>
+            超频技术指南
+          </h2>
+          
+          <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+            超频是通过提高 CPU 的工作频率来获得额外性能的技术。适当的超频可以免费提升性能，但需要谨慎操作。
+          </p>
+          
+          <div class="mb-8">
+            <h3 class="font-bold text-xl mb-4">超频前准备</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-5 rounded-xl bg-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <i class="fas fa-microchip text-[var(--accent-cyan)]"></i>
+                  <div class="font-bold">支持超频的 CPU</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">Intel: K/KF 后缀（如 i9-13900K）；AMD: Ryzen 全系列（除 APU 外）</p>
+              </div>
+              
+              <div class="p-5 rounded-xl bg-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <i class="fas fa-th text-[var(--accent-cyan)]"></i>
+                  <div class="font-bold">支持超频的主板</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">Intel: Z 系列芯片组；AMD: B/X 系列芯片组</p>
+              </div>
+              
+              <div class="p-5 rounded-xl bg-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <i class="fas fa-fan text-[var(--accent-cyan)]"></i>
+                  <div class="font-bold">强力散热系统</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">推荐 240/360 水冷或高端风冷，确保温度可控</p>
+              </div>
+              
+              <div class="p-5 rounded-xl bg-white/5">
+                <div class="flex items-center gap-3 mb-3">
+                  <i class="fas fa-bolt text-[var(--accent-cyan)]"></i>
+                  <div class="font-bold">稳定电源</div>
+                </div>
+                <p class="text-sm text-[var(--text-secondary)]">80 PLUS 金牌以上认证，功率留有余量</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="warning-box mb-8">
+            <div class="font-bold mb-2"><i class="fas fa-exclamation-triangle text-[var(--accent-orange)] mr-2"></i>风险提示</div>
+            <ul class="list-arrow space-y-2 text-sm text-[var(--text-secondary)]">
+              <li>超频可能导致系统不稳定、数据丢失</li>
+              <li>过度超频会缩短 CPU 寿命，甚至永久损坏硬件</li>
+              <li>超频可能使保修失效，请谨慎操作</li>
+              <li>建议在专业人士指导下进行</li>
+            </ul>
+          </div>
+        </section>
+        
+        <section id="section7" class="scroll-mt-24">
+          <h2 class="font-display text-3xl font-bold mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-blue)] flex items-center justify-center text-white font-bold">7</span>
+            选购建议与推荐
+          </h2>
+          
+          <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+            选择 CPU 需要综合考虑用途、预算、平台兼容性等因素。以下是针对不同用户群体的推荐方案。
+          </p>
+          
+          <div class="space-y-6">
+            <div class="p-6 rounded-xl bg-gradient-to-r from-green-500/5 to-transparent border-l-4 border-[var(--accent-green)]">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-[var(--accent-green)]/10 flex items-center justify-center">
+                  <i class="fas fa-home text-[var(--accent-green)]"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-lg">入门办公 / 家用娱乐</div>
+                  <div class="text-xs text-[var(--text-secondary)]">预算：800-1500 元</div>
+                </div>
+              </div>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">Intel 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Core i3-13100 / i5-13400</div>
+                  <div class="text-xs text-[var(--text-secondary)]">4-6 核心，适合 Office、网页浏览、轻度游戏</div>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">AMD 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Ryzen 5 5600G / 7500F</div>
+                  <div class="text-xs text-[var(--text-secondary)]">6 核心，核显强劲，性价比优选</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 rounded-xl bg-gradient-to-r from-blue-500/5 to-transparent border-l-4 border-[var(--accent-blue)]">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-[var(--accent-blue)]/10 flex items-center justify-center">
+                  <i class="fas fa-gamepad text-[var(--accent-blue)]"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-lg">主流游戏</div>
+                  <div class="text-xs text-[var(--text-secondary)]">预算：1500-2500 元</div>
+                </div>
+              </div>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">Intel 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Core i5-13600K / i5-14600K</div>
+                  <div class="text-xs text-[var(--text-secondary)]">14 核心 20 线程，游戏性能优异</div>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">AMD 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Ryzen 7 7700X / 7800X3D</div>
+                  <div class="text-xs text-[var(--text-secondary)]">8 核心，3D V-Cache 游戏神 U</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 rounded-xl bg-gradient-to-r from-purple-500/5 to-transparent border-l-4 border-[var(--accent-purple)]">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-[var(--accent-purple)]/10 flex items-center justify-center">
+                  <i class="fas fa-video text-[var(--accent-purple)]"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-lg">内容创作 / 专业工作</div>
+                  <div class="text-xs text-[var(--text-secondary)]">预算：2500-5000 元</div>
+                </div>
+              </div>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">Intel 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Core i7-14700K / i9-14900K</div>
+                  <div class="text-xs text-[var(--text-secondary)]">20-24 核心，视频剪辑、3D 渲染利器</div>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">AMD 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Ryzen 9 7900X / 7950X</div>
+                  <div class="text-xs text-[var(--text-secondary)]">12-16 核心，多核性能强劲，能效比优</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 rounded-xl bg-gradient-to-r from-orange-500/5 to-transparent border-l-4 border-[var(--accent-orange)]">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-[var(--accent-orange)]/10 flex items-center justify-center">
+                  <i class="fas fa-server text-[var(--accent-orange)]"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-lg">工作站 / 服务器</div>
+                  <div class="text-xs text-[var(--text-secondary)]">预算：5000 元以上</div>
+                </div>
+              </div>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">Intel 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Xeon W / Core i9 Extreme</div>
+                  <div class="text-xs text-[var(--text-secondary)]">24 核心以上，支持 ECC 内存，稳定性强</div>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5">
+                  <div class="font-bold mb-2">AMD 方案</div>
+                  <div class="text-sm text-[var(--text-secondary)] mb-2">Ryzen Threadripper / EPYC</div>
+                  <div class="text-xs text-[var(--text-secondary)]">32-64 核心，PCIe通道多，扩展性极佳</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 highlight-box">
+            <div class="font-bold mb-2"><i class="fas fa-lightbulb text-[var(--accent-yellow)] mr-2"></i>购买建议</div>
+            <ul class="list-check space-y-2 text-sm text-[var(--text-secondary)]">
+              <li>不要盲目追求最新型号，根据实际需求选择</li>
+              <li>关注散片价格，性价比往往更高</li>
+              <li>考虑平台整体成本（主板、内存兼容性）</li>
+              <li>留意促销节点（618、双 11 等）</li>
+              <li>二手市场需谨慎，优先选择正规渠道</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      
+      <div class="divider my-12"></div>
+      
+      <footer class="text-center">
+        <div class="inline-flex items-center gap-2 px-6 py-3 rounded-full glass mb-6">
+          <span class="text-sm text-[var(--text-secondary)]">觉得有帮助？</span>
+          <button class="text-[var(--accent-cyan)] hover:scale-110 transition-transform" onclick="showNotification('感谢支持！', 'success')">
+            <i class="fas fa-heart"></i>
+          </button>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="../encyclopedia.html" class="btn-secondary">
+            <i class="fas fa-book"></i>返回百科
+          </a>
+          <a href="../learning-path.html" class="btn-primary">
+            <i class="fas fa-route"></i>继续学习
+          </a>
+        </div>
+      </footer>
+    </article>
+  </div>
+</main>
+
+<script src="../src/js/script.js"></script>
+<script>
+function toggleAccordion(header) {
+  const content = header.nextElementSibling;
+  const icon = header.querySelector('.fa-chevron-down');
+  
+  content.classList.toggle('active');
+  icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+}
+</script>
+</body>
+</html>

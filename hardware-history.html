@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="硬件发展历史时间线，从 1971 年至今的 CPU、GPU、内存等硬件技术演进历程">
+<meta name="keywords" content="硬件历史，计算机发展，CPU 历史，GPU 演进，科技发展，时间线">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>硬件发展史 - 硬件探索者</title>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+<style>
+.timeline-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent-purple), var(--accent-cyan), var(--accent-blue));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+  position: relative;
+  width: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+  align-self: flex-start;
+  padding-right: 40px;
+}
+
+.timeline-item:nth-child(even) {
+  align-self: flex-end;
+  justify-content: flex-start;
+  padding-left: 40px;
+  margin-left: 50%;
+}
+
+.timeline-dot {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  top: 25px;
+  box-shadow: 0 0 20px var(--accent-cyan);
+  animation: pulse 2s infinite;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+  right: -10px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+  left: -10px;
+}
+
+.timeline-content {
+  background: rgba(16, 26, 41, 0.8);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 450px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+}
+
+.timeline-year {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 20px;
+  }
+  
+  .timeline-item {
+    width: 100%;
+    padding-left: 50px !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    justify-content: flex-start !important;
+  }
+  
+  .timeline-dot {
+    left: 10px !important;
+    right: auto !important;
+  }
+  
+  .timeline-content {
+    max-width: 100%;
+  }
+}
+
+.era-section {
+  margin: 60px 0;
+}
+
+.era-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.era-title::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  margin: 15px auto 0;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent-cyan);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+.milestone-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+  color: white;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div class="sidebar-header-text">
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item active" data-page="hardware-history" onclick="navigateTo('hardware-history')">
+        <i class="fas fa-history"></i>
+        <span class="nav-text">硬件历史</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
+    </div>
+    
+  </nav>
+  
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="sidebar-footer">
+    <div class="sidebar-social">
+      <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+    </div>
+    <div class="sidebar-copyright">
+      &copy; 2024 硬件探索者. All rights reserved.
+    </div>
+  </div>
+</aside>
+
+<button class="mobile-menu-btn md:hidden" aria-label="菜单">
+  <i class="fas fa-bars"></i>
+</button>
+
+<main class="main-content">
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 gradient-text">
+        <i class="fas fa-history mr-3"></i>硬件发展史
+      </h1>
+      <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+        探索计算机硬件的演进历程，从 1971 年第一款微处理器到现代高性能计算芯片，见证科技改变世界的每一步
+      </p>
+    </div>
+
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="cpu">CPU</button>
+      <button class="filter-btn" data-filter="gpu">GPU</button>
+      <button class="filter-btn" data-filter="memory">内存</button>
+      <button class="filter-btn" data-filter="storage">存储</button>
+      <button class="filter-btn" data-filter="milestone">里程碑</button>
+    </div>
+
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+
+      <div class="era-section">
+        <h2 class="era-title">启蒙时代 (1971-1980)</h2>
+        
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1971</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 4004 - 世界首款微处理器</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 推出了世界上第一款商用微处理器 4004，采用 10 微米工艺，包含 2300 个晶体管，主频 740kHz。这标志着计算机微型化革命的开始。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">10μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">2300 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">740kHz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">1974</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 8080 - 个人计算机的基石</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 8080 处理器问世，采用 6 微米工艺，主频 2MHz。它成为了第一台个人计算机 Altair 8800 的心脏，开启了 PC 时代。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">6μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">6000 晶体管</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1978</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 8086 - x86 架构诞生</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 发布了 8086 处理器，这是 x86 架构的开山之作。16 位设计，主频 5-10MHz，奠定了现代 PC 兼容机的基础。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">3μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">29000 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">16 位架构</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="memory">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">1980</div>
+            <h3 class="text-xl font-bold text-white mb-2">DRAM 技术成熟</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              64K DRAM 芯片开始普及，采用 NMOS 技术，存取时间缩短至 100-150ns。内存开始成为独立组件，为 PC 发展奠定基础。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="era-section">
+        <h2 class="era-title">PC 时代 (1981-1990)</h2>
+        
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1981</div>
+            <h3 class="text-xl font-bold text-white mb-2">IBM PC 诞生</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              IBM 推出第一台个人计算机 IBM 5150，采用 Intel 8088 处理器（8086 的降频版），主频 4.77MHz，内存 16KB-256KB。PC 时代正式开启。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">8088 CPU</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">4.77MHz</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">16KB 起</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">1982</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 80286 发布</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              80286 处理器推出，支持保护模式，可寻址 16MB 内存。主频 6-12.5MHz，晶体管数量达到 13.4 万，性能大幅提升。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">1.5μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">134K 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">保护模式</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">1985</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 80386 - 32 位时代</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              80386 是 Intel 首款 32 位处理器，支持多任务处理，可寻址 4GB 内存和 64TB 虚拟内存。主频 12.5-40MHz，晶体管 27.5 万。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">1.5μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">275K 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">32 位架构</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="gpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">1987</div>
+            <h3 class="text-xl font-bold text-white mb-2">VGA 图形标准确立</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              IBM 推出 VGA（Video Graphics Array）标准，支持 640x480 分辨率 16 色或 320x200 分辨率 256 色。图形显示开始标准化。
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">1989</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 80486 - 内置缓存</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              80486 首次将 L1 缓存集成到 CPU 内部（8KB），并内置数学协处理器。主频 16-100MHz，晶体管 120 万，性能是 386 的 2-4 倍。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">1μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">1.2M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">8KB L1 缓存</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="era-section">
+        <h2 class="era-title">性能飞跃 (1991-2000)</h2>
+        
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1993</div>
+            <h3 class="text-xl font-bold text-white mb-2">Pentium 处理器问世</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 推出 Pentium（奔腾）处理器，采用超标量架构，每个时钟周期可执行两条指令。主频 60-200MHz，晶体管 310 万。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">0.8μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">3.1M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">超标量架构</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="gpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1995</div>
+            <h3 class="text-xl font-bold text-white mb-2">3D 图形加速卡出现</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              3dfx 推出 Voodoo 图形加速卡，专门处理 3D 图形渲染。这标志着 GPU 概念的雏形，游戏图形进入 3D 时代。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">3dfx</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">Voodoo</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">3D 加速</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">1997</div>
+            <h3 class="text-xl font-bold text-white mb-2">Pentium II 发布</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Pentium II 采用 Slot 1 接口，将 L2 缓存封装在 CPU 卡匣内。主频 233-450MHz，引入 MMX 多媒体指令集。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">0.35μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">7.5M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">MMX 指令集</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="memory milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1998</div>
+            <h3 class="text-xl font-bold text-white mb-2">DDR SDRAM 标准确立</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Samsung 开发出首款 DDR SDRAM 内存，每个时钟周期可传输两次数据，带宽翻倍。DDR 时代正式开启。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">200MHz</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">1.6GB/s</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">双倍速率</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1999</div>
+            <h3 class="text-xl font-bold text-white mb-2">AMD Athlon 超越 Pentium III</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              AMD Athlon（K7 架构）发布，首次在性能上超越 Intel 的 Pentium III。采用 Slot A 接口，主频突破 1GHz 大关。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">0.18μm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">22M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">1GHz+</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="gpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">1999</div>
+            <h3 class="text-xl font-bold text-white mb-2">NVIDIA GeForce 256 - 首款 GPU</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              NVIDIA 推出 GeForce 256，首次提出"GPU"（图形处理器）概念。集成硬件 T&L 单元，支持硬件级几何变换，晶体管 2300 万。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">220nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">23M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">硬件 T&L</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="era-section">
+        <h2 class="era-title">多核时代 (2001-2010)</h2>
+        
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2000</div>
+            <h3 class="text-xl font-bold text-white mb-2">Pentium 4 - NetBurst 架构</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 推出 Pentium 4，采用 NetBurst 架构，追求高频策略。主频最高达 3.8GHz，但功耗和发热量巨大。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">180nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">42M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">3.8GHz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="memory">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2002</div>
+            <h3 class="text-xl font-bold text-white mb-2">DDR2 内存发布</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              DDR2 SDRAM 正式推出，工作电压降至 1.8V，频率提升至 400-1066MHz，带宽最高 8.5GB/s。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">1.8V</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">1066MHz</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">8.5GB/s</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2005</div>
+            <h3 class="text-xl font-bold text-white mb-2">双核处理器时代来临</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              AMD 推出 Athlon 64 X2，Intel 推出 Pentium D，桌面级双核处理器正式商用。多任务处理能力大幅提升。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">90nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">2 核心</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">多任务</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2006</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel Core 2 Duo - 酷睿架构</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 推出 Core 2 Duo，采用全新的 Core 微架构，摒弃 NetBurst。性能强劲且功耗低，重新夺回性能王座。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">65nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">291M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">高效能比</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="gpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2006</div>
+            <h3 class="text-xl font-bold text-white mb-2">统一渲染架构</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              NVIDIA GeForce 8800 GTX 和 AMD Radeon HD 2900 XT 先后推出，采用统一渲染架构，GPU 编程更加灵活。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-px-2 py-1 bg-purple-900/50 text-purple-300 rounded">90nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">681M 晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">统一着色器</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="memory">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2007</div>
+            <h3 class="text-xl font-bold text-white mb-2">DDR3 内存商用</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              DDR3 SDRAM 开始普及，工作电压进一步降至 1.5V，频率范围 800-2133MHz，带宽最高 17GB/s。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">1.5V</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">2133MHz</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">17GB/s</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2008</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel i7 - Nehalem 架构</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel Core i7 系列发布，采用 Nehalem 架构， reintroducing 超线程技术，集成内存控制器，支持三通道 DDR3。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">45nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">7.31 亿晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">超线程</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="era-section">
+        <h2 class="era-title">现代计算 (2011-至今)</h2>
+        
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2011</div>
+            <h3 class="text-xl font-bold text-white mb-2">AMD Fusion - APU 概念</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              AMD 推出 Fusion APU，首次将 CPU 和 GPU 集成在同一芯片上。异构计算概念开始普及。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">32nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">CPU+GPU</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">异构计算</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="memory">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2014</div>
+            <h3 class="text-xl font-bold text-white mb-2">DDR4 内存标准</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              DDR4 SDRAM 正式商用，工作电压降至 1.2V，起始频率 2133MHz，最高支持 4266MHz，单条容量最高 64GB。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">1.2V</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">4266MHz</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">64GB 单条</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2017</div>
+            <h3 class="text-xl font-bold text-white mb-2">AMD Ryzen - Zen 架构崛起</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              AMD 推出 Ryzen 系列，采用 Zen 架构，IPC 性能提升 52%。多核性价比战略，重新获得市场竞争力。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">14nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">8 核 16 线程</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">IPC +52%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2018</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 9 代酷睿 - 6 核普及</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 第 9 代酷睿发布，i9-9900K 首次将 8 核 16 线程带入主流市场，主频突破 5GHz 大关。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">14nm++</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">8 核 16 线程</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">5GHz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="gpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2018</div>
+            <h3 class="text-xl font-bold text-white mb-2">NVIDIA RTX - 光线追踪时代</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              NVIDIA GeForce RTX 20 系列发布，首次引入 RT Core 光线追踪核心和 Tensor Core，实时光追成为现实。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">12nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">186 亿晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">RT Core</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2020</div>
+            <h3 class="text-xl font-bold text-white mb-2">AMD Ryzen 5000 - Zen 3 架构</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              AMD Ryzen 5000 系列采用 Zen 3 架构，IPC 提升 19%，游戏性能首次全面超越 Intel，单核多核双领先。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">7nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">16 核 32 线程</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">IPC +19%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="memory milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2020</div>
+            <h3 class="text-xl font-bold text-white mb-2">DDR5 内存标准发布</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              JEDEC 正式发布 DDR5 内存标准，起始频率 4800MHz，最高支持 8400MHz+，工作电压 1.1V，集成 PMIC 电源管理。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">1.1V</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">8400MHz+</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">片上 ECC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2021</div>
+            <h3 class="text-xl font-bold text-white mb-2">Intel 12 代酷睿 - 大小核设计</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Intel 第 12 代酷睿采用混合架构设计，结合性能核（P-Core）和能效核（E-Core），支持 DDR5 和 PCIe 5.0。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">Intel 7 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">16 核 24 线程</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">混合架构</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="gpu milestone">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="milestone-badge">里程碑</span>
+            <div class="timeline-year">2022</div>
+            <h3 class="text-xl font-bold text-white mb-2">NVIDIA RTX 40 系列 - Ada Lovelace</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              RTX 4090 采用 Ada Lovelace 架构，支持 DLSS 3.0 帧生成技术，晶体管数量达到 763 亿，性能大幅提升。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">TSMC 4N</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">763 亿晶体管</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">DLSS 3.0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="cpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2023</div>
+            <h3 class="text-xl font-bold text-white mb-2">AMD Ryzen 7000X3D - 3D V-Cache</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              AMD 推出 3D V-Cache 技术，在 CPU 上堆叠额外 L3 缓存，游戏性能大幅提升，Ryzen 7 7800X3D 成为游戏神 U。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">5nm 工艺</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">96MB L3</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">3D 堆叠</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-category="gpu">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2024</div>
+            <h3 class="text-xl font-bold text-white mb-2">NVIDIA RTX 40 SUPER 系列</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              NVIDIA 推出 RTX 40 SUPER 系列，包括 4080 SUPER、4070 Ti SUPER 和 4070 SUPER，性能提升，显存增加。
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded">TSMC 4N</span>
+              <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded">16GB GDDR6X</span>
+              <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded">性能优化</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 p-8 bg-gradient-to-r from-purple-900/30 via-blue-900/30 to-cyan-900/30 rounded-2xl border border-cyan-500/30">
+      <h3 class="text-2xl font-display font-bold text-white mb-4 text-center">
+        <i class="fas fa-lightbulb mr-2"></i>未来展望
+      </h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-4 bg-black/30 rounded-xl">
+          <div class="text-cyan-400 text-3xl mb-3"><i class="fas fa-brain"></i></div>
+          <h4 class="text-lg font-bold text-white mb-2">AI 加速</h4>
+          <p class="text-gray-400 text-sm">NPU 专用 AI 处理单元集成，硬件级 AI 加速成为标配，端侧 AI 能力大幅提升。</p>
+        </div>
+        <div class="p-4 bg-black/30 rounded-xl">
+          <div class="text-purple-400 text-3xl mb-3"><i class="fas fa-layer-group"></i></div>
+          <h4 class="text-lg font-bold text-white mb-2">3D 堆叠</h4>
+          <p class="text-gray-400 text-sm">Chiplet 小芯片设计和 3D 堆叠技术成熟，突破摩尔定律限制，性能持续提升。</p>
+        </div>
+        <div class="p-4 bg-black/30 rounded-xl">
+          <div class="text-blue-400 text-3xl mb-3"><i class="fas fa-bolt"></i></div>
+          <h4 class="text-lg font-bold text-white mb-2">先进封装</h4>
+          <p class="text-gray-400 text-sm">2.5D/3D 封装技术普及，HBM 高带宽内存与 GPU/CPU 集成，带宽瓶颈被打破。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+<script>
+// 筛选功能
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      if (filter === 'all' || item.dataset.category.includes(filter)) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+// 滚动动画
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.timeline-item').forEach(item => {
+  item.style.opacity = '0';
+  item.style.transform = 'translateY(20px)';
+  item.style.transition = 'all 0.6s ease';
+  observer.observe(item);
+});
+</script>
+</body>
+</html>

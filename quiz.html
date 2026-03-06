@@ -3,10 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="硬件知识测验，通过趣味问答检验你的硬件知识水平，巩固学习成果">
+<meta name="keywords" content="硬件测验,知识问答,硬件考试,学习测试,硬件知识">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>知识测验 - 硬件探索者</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
@@ -79,13 +92,6 @@
       </div>
     </div>
     
-    <div class="nav-section">
-      <div class="nav-section-title">账户</div>
-      <div class="nav-item" data-page="login" onclick="navigateTo('login')">
-        <i class="fas fa-user-circle"></i>
-        <span class="nav-text">登录/注册</span>
-      </div>
-    </div>
   </nav>
   
   <div class="progress-section">
@@ -144,10 +150,6 @@
         <i class="fas fa-trophy"></i>
         <span>成就系统</span>
       </div>
-      <div class="mobile-nav-more-popup-item" data-page="login">
-        <i class="fas fa-user-circle"></i>
-        <span>登录/注册</span>
-      </div>
     </div>
   </div>
 </nav>
@@ -193,7 +195,7 @@
             </div>
           </div>
           
-          <div class="knowledge-card group cursor-pointer" onclick="initQuiz('advanced')">
+          <div class="knowledge-card group cursor-pointer" onclick="startQuiz('advanced')">
             <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent-orange)]/20 to-transparent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <i class="fas fa-diamond text-2xl text-[var(--accent-orange)]"></i>
             </div>

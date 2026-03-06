@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="2024 年最新装机配置推荐，从入门办公到旗舰工作站，提供详细的电脑组装配置单和购买建议">
+<meta name="keywords" content="装机配置，电脑组装，配置推荐，DIY 电脑，装机单，电脑配置，2024 装机">
+<meta name="author" content="硬件探索者">
+<meta name="theme-color" content="#0a0e14">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>装机配置推荐 - 硬件探索者</title>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<script src="https://cdn.tailwindcss.com" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="src/css/style.css">
+<style>
+.budget-card {
+  background: rgba(16, 26, 41, 0.6);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.budget-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3);
+}
+
+.budget-header {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(147, 51, 234, 0.2));
+  border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.component-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+  transition: all 0.3s ease;
+}
+
+.component-item:hover {
+  background: rgba(6, 182, 212, 0.05);
+}
+
+.component-item:last-child {
+  border-bottom: none;
+}
+
+.price-tag {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.total-price {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.filter-btn {
+  padding: 10px 24px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent-cyan);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+.usage-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(147, 51, 234, 0.2);
+  color: var(--accent-purple);
+  border: 1px solid rgba(147, 51, 234, 0.4);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 4px;
+}
+
+.performance-bar {
+  height: 6px;
+  background: rgba(6, 182, 212, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.performance-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<aside class="sidebar fixed left-0 top-0 bottom-0 glass-strong z-40 p-4 hidden md:flex flex-col">
+  <button class="sidebar-toggle" aria-label="切换侧边栏">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="sidebar-logo animate-glow">
+      <i class="fas fa-microchip text-white"></i>
+    </div>
+    <div class="sidebar-header-text">
+      <div class="font-display font-bold text-sm tracking-wider">HARDWARE</div>
+      <div class="text-[10px] text-[var(--accent-cyan)]">EXPLORER</div>
+    </div>
+  </div>
+  
+  <nav class="flex-1 overflow-y-auto">
+    <div class="nav-section">
+      <div class="nav-section-title">主导航</div>
+      <div class="nav-item" data-page="index" onclick="navigateTo('index')">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">首页</span>
+      </div>
+      <div class="nav-item" data-page="learning-path" onclick="navigateTo('learning-path')">
+        <i class="fas fa-route"></i>
+        <span class="nav-text">学习路径</span>
+      </div>
+      <div class="nav-item" data-page="beginner-guide" onclick="navigateTo('beginner-guide')">
+        <i class="fas fa-graduation-cap"></i>
+        <span class="nav-text">新手入门</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">知识库</div>
+      <div class="nav-item" data-page="encyclopedia" onclick="navigateTo('encyclopedia')">
+        <i class="fas fa-book"></i>
+        <span class="nav-text">硬件百科</span>
+      </div>
+      <div class="nav-item active" data-page="builds" onclick="navigateTo('builds')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">配置推荐</span>
+      </div>
+      <div class="nav-item" data-page="mobile-hardware" onclick="navigateTo('mobile-hardware')">
+        <i class="fas fa-mobile-alt"></i>
+        <span class="nav-text">手机硬件</span>
+      </div>
+      <div class="nav-item" data-page="other-devices" onclick="navigateTo('other-devices')">
+        <i class="fas fa-laptop"></i>
+        <span class="nav-text">其他设备</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">互动工具</div>
+      <div class="nav-item" data-page="builder" onclick="navigateTo('builder')">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">装机模拟</span>
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" data-page="quiz" onclick="navigateTo('quiz')">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">知识测验</span>
+      </div>
+      <div class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-text">成就系统</span>
+      </div>
+    </div>
+    
+  </nav>
+  
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title"><i class="fas fa-chart-line mr-1"></i> 学习进度</span>
+      <span class="progress-value" id="progressText">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="sidebar-footer">
+    <div class="sidebar-social">
+      <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+    </div>
+    <div class="sidebar-copyright">
+      &copy; 2024 硬件探索者。All rights reserved.
+    </div>
+  </div>
+</aside>
+
+<button class="mobile-menu-btn md:hidden" aria-label="菜单">
+  <i class="fas fa-bars"></i>
+</button>
+
+<main class="main-content">
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 gradient-text">
+        <i class="fas fa-tools mr-3"></i>装机配置推荐
+      </h1>
+      <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+        2024 年最新电脑组装配置单，从入门办公到旗舰工作站，提供详细的硬件配置和购买建议，帮助您打造理想电脑
+      </p>
+      <div class="mt-4 flex flex-wrap gap-3 justify-center">
+        <span class="px-4 py-2 bg-green-900/30 text-green-400 border border-green-500/30 rounded-full text-sm">
+          <i class="fas fa-calendar mr-1"></i>2024 年 1 月更新
+        </span>
+        <span class="px-4 py-2 bg-purple-900/30 text-purple-400 border border-purple-500/30 rounded-full text-sm">
+          <i class="fas fa-list mr-1"></i>8 套配置方案
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-3 justify-center mb-12">
+      <button class="filter-btn active" data-budget="all">全部配置</button>
+      <button class="filter-btn" data-budget="entry">入门办公 (2000-3000 元)</button>
+      <button class="filter-btn" data-budget="mainstream">主流游戏 (4000-6000 元)</button>
+      <button class="filter-btn" data-budget="high">高端创作 (7000-12000 元)</button>
+      <button class="filter-btn" data-budget="flagship">旗舰工作站 (15000 元+)</button>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- 配置 1: 入门办公 -->
+      <div class="budget-card rounded-2xl overflow-hidden" data-budget="entry">
+        <div class="budget-header p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-2xl font-display font-bold text-white">入门办公配置</h3>
+            <span class="px-4 py-2 bg-green-600/20 text-green-400 border border-green-500/30 rounded-full text-sm font-bold">
+              ¥2,599
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="usage-tag">办公</span>
+            <span class="usage-tag">网课</span>
+            <span class="usage-tag">轻度娱乐</span>
+          </div>
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-sm mb-2">
+              <span class="text-gray-400">性能指数</span>
+              <span class="text-cyan-400 font-bold">★★☆☆☆</span>
+            </div>
+            <div class="performance-bar">
+              <div class="performance-fill" style="width: 25%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6">
+          <div class="space-y-0">
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">CPU</div>
+                <div class="text-gray-400 text-xs">Intel Core i3-12100F 散片</div>
+              </div>
+              <span class="price-tag">¥599</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">主板</div>
+                <div class="text-gray-400 text-xs">华硕 H610M-E D4</div>
+              </div>
+              <span class="price-tag">¥499</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">内存</div>
+                <div class="text-gray-400 text-xs">金士顿 16GB DDR4 3200</div>
+              </div>
+              <span class="price-tag">¥249</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">硬盘</div>
+                <div class="text-gray-400 text-xs">西部数据 SN570 500GB NVMe</div>
+              </div>
+              <span class="price-tag">¥299</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">显卡</div>
+                <div class="text-gray-400 text-xs">CPU 集成 UHD730</div>
+              </div>
+              <span class="price-tag">¥0</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">电源</div>
+                <div class="text-gray-400 text-xs">航嘉 Jumper400 400W</div>
+              </div>
+              <span class="price-tag">¥199</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">散热</div>
+                <div class="text-gray-400 text-xs">雅浚 B3 风冷</div>
+              </div>
+              <span class="price-tag">¥79</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">机箱</div>
+                <div class="text-gray-400 text-xs">先马 平头哥 M1</div>
+              </div>
+              <span class="price-tag">¥129</span>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-xl">
+            <div class="text-green-400 text-xs font-bold mb-2"><i class="fas fa-info-circle mr-1"></i>配置点评</div>
+            <p class="text-gray-300 text-xs">
+              入门级办公神机，i3-12100F 四核性能足够日常办公使用，16GB 内存保证多任务流畅，500GB NVMe SSD 提供快速的系统响应。适合办公、学习、网课等场景。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 配置 2: 主流游戏 -->
+      <div class="budget-card rounded-2xl overflow-hidden" data-budget="mainstream">
+        <div class="budget-header p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-2xl font-display font-bold text-white">主流游戏配置</h3>
+            <span class="px-4 py-2 bg-cyan-600/20 text-cyan-400 border border-cyan-500/30 rounded-full text-sm font-bold">
+              ¥5,299
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="usage-tag">1080P 游戏</span>
+            <span class="usage-tag">电竞</span>
+            <span class="usage-tag">直播</span>
+          </div>
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-sm mb-2">
+              <span class="text-gray-400">性能指数</span>
+              <span class="text-cyan-400 font-bold">★★★★☆</span>
+            </div>
+            <div class="performance-bar">
+              <div class="performance-fill" style="width: 55%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6">
+          <div class="space-y-0">
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">CPU</div>
+                <div class="text-gray-400 text-xs">Intel Core i5-12400F 散片</div>
+              </div>
+              <span class="price-tag">¥899</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">主板</div>
+                <div class="text-gray-400 text-xs">微星 B660M MORTAR</div>
+              </div>
+              <span class="price-tag">¥799</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">内存</div>
+                <div class="text-gray-400 text-xs">芝奇 16GB(8G×2) DDR4 3600</div>
+              </div>
+              <span class="price-tag">¥399</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">硬盘</div>
+                <div class="text-gray-400 text-xs">致态 TiPlus5000 1TB NVMe</div>
+              </div>
+              <span class="price-tag">¥499</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">显卡</div>
+                <div class="text-gray-400 text-xs">七彩虹 RTX 4060 战斧 8GB</div>
+              </div>
+              <span class="price-tag">¥2,299</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">电源</div>
+                <div class="text-gray-400 text-xs">长城 G6 650W 金牌</div>
+              </div>
+              <span class="price-tag">¥349</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">散热</div>
+                <div class="text-gray-400 text-xs">利民 AX120 R SE</div>
+              </div>
+              <span class="price-tag">¥89</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">机箱</div>
+                <div class="text-gray-400 text-xs">玩嘉 孤勇者 M-ATX</div>
+              </div>
+              <span class="price-tag">¥199</span>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-cyan-900/20 border border-cyan-500/30 rounded-xl">
+            <div class="text-cyan-400 text-xs font-bold mb-2"><i class="fas fa-info-circle mr-1"></i>配置点评</div>
+            <p class="text-gray-300 text-xs">
+              主流甜点级游戏配置，i5-12400F+RTX4060 组合可在 1080P 分辨率下高画质流畅运行所有 3A 大作。16GB 双通道内存和 1TB 高速 SSD 提供流畅体验。性价比极高，适合大多数游戏玩家。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 配置 3: 2K 游戏 -->
+      <div class="budget-card rounded-2xl overflow-hidden" data-budget="high">
+        <div class="budget-header p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-2xl font-display font-bold text-white">2K 游戏配置</h3>
+            <span class="px-4 py-2 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full text-sm font-bold">
+              ¥8,999
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="usage-tag">2K 游戏</span>
+            <span class="usage-tag">光追</span>
+            <span class="usage-tag">内容创作</span>
+          </div>
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-sm mb-2">
+              <span class="text-gray-400">性能指数</span>
+              <span class="text-cyan-400 font-bold">★★★★★</span>
+            </div>
+            <div class="performance-bar">
+              <div class="performance-fill" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6">
+          <div class="space-y-0">
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">CPU</div>
+                <div class="text-gray-400 text-xs">AMD Ryzen 5 7600X 散片</div>
+              </div>
+              <span class="price-tag">¥1,499</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">主板</div>
+                <div class="text-gray-400 text-xs">华硕 TUF B650M-PLUS</div>
+              </div>
+              <span class="price-tag">¥1,299</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">内存</div>
+                <div class="text-gray-400 text-xs">金士顿 32GB(16G×2) DDR5 6000</div>
+              </div>
+              <span class="price-tag">¥799</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">硬盘</div>
+                <div class="text-gray-400 text-xs">三星 980 PRO 1TB PCIe4.0</div>
+              </div>
+              <span class="price-tag">¥699</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">显卡</div>
+                <div class="text-gray-400 text-xs">微星 RTX 4070 SUPER 12G</div>
+              </div>
+              <span class="price-tag">¥4,299</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">电源</div>
+                <div class="text-gray-400 text-xs">海韵 FOCUS GX750 金牌全模</div>
+              </div>
+              <span class="price-tag">¥799</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">散热</div>
+                <div class="text-gray-400 text-xs">瓦尔基里 A360 水冷</div>
+              </div>
+              <span class="price-tag">¥399</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">机箱</div>
+                <div class="text-gray-400 text-xs">联力 216 ATX</div>
+              </div>
+              <span class="price-tag">¥599</span>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-purple-900/20 border border-purple-500/30 rounded-xl">
+            <div class="text-purple-400 text-xs font-bold mb-2"><i class="fas fa-info-circle mr-1"></i>配置点评</div>
+            <p class="text-gray-300 text-xs">
+              2K 分辨率游戏利器，R5 7600X+RTX4070 SUPER 组合可在 2K 分辨率下高画质流畅运行所有 3A 大作，支持光线追踪和 DLSS 3.0。32GB DDR5 内存和 PCIe4.0 SSD 提供极速体验。适合追求高画质的游戏玩家和创作者。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 配置 4: 旗舰工作站 -->
+      <div class="budget-card rounded-2xl overflow-hidden" data-budget="flagship">
+        <div class="budget-header p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-2xl font-display font-bold text-white">旗舰工作站</h3>
+            <span class="px-4 py-2 bg-yellow-600/20 text-yellow-400 border border-yellow-500/30 rounded-full text-sm font-bold">
+              ¥23,999
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="usage-tag">4K 游戏</span>
+            <span class="usage-tag">8K 视频</span>
+            <span class="usage-tag">3D 渲染</span>
+            <span class="usage-tag">AI 计算</span>
+          </div>
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-sm mb-2">
+              <span class="text-gray-400">性能指数</span>
+              <span class="text-cyan-400 font-bold">★★★★★</span>
+            </div>
+            <div class="performance-bar">
+              <div class="performance-fill" style="width: 95%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6">
+          <div class="space-y-0">
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">CPU</div>
+                <div class="text-gray-400 text-xs">AMD Ryzen 9 7950X3D 盒装</div>
+              </div>
+              <span class="price-tag">¥5,299</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">主板</div>
+                <div class="text-gray-400 text-xs">华硕 ROG X670E HERO</div>
+              </div>
+              <span class="price-tag">¥4,999</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">内存</div>
+                <div class="text-gray-400 text-xs">芝奇 64GB(32G×2) DDR5 6400</div>
+              </div>
+              <span class="price-tag">¥2,499</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">硬盘</div>
+                <div class="text-gray-400 text-xs">三星 990 PRO 2TB PCIe4.0</div>
+              </div>
+              <span class="price-tag">¥1,299</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">显卡</div>
+                <div class="text-gray-400 text-xs">华硕 ROG RTX 4090 24GB</div>
+              </div>
+              <span class="price-tag">¥14,999</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">电源</div>
+                <div class="text-gray-400 text-xs">海韵 PRIME TX1000 白金牌</div>
+              </div>
+              <span class="price-tag">¥1,799</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">散热</div>
+                <div class="text-gray-400 text-xs">华硕 ROG 龙神 III 360 水冷</div>
+              </div>
+              <span class="price-tag">¥2,499</span>
+            </div>
+            <div class="component-item">
+              <div>
+                <div class="text-white font-bold text-sm">机箱</div>
+                <div class="text-gray-400 text-xs">联力 O11D EVO RGB</div>
+              </div>
+              <span class="price-tag">¥1,299</span>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-xl">
+            <div class="text-yellow-400 text-xs font-bold mb-2"><i class="fas fa-info-circle mr-1"></i>配置点评</div>
+            <p class="text-gray-300 text-xs">
+              顶级旗舰工作站，7950X3D+RTX4090 组合代表消费级最强性能。可在 4K 分辨率下最高画质流畅运行所有游戏，支持 8K 视频剪辑、3D 渲染、AI 计算等专业工作。64GB 内存和 2TB 旗舰 SSD 提供极致体验。预算充足的终极选择。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 p-8 bg-gradient-to-r from-purple-900/30 via-blue-900/30 to-cyan-900/30 rounded-2xl border border-cyan-500/30">
+      <h3 class="text-2xl font-display font-bold text-white mb-6 text-center">
+        <i class="fas fa-lightbulb mr-2"></i>装机指南
+      </h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <div class="text-cyan-400 font-bold mb-3"><i class="fas fa-coins mr-2"></i>预算分配</div>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li><i class="fas fa-check text-green-400 mr-2"></i>CPU+ 主板：30-35%</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>显卡：35-45%</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>内存：8-10%</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>硬盘：8-12%</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>电源+ 散热 + 机箱：15-20%</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-purple-400 font-bold mb-3"><i class="fas fa-exclamation-triangle mr-2"></i>注意事项</div>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li><i class="fas fa-times text-red-400 mr-2"></i>注意 CPU 与主板兼容性</li>
+            <li><i class="fas fa-times text-red-400 mr-2"></i>电源功率要留有余量</li>
+            <li><i class="fas fa-times text-red-400 mr-2"></i>散热器要能压住 CPU</li>
+            <li><i class="fas fa-times text-red-400 mr-2"></i>机箱要能装下显卡和散热</li>
+            <li><i class="fas fa-times text-red-400 mr-2"></i>内存代数要匹配主板</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-blue-400 font-bold mb-3"><i class="fas fa-shopping-cart mr-2"></i>购买建议</div>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li><i class="fas fa-check text-green-400 mr-2"></i>CPU 散片性价比更高</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>显卡选择正规渠道</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>电源不要省钱，选大品牌</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>618/双 11 入手最划算</li>
+            <li><i class="fas fa-check text-green-400 mr-2"></i>关注价格波动，比价购买</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 p-6 bg-black/30 rounded-xl border border-cyan-500/20">
+      <h4 class="text-xl font-display font-bold text-white mb-4">
+        <i class="fas fa-question-circle mr-2"></i>常见问题
+      </h4>
+      <div class="space-y-4">
+        <div class="p-4 bg-white/5 rounded-lg">
+          <div class="text-cyan-400 font-bold mb-2">Q: 这些配置单包含显示器吗？</div>
+          <p class="text-gray-300 text-sm">A: 不包含。以上配置单仅包含主机硬件，显示器需根据预算和个人需求单独购买。建议 1080P 显示器配主流游戏配置，2K 显示器配 2K 游戏配置，4K 显示器配旗舰配置。</p>
+        </div>
+        <div class="p-4 bg-white/5 rounded-lg">
+          <div class="text-purple-400 font-bold mb-2">Q: 可以自己更换配件品牌吗？</div>
+          <p class="text-gray-300 text-sm">A: 可以。配置单中的配件品牌仅供参考，可以根据个人喜好和预算更换同级别的其他品牌产品。注意确保兼容性，如 CPU 与主板、内存与主板、散热器与 CPU 插槽等。</p>
+        </div>
+        <div class="p-4 bg-white/5 rounded-lg">
+          <div class="text-cyan-400 font-bold mb-2">Q: 多久更新一次配置单？</div>
+          <p class="text-gray-300 text-sm">A: 我们会根据市场价格和新产品发布情况每月更新配置单。新品发布或价格大幅波动时会及时更新，确保推荐最具性价比的配置方案。</p>
+        </div>
+        <div class="p-4 bg-white/5 rounded-lg">
+          <div class="text-purple-400 font-bold mb-2">Q: 新手能自己组装吗？</div>
+          <p class="text-gray-300 text-sm">A: 组装电脑需要一定的动手能力，建议新手先观看装机教程视频，或选择提供上门装机服务的电商平台购买。如果担心，也可以购买配件后找电脑店付费安装。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="src/js/script.js"></script>
+<script>
+// 配置筛选
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    
+    const budget = this.dataset.budget;
+    document.querySelectorAll('.budget-card').forEach(card => {
+      if (budget === 'all' || card.dataset.budget === budget) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+// 性能条动画
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bar = entry.target.querySelector('.performance-fill');
+      if (bar) {
+        const width = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 100);
+      }
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.budget-card').forEach(card => {
+  observer.observe(card);
+});
+</script>
+</body>
+</html>
